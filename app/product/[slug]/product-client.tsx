@@ -13,7 +13,7 @@ import { ProductCard } from "@/components/ProductCard";
 const TRUST_ITEMS = [
   {
     label: "Ücretsiz Kargo",
-    body: "750₺ üzeri siparişlerde",
+    body: "2.500₺ üzeri siparişlerde",
     icon: (
       <path d="M2 6h11v9H2zM13 10h4l3 3v2h-7zM6 19a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM16.5 19a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
     ),
@@ -424,7 +424,7 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
         </h1>
 
         <p className="mt-3 text-[13px] text-ash">
-          Bu ay {stats.soldTotal} kişi bu ürünü satın aldı · {viewCount} kişi inceledi
+          Toplam {stats.soldTotal} satıldı · {viewCount} kez görüntülendi
         </p>
 
         <div className="mt-4 flex items-center gap-3">

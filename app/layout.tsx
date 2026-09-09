@@ -123,10 +123,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-onyx-900 text-ink font-sans">
         <div className="promo-bar sticky top-0 z-50 h-9 flex items-center justify-center overflow-hidden bg-charcoal-700 px-4 border-b border-[var(--border-accent-soft)]">
           <span className="promo-bar-shimmer" aria-hidden />
-          <p
-            className="relative max-w-full truncate text-[10px] md:text-[11px] font-medium uppercase text-[var(--text-on-dark)]"
-            style={{ letterSpacing: "0.14em" }}
-          >
+          <p className="relative max-w-full truncate text-[8px] tracking-[0.03em] md:text-[11px] md:tracking-[0.14em] font-medium uppercase text-[var(--text-on-dark)]">
             {promoBarText}
           </p>
         </div>

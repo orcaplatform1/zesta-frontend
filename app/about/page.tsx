@@ -55,10 +55,13 @@ export default function AboutPage() {
         ) : (
           <section key={s.heading} className="bg-onyx-950 py-16 md:py-24">
             <div className="mx-auto max-w-2xl px-5 md:px-12">
-              <h2 className="font-display text-[26px] md:text-[32px] font-normal text-ink mb-5" style={{ lineHeight: 1.1 }}>
+              <h2
+                className="font-display text-[26px] md:text-[32px] font-normal mb-5"
+                style={{ lineHeight: 1.1, color: "var(--text-on-dark)" }}
+              >
                 {s.heading}
               </h2>
-              <p className="text-[15px] md:text-[16px] leading-relaxed text-smoke">{s.body}</p>
+              <p className="text-[15px] md:text-[16px] leading-relaxed text-mist-200">{s.body}</p>
             </div>
           </section>
         ),
