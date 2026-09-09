@@ -6,9 +6,9 @@ import Link from "next/link";
 import type { Category } from "@/lib/types";
 
 const LINKS = [
-  { href: "/shop", label: "Ürünler" },
-  { href: "/account", label: "Hesabım" },
-  { href: "/cart", label: "Sepet" },
+  { href: "/magaza", label: "Ürünler" },
+  { href: "/hesap", label: "Hesabım" },
+  { href: "/sepet", label: "Sepet" },
 ];
 
 export function MobileNav({ categories = [] }: { categories?: Category[] }) {
@@ -70,7 +70,7 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                   {categories.map((c) => (
                     <Link
                       key={c.id}
-                      href={`/category/${c.slug}`}
+                      href={`/kategori/${c.slug}`}
                       onClick={() => setOpen(false)}
                       className="text-[15px] text-smoke hover:text-ink transition-colors duration-[180ms]"
                     >

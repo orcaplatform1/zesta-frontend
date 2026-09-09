@@ -31,7 +31,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <Link
-      href={`/product/${product.slug}`}
+      href={`/urun/${product.slug}`}
       className="group block border border-[var(--border-subtle)] rounded-sm bg-onyx-700 overflow-hidden transition-all duration-[250ms] ease-[var(--ease-luxury)] hover:-translate-y-[3px] hover:border-[var(--border-hover)] hover:shadow-[var(--shadow-lg)]"
     >
       <div className="relative aspect-square bg-stone-100 flex items-center justify-center overflow-hidden">

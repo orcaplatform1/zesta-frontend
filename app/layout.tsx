@@ -66,19 +66,19 @@ const ORGANIZATION_JSON_LD = {
 };
 
 const FOOTER_LINKS = [
-  { href: "/about", label: "Hakkımızda" },
-  { href: "/faq", label: "Sıkça Sorulan Sorular" },
-  { href: "/contact", label: "İletişim" },
-  { href: "/shipping", label: "Kargo & Teslimat" },
-  { href: "/returns", label: "İade & Değişim" },
+  { href: "/hikayemiz", label: "Hikâyemiz" },
+  { href: "/sss", label: "Sıkça Sorulan Sorular" },
+  { href: "/iletisim", label: "İletişim" },
+  { href: "/kargo-teslimat", label: "Kargo & Teslimat" },
+  { href: "/iade-degisim", label: "İade & Değişim" },
 ];
 
 const LEGAL_LINKS = [
-  { href: "/legal/mesafeli-satis-sozlesmesi", label: "Mesafeli Satış Sözleşmesi" },
-  { href: "/legal/gizlilik-politikasi", label: "Gizlilik Politikası" },
-  { href: "/legal/kvkk", label: "KVKK Aydınlatma Metni" },
-  { href: "/legal/cerez-politikasi", label: "Çerez Politikası" },
-  { href: "/legal/kullanim-kosullari", label: "Kullanım Koşulları" },
+  { href: "/yasal/mesafeli-satis-sozlesmesi", label: "Mesafeli Satış Sözleşmesi" },
+  { href: "/yasal/gizlilik-politikasi", label: "Gizlilik Politikası" },
+  { href: "/yasal/kvkk", label: "KVKK Aydınlatma Metni" },
+  { href: "/yasal/cerez-politikasi", label: "Çerez Politikası" },
+  { href: "/yasal/kullanim-kosullari", label: "Kullanım Koşulları" },
 ];
 
 // "Traders.TR" gecen kismi ozel stille (kirmizi/beyaz + bayrak) vurguluyoruz —
@@ -144,14 +144,14 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               className="hidden md:flex items-center gap-6 md:gap-8 text-[13px]"
               style={{ letterSpacing: "0.08em" }}
             >
-              <Link href="/shop" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
+              <Link href="/magaza" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
                 ÜRÜNLER
               </Link>
               <CategoryNav categories={categories} />
-              <Link href="/account" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
+              <Link href="/hesap" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
                 HESABIM
               </Link>
-              <Link href="/cart" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
+              <Link href="/sepet" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
                 SEPET
               </Link>
             </nav>

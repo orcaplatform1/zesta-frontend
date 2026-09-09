@@ -64,14 +64,14 @@ export function HomeClient() {
             <p className="mt-6 text-[15px] md:text-[17px] text-ash max-w-md leading-relaxed">{content.hero.body}</p>
             <div className="mt-10 flex items-center gap-6">
               <Link
-                href="/shop"
+                href="/magaza"
                 className="inline-flex h-12 items-center justify-center rounded-xs bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
                 style={{ letterSpacing: "0.1em" }}
               >
                 {content.hero.ctaLabel}
               </Link>
               <Link
-                href="/about"
+                href="/hikayemiz"
                 className="text-[13px] text-smoke hover:text-ink transition-colors duration-[180ms]"
                 style={{ letterSpacing: "0.08em" }}
               >
@@ -95,7 +95,7 @@ export function HomeClient() {
             )}
             {heroProduct && (
               <Link
-                href={`/product/${heroProduct.slug}`}
+                href={`/urun/${heroProduct.slug}`}
                 className="absolute bottom-5 right-5 inline-flex h-11 items-center justify-center rounded-full bg-[var(--ivory-50)] px-6 text-[11px] font-medium text-ink shadow-[var(--shadow-md)] transition-colors duration-[180ms] hover:bg-mist-100"
                 style={{ letterSpacing: "0.1em" }}
               >
@@ -157,7 +157,7 @@ function CategoryRow({ slug, label, data }: { slug: string; label: string; data:
             </h2>
           </div>
           <Link
-            href={`/category/${slug}`}
+            href={`/kategori/${slug}`}
             className="hidden sm:inline text-[12px] text-smoke hover:text-ink transition-colors duration-[180ms] whitespace-nowrap"
             style={{ letterSpacing: "0.1em" }}
           >
@@ -178,7 +178,7 @@ function CategoryRow({ slug, label, data }: { slug: string; label: string; data:
         )}
 
         <Link
-          href={`/category/${slug}`}
+          href={`/kategori/${slug}`}
           className="sm:hidden mt-6 inline-block text-[12px] text-smoke hover:text-ink transition-colors duration-[180ms]"
           style={{ letterSpacing: "0.1em" }}
         >
@@ -215,7 +215,7 @@ function EditorialSplitSection({
             {split.body}
           </p>
           <Link
-            href={`/category/${split.categorySlug}`}
+            href={`/kategori/${split.categorySlug}`}
             className="mt-8 inline-flex text-[12px] font-medium text-ink hover:text-[color:var(--text-secondary)] transition-colors duration-[180ms]"
             style={{ letterSpacing: "0.1em" }}
           >

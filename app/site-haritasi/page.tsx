@@ -13,30 +13,30 @@ const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
   {
     title: "Mağaza",
     links: [
-      { href: "/shop", label: "Tüm Ürünler" },
-      { href: "/cart", label: "Sepet" },
-      { href: "/account", label: "Hesabım" },
-      { href: "/account/orders", label: "Siparişlerim" },
+      { href: "/magaza", label: "Tüm Ürünler" },
+      { href: "/sepet", label: "Sepet" },
+      { href: "/hesap", label: "Hesabım" },
+      { href: "/hesap/siparislerim", label: "Siparişlerim" },
     ],
   },
   {
     title: "Kurumsal",
     links: [
-      { href: "/about", label: "Hakkımızda" },
-      { href: "/contact", label: "İletişim" },
-      { href: "/faq", label: "Sıkça Sorulan Sorular" },
-      { href: "/shipping", label: "Kargo & Teslimat" },
-      { href: "/returns", label: "İade & Değişim" },
+      { href: "/hikayemiz", label: "Hikâyemiz" },
+      { href: "/iletisim", label: "İletişim" },
+      { href: "/sss", label: "Sıkça Sorulan Sorular" },
+      { href: "/kargo-teslimat", label: "Kargo & Teslimat" },
+      { href: "/iade-degisim", label: "İade & Değişim" },
     ],
   },
   {
     title: "Yasal",
     links: [
-      { href: "/legal/mesafeli-satis-sozlesmesi", label: "Mesafeli Satış Sözleşmesi" },
-      { href: "/legal/gizlilik-politikasi", label: "Gizlilik Politikası" },
-      { href: "/legal/kvkk", label: "KVKK Aydınlatma Metni" },
-      { href: "/legal/cerez-politikasi", label: "Çerez Politikası" },
-      { href: "/legal/kullanim-kosullari", label: "Kullanım Koşulları" },
+      { href: "/yasal/mesafeli-satis-sozlesmesi", label: "Mesafeli Satış Sözleşmesi" },
+      { href: "/yasal/gizlilik-politikasi", label: "Gizlilik Politikası" },
+      { href: "/yasal/kvkk", label: "KVKK Aydınlatma Metni" },
+      { href: "/yasal/cerez-politikasi", label: "Çerez Politikası" },
+      { href: "/yasal/kullanim-kosullari", label: "Kullanım Koşulları" },
     ],
   },
 ];
@@ -58,7 +58,7 @@ export default async function SiteHaritasiPage() {
             {categories.map((c) => (
               <li key={c.id}>
                 <Link
-                  href={`/category/${c.slug}`}
+                  href={`/kategori/${c.slug}`}
                   className="text-[15px] text-smoke hover:text-ink transition-colors duration-[180ms]"
                 >
                   {c.name}

@@ -5,15 +5,15 @@ import type { Category, ProductListResponse } from "@/lib/types";
 
 const STATIC_ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
   { path: "", priority: 1, changeFrequency: "daily" },
-  { path: "/shop", priority: 0.9, changeFrequency: "daily" },
-  { path: "/about", priority: 0.5, changeFrequency: "monthly" },
-  { path: "/contact", priority: 0.5, changeFrequency: "monthly" },
-  { path: "/shipping", priority: 0.4, changeFrequency: "monthly" },
-  { path: "/returns", priority: 0.4, changeFrequency: "monthly" },
-  { path: "/legal/mesafeli-satis-sozlesmesi", priority: 0.3, changeFrequency: "yearly" },
-  { path: "/legal/gizlilik-politikasi", priority: 0.3, changeFrequency: "yearly" },
-  { path: "/legal/kvkk", priority: 0.3, changeFrequency: "yearly" },
-  { path: "/legal/cerez-politikasi", priority: 0.3, changeFrequency: "yearly" },
+  { path: "/magaza", priority: 0.9, changeFrequency: "daily" },
+  { path: "/hikayemiz", priority: 0.5, changeFrequency: "monthly" },
+  { path: "/iletisim", priority: 0.5, changeFrequency: "monthly" },
+  { path: "/kargo-teslimat", priority: 0.4, changeFrequency: "monthly" },
+  { path: "/iade-degisim", priority: 0.4, changeFrequency: "monthly" },
+  { path: "/yasal/mesafeli-satis-sozlesmesi", priority: 0.3, changeFrequency: "yearly" },
+  { path: "/yasal/gizlilik-politikasi", priority: 0.3, changeFrequency: "yearly" },
+  { path: "/yasal/kvkk", priority: 0.3, changeFrequency: "yearly" },
+  { path: "/yasal/cerez-politikasi", priority: 0.3, changeFrequency: "yearly" },
 ];
 
 // Katalog (ürün/kategori) her değiştiğinde site haritası da kendiliğinden
@@ -32,14 +32,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const productEntries: MetadataRoute.Sitemap = (productList?.items ?? []).map((product) => ({
-    url: `${SITE_URL}/product/${product.slug}`,
+    url: `${SITE_URL}/urun/${product.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.8,
   }));
 
   const categoryEntries: MetadataRoute.Sitemap = (categories ?? []).map((category) => ({
-    url: `${SITE_URL}/category/${category.slug}`,
+    url: `${SITE_URL}/kategori/${category.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.6,

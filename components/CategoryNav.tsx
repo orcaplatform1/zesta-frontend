@@ -37,7 +37,7 @@ export function CategoryNav({ categories }: { categories: Category[] }) {
             {categories.map((c) => (
               <Link
                 key={c.id}
-                href={`/category/${c.slug}`}
+                href={`/kategori/${c.slug}`}
                 onClick={() => setOpen(false)}
                 className="rounded-xs px-3 py-2 text-[13px] text-[color:var(--text-primary)] transition-colors duration-[180ms] hover:bg-[var(--bg-secondary)]"
               >
