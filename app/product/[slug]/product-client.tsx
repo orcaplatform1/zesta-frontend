@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode, type FormEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api, formatPrice } from "@/lib/api";
-import type { Product, ProductListResponse } from "@/lib/types";
+import type { Product, ProductListResponse, Review } from "@/lib/types";
 import { getSalesStats } from "@/lib/sales-stats";
+import { getViewCount } from "@/lib/view-stats";
 import { parseProductDescription } from "@/lib/product-description";
 import { ProductCard } from "@/components/ProductCard";
 
@@ -96,6 +98,163 @@ function AccordionSection({
         </div>
       </div>
     </div>
+  );
+}
+
+function Stars({ rating, size = 14 }: { rating: number; size?: number }) {
+  const rounded = Math.round(rating);
+  return (
+    <span className="inline-flex items-center gap-0.5">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} viewBox="0 0 20 20" width={size} height={size} fill={i < rounded ? "var(--champagne-300)" : "none"} stroke="var(--champagne-300)" strokeWidth={1.2}>
+          <path d="M10 1.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9L10 15l-5.2 2.8 1-5.9L1.5 7.7l5.9-.8z" />
+        </svg>
+      ))}
+    </span>
+  );
+}
+
+function StarPicker({ value, onChange }: { value: number; onChange: (v: number) => void }) {
+  return (
+    <span className="inline-flex items-center gap-1">
+      {Array.from({ length: 5 }).map((_, i) => {
+        const v = i + 1;
+        return (
+          <button key={v} type="button" onClick={() => onChange(v)} aria-label={`${v} yıldız`}>
+            <svg viewBox="0 0 20 20" width={24} height={24} fill={v <= value ? "var(--champagne-300)" : "none"} stroke="var(--champagne-300)" strokeWidth={1.2}>
+              <path d="M10 1.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9L10 15l-5.2 2.8 1-5.9L1.5 7.7l5.9-.8z" />
+            </svg>
+          </button>
+        );
+      })}
+    </span>
+  );
+}
+
+function ReviewsSection({ productId }: { productId: string }) {
+  const [reviews, setReviews] = useState<Review[] | null>(null);
+  const [me, setMe] = useState<{ email: string; name: string } | null | undefined>(undefined);
+  const [formOpen, setFormOpen] = useState(false);
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
+
+  function load() {
+    api.get<Review[]>(`/reviews?productId=${productId}`).then(setReviews).catch(() => setReviews([]));
+  }
+
+  useEffect(() => {
+    load();
+    api
+      .get<{ email: string; name: string }>("/auth/me")
+      .then(setMe)
+      .catch(() => setMe(null));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productId]);
+
+  const average = reviews && reviews.length > 0 ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : null;
+
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    setBusy(true);
+    setStatus(null);
+    try {
+      await api.post("/reviews", { productId, rating, comment: comment || undefined });
+      setStatus("Yorumun alındı — onaylandıktan sonra burada yayınlanacak.");
+      setComment("");
+      setRating(5);
+      setFormOpen(false);
+    } catch (err) {
+      setStatus(err instanceof Error ? err.message : "Yorum gönderilemedi");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section className="mx-auto max-w-[1440px] px-5 md:px-12 pb-20 md:pb-28">
+      <div className="max-w-3xl border-t border-[var(--border-subtle)] pt-16 md:pt-20">
+        <p className="eyebrow-on-light">Değerlendirmeler</p>
+        <div className="mt-3 flex flex-wrap items-center gap-4">
+          {average !== null ? (
+            <>
+              <span className="font-display text-[32px] text-ink">{average.toFixed(1)}</span>
+              <div>
+                <Stars rating={average} size={16} />
+                <p className="mt-0.5 text-xs text-ash">
+                  {reviews!.length} değerlendirmeye göre
+                </p>
+              </div>
+            </>
+          ) : (
+            <p className="text-sm text-ash">Henüz değerlendirme yok — ilk yorumu siz yazın.</p>
+          )}
+          <button
+            onClick={() => setFormOpen((v) => !v)}
+            className="ml-auto h-11 rounded-xs border border-[var(--border-subtle)] px-6 text-[12px] font-medium text-ink transition-colors duration-[180ms] hover:bg-onyx-700"
+            style={{ letterSpacing: "0.1em" }}
+          >
+            YORUM YAZ
+          </button>
+        </div>
+
+        {formOpen && (
+          <div className="mt-6 border border-[var(--border-subtle)] rounded-sm p-5">
+            {me === undefined ? (
+              <p className="text-sm text-ash">Yükleniyor...</p>
+            ) : me === null ? (
+              <div>
+                <p className="text-sm text-ash">Yorum yazmak için giriş yapmanız gerekiyor.</p>
+                <Link href="/account" className="mt-3 inline-block text-sm text-champagne-300 underline">
+                  Giriş Yap / Üye Ol
+                </Link>
+              </div>
+            ) : (
+              <form onSubmit={submit} className="space-y-3">
+                <div>
+                  <span className="label-uppercase block mb-2">Puanınız</span>
+                  <StarPicker value={rating} onChange={setRating} />
+                </div>
+                <textarea
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Ürün hakkındaki düşünceleriniz..."
+                  rows={3}
+                  className="w-full rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 py-2.5 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]"
+                />
+                <button
+                  type="submit"
+                  disabled={busy}
+                  className="h-11 rounded-xs bg-charcoal-700 px-6 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
+                  style={{ letterSpacing: "0.1em" }}
+                >
+                  {busy ? "GÖNDERİLİYOR..." : "GÖNDER"}
+                </button>
+              </form>
+            )}
+          </div>
+        )}
+        {status && <p className="mt-4 text-sm text-champagne-300">{status}</p>}
+
+        {reviews && reviews.length > 0 && (
+          <div className="mt-10 divide-y divide-[var(--border-subtle)] border-t border-[var(--border-subtle)]">
+            {reviews.map((r) => (
+              <div key={r.id} className="py-5">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-ink">{r.authorName}</span>
+                  <span className="text-xs text-dim">{new Date(r.createdAt).toLocaleDateString("tr-TR")}</span>
+                </div>
+                <div className="mt-1.5">
+                  <Stars rating={r.rating} />
+                </div>
+                {r.comment && <p className="mt-2 text-[14px] leading-relaxed text-smoke">{r.comment}</p>}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -202,6 +361,7 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
       : null;
   const variantGroups = Array.from(new Set(product.variants.map((v) => v.name)));
   const stats = getSalesStats(product.id, product.createdAt);
+  const viewCount = getViewCount(product.id, product.createdAt);
   const parsed = parseProductDescription(product);
   const images = product.images;
 
@@ -263,7 +423,9 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
           {product.name}
         </h1>
 
-        <p className="mt-3 text-[13px] text-ash">Bu ay {stats.soldTotal} kişi bu ürünü satın aldı</p>
+        <p className="mt-3 text-[13px] text-ash">
+          Bu ay {stats.soldTotal} kişi bu ürünü satın aldı · {viewCount} kişi inceledi
+        </p>
 
         <div className="mt-4 flex items-center gap-3">
           {discountPct !== null && discountPct > 0 && <span className="badge-sale">-%{discountPct}</span>}
@@ -370,6 +532,8 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
         </div>
       </div>
     </div>
+
+    <ReviewsSection productId={product.id} />
 
     <RelatedProducts
       categorySlug={product.category?.slug}

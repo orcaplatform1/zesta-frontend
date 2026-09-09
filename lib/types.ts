@@ -93,3 +93,15 @@ export interface Page {
   title: string;
   content: string;
 }
+
+export interface Review {
+  id: string;
+  productId: string;
+  customerId: string | null;
+  authorName: string;
+  rating: number;
+  comment: string | null;
+  isApproved: boolean;
+  createdAt: string;
+  product?: { name: string; slug: string };
+}
