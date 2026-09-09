@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 
 interface CheckoutResponse {
   order: { orderNumber: string };
+  payment: { configured: boolean; checkoutUrl: string | null };
 }
 
 export default function CheckoutPage() {
@@ -19,6 +20,7 @@ export default function CheckoutPage() {
     postalCode: "",
     addressLine: "",
     couponCode: "",
+    identityNumber: "",
   });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,8 +34,16 @@ export default function CheckoutPage() {
     setBusy(true);
     setError(null);
     try {
-      const payload = { ...form, couponCode: form.couponCode || undefined };
+      const payload = {
+        ...form,
+        couponCode: form.couponCode || undefined,
+        identityNumber: form.identityNumber || undefined,
+      };
       const res = await api.post<CheckoutResponse>("/checkout", payload);
+      if (res.payment.configured && res.payment.checkoutUrl) {
+        window.location.href = res.payment.checkoutUrl;
+        return;
+      }
       router.push(`/order-success?orderNumber=${res.order.orderNumber}&email=${encodeURIComponent(form.email)}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sipariş oluşturulamadı");
@@ -49,6 +59,11 @@ export default function CheckoutPage() {
         <Field label="Ad Soyad" value={form.fullName} onChange={(v) => set("fullName", v)} required />
         <Field label="E-posta" type="email" value={form.email} onChange={(v) => set("email", v)} required />
         <Field label="Telefon" value={form.phone} onChange={(v) => set("phone", v)} required />
+        <Field
+          label="TC Kimlik No"
+          value={form.identityNumber}
+          onChange={(v) => set("identityNumber", v)}
+        />
         <Field label="Adres" value={form.addressLine} onChange={(v) => set("addressLine", v)} required />
         <div className="grid grid-cols-2 gap-4">
           <Field label="İl" value={form.city} onChange={(v) => set("city", v)} required />
@@ -67,7 +82,7 @@ export default function CheckoutPage() {
           {busy ? "Gönderiliyor..." : "Siparişi Tamamla"}
         </button>
         <p className="text-xs text-neutral-500">
-          Kart bilgileriniz sistemimizde saklanmaz. Ödeme sağlayıcısı entegrasyonu yakında devreye alınacak.
+          Kart bilgileriniz sistemimizde saklanmaz — ödeme iyzico'nun güvenli sayfasında tamamlanır.
         </p>
       </form>
     </div>
