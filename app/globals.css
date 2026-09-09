@@ -1,57 +1,99 @@
 @import "tailwindcss";
 
 /* ============================================================
-   ZESTA — ONYX Design System
-   Minimalist / premium / artisanal / editorial luxury.
+   ZESTA — OLIVE Design System (v03)
+   Minimalist / premium / organic / artisanal / editorial luxury.
+   Olive-green-led palette balanced with warm stone + warm ivory,
+   muted champagne used only for small accent details.
    ============================================================ */
 :root {
-  /* Onyx scale */
-  --onyx-950: #080809;
-  --onyx-900: #0b0b0c;
-  --onyx-800: #111112;
-  --onyx-700: #171718;
-  --onyx-600: #1d1d1e;
-  --onyx-500: #242425;
-  --onyx-400: #2b2b2c;
+  /* Olive scale — primary hue of the system */
+  --olive-950: #11130d;
+  --olive-900: #181a11;
+  --olive-850: #202217;
+  --olive-800: #292b1c;
+  --olive-700: #343624;
+  --olive-600: #41432d;
+  --olive-500: #50523a;
+  --olive-400: #666a4c;
+  --olive-300: #7e8363;
+  --olive-200: #9ca184;
+  --olive-100: #c3c5af;
+  --olive-50: #e6e6db;
 
-  /* Stone scale */
-  --stone-50: #f5f1ea;
+  /* Deepest, below the olive scale — used only for footer / deep sections */
+  --deep-section: #0e100b;
+
+  /* Earth / dark-olive-brown tones — backgrounds, cards, overlays, borders */
+  --earth-950: #110e04;
+  --earth-900: #231e0d;
+  --earth-800: #2e2a1a;
+  --earth-700: #383322;
+  --earth-600: #463f2c;
+  --earth-500: #584d37;
+  --earth-400: #6d5f45;
+  --earth-300: #857356;
+  --earth-200: #998c70;
+
+  /* Legacy "onyx" alias scale — kept so existing bg-onyx-* / text-onyx-*
+     utility classes across the app keep working, now resolving to OLIVE
+     roles: 950=deep section, 900=page bg, 800=primary dark,
+     700=secondary surface, 600=card, 500=elevated card, 400=image section. */
+  --onyx-950: var(--deep-section);
+  --onyx-900: var(--olive-950);
+  --onyx-800: var(--olive-900);
+  --onyx-700: var(--olive-850);
+  --onyx-600: var(--olive-800);
+  --onyx-500: var(--olive-700);
+  --onyx-400: var(--olive-600);
+
+  /* Warm stone scale */
+  --stone-50: #f5f1e9;
   --stone-100: #e8e1d7;
-  --stone-200: #d4ccc0;
-  --stone-300: #b8b0a5;
-  --stone-400: #969087;
-  --stone-500: #777169;
-  --stone-600: #5e5953;
-  --stone-700: #45423e;
-  --stone-800: #302f2d;
-  --stone-900: #1d1d1c;
+  --stone-200: #d6cec1;
+  --stone-300: #c1b7a8;
+  --stone-400: #a79d8e;
+  --stone-500: #8b8171;
+  --stone-600: #71695c;
+  --stone-700: #585147;
+  --stone-800: #3e3a32;
+  --stone-900: #292721;
 
-  /* Ivory / cream */
-  --ivory: #f2eee7;
+  /* Warm ivory / cream */
+  --ivory: #f1eee6;
   --cream: #f7f3ec;
+  --warm-ivory: #ebe0d0;
 
-  /* Muted champagne accent — never bright gold */
+  /* Muted champagne accent — small details only, never bright/metallic gold */
   --champagne-100: #e8ded0;
   --champagne-200: #d5c6b3;
   --champagne-300: #b9a58d;
   --champagne-400: #9d896f;
   --champagne-500: #806d57;
 
-  /* Text */
-  --text-primary: #f2eee7;
+  /* Text (on dark) */
+  --text-primary: #f1eee6;
   --text-secondary: #d6d0c7;
-  --text-muted: #a8a29a;
-  --text-disabled: #716d67;
+  --text-muted: #a8a69a;
+  --text-disabled: #747266;
+  --text-olive: #c3c5af;
+  --text-champagne: #b9a58d;
+
+  /* Text (on light / açık sections) */
+  --text-on-light-primary: #292721;
+  --text-on-light-secondary: #585147;
 
   /* Borders */
-  --border-subtle: rgba(242, 238, 231, 0.1);
-  --border-hover: rgba(242, 238, 231, 0.18);
+  --border-subtle: rgba(241, 238, 230, 0.1);
+  --border-hover: rgba(241, 238, 230, 0.18);
   --border-accent: rgba(185, 165, 141, 0.45);
   --border-accent-soft: rgba(185, 165, 141, 0.25);
+  --border-olive: rgba(195, 197, 175, 0.28);
+  --border-on-light: rgba(41, 39, 33, 0.12);
 
   /* Shadows — always soft */
   --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.18);
-  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.22);
   --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.4);
 
   /* Radius — sharp, editorial, never rounded like SaaS */
@@ -72,11 +114,35 @@
   --status-error: #b58d87;
   --status-error-bg: rgba(181, 141, 135, 0.1);
   --status-warning: #b9a58d;
+  --status-warning-bg: rgba(185, 165, 141, 0.1);
 }
 
 @theme inline {
   --font-display: "Bodoni Moda", "Cormorant Garamond", serif;
   --font-sans: var(--font-inter), Inter, sans-serif;
+
+  --color-olive-950: var(--olive-950);
+  --color-olive-900: var(--olive-900);
+  --color-olive-850: var(--olive-850);
+  --color-olive-800: var(--olive-800);
+  --color-olive-700: var(--olive-700);
+  --color-olive-600: var(--olive-600);
+  --color-olive-500: var(--olive-500);
+  --color-olive-400: var(--olive-400);
+  --color-olive-300: var(--olive-300);
+  --color-olive-200: var(--olive-200);
+  --color-olive-100: var(--olive-100);
+  --color-olive-50: var(--olive-50);
+
+  --color-earth-950: var(--earth-950);
+  --color-earth-900: var(--earth-900);
+  --color-earth-800: var(--earth-800);
+  --color-earth-700: var(--earth-700);
+  --color-earth-600: var(--earth-600);
+  --color-earth-500: var(--earth-500);
+  --color-earth-400: var(--earth-400);
+  --color-earth-300: var(--earth-300);
+  --color-earth-200: var(--earth-200);
 
   --color-onyx-950: var(--onyx-950);
   --color-onyx-900: var(--onyx-900);
@@ -99,6 +165,7 @@
 
   --color-ivory: var(--ivory);
   --color-cream: var(--cream);
+  --color-warm-ivory: var(--warm-ivory);
 
   --color-champagne-100: var(--champagne-100);
   --color-champagne-200: var(--champagne-200);
@@ -110,6 +177,10 @@
   --color-smoke: var(--text-secondary);
   --color-ash: var(--text-muted);
   --color-dim: var(--text-disabled);
+  --color-olive-text: var(--text-olive);
+
+  --color-ink-on-light: var(--text-on-light-primary);
+  --color-smoke-on-light: var(--text-on-light-secondary);
 
   --color-success: var(--status-success);
   --color-error: var(--status-error);
@@ -141,7 +212,7 @@ body {
 
 ::selection {
   background: var(--champagne-300);
-  color: var(--onyx-900);
+  color: var(--olive-900);
 }
 
 /* Minimal scrollbar */
@@ -150,14 +221,14 @@ body {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--onyx-900);
+  background: var(--olive-950);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--stone-800);
+  background: var(--olive-700);
   border-radius: var(--radius-sm);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--stone-600);
+  background: var(--stone-700);
 }
 
 /* Faint paper-grain texture, used sparingly on hero/dark sections */
@@ -182,9 +253,16 @@ body {
   text-transform: uppercase;
   color: var(--text-muted);
 }
+.eyebrow-on-light {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--text-on-light-secondary);
+}
 
 /* Footer'daki "Traders.TR" marka gecisi icin — duz (premium/glow olmadan)
-   kirmizi ve beyaz. Sitenin ONYX paletinden BAGIMSIZ (bilerek), ORCA/
+   kirmizi ve beyaz. Sitenin OLIVE paletinden BAGIMSIZ (bilerek), ORCA/
    KriptoBeyan footer'larindaki AYNI class ile tutarli. */
 .text-traders-red {
   font-weight: 700;
@@ -200,4 +278,25 @@ body {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+.label-uppercase-on-light {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-on-light-secondary);
+}
+
+/* Small "YENİ / EL YAPIMI / SINIRLI ÜRETİM" style badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-olive);
+  background: var(--olive-700);
+  border: 1px solid var(--border-olive);
+  border-radius: var(--radius-xs);
 }

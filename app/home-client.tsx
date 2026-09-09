@@ -44,6 +44,32 @@ export function HomeClient() {
         </div>
       </section>
 
+      <section className="bg-warm-ivory py-16 md:py-24">
+        <div className="mx-auto max-w-[1440px] px-5 md:px-12 grid gap-10 sm:grid-cols-3 text-center sm:text-left">
+          {[
+            {
+              title: "El Yapımı",
+              body: "Her parça, usta ellerde tek tek şekillendirilir. Seri üretim değil, zanaat.",
+            },
+            {
+              title: "Sipariş Üzerine",
+              body: "Ürünler stoklamak için değil, siparişinize özel, özenle hazırlanır.",
+            },
+            {
+              title: "Özenle Paketlenir",
+              body: "Her sipariş, kırılmaya karşı özenle sarılıp elinize zarar görmeden ulaşır.",
+            },
+          ].map((item) => (
+            <div key={item.title}>
+              <p className="eyebrow-on-light">{item.title}</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-[color:var(--text-on-light-secondary)]">
+                {item.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="bg-onyx-800 py-16 md:py-24">
         <div className="mx-auto max-w-[1440px] px-5 md:px-12">
           <div className="mb-10 text-center">
