@@ -1,14 +1,33 @@
+"use client";
+
+import { useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/api";
 import type { Product } from "@/lib/types";
 
 export function ProductCard({ product }: { product: Product }) {
-  const image = product.images[0]?.url;
+  const [index, setIndex] = useState(0);
+  const images = product.images;
+  const image = images[index]?.url;
   const price = product.salePrice ?? product.price;
   const discountPct =
     product.salePrice && Number(product.price) > 0
       ? Math.round((1 - Number(product.salePrice) / Number(product.price)) * 100)
       : null;
+
+  function goPrev(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIndex((i) => Math.max(0, i - 1));
+  }
+  function goNext(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIndex((i) => Math.min(images.length - 1, i + 1));
+  }
+
+  const arrowClass =
+    "absolute top-1/2 z-10 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--ivory-50)]/90 text-ink shadow-[var(--shadow-sm)] opacity-100 transition-opacity duration-[180ms] md:opacity-0 md:group-hover:opacity-100";
 
   return (
     <Link
@@ -28,6 +47,20 @@ export function ProductCard({ product }: { product: Product }) {
           />
         ) : (
           <span className="text-sm text-stone-500">Görsel yok</span>
+        )}
+        {images.length > 1 && (
+          <>
+            {index > 0 && (
+              <button onClick={goPrev} aria-label="Önceki görsel" className={`${arrowClass} left-1.5`}>
+                ‹
+              </button>
+            )}
+            {index < images.length - 1 && (
+              <button onClick={goNext} aria-label="Sonraki görsel" className={`${arrowClass} right-1.5`}>
+                ›
+              </button>
+            )}
+          </>
         )}
       </div>
       <div className="p-4">

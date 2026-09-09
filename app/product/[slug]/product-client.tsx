@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { api, formatPrice } from "@/lib/api";
-import type { Product } from "@/lib/types";
+import type { Product, ProductListResponse } from "@/lib/types";
 import { getSalesStats } from "@/lib/sales-stats";
+import { parseProductDescription } from "@/lib/product-description";
+import { ProductCard } from "@/components/ProductCard";
 
 const TRUST_ITEMS = [
   {
@@ -64,6 +66,82 @@ function WeeklyTrendChart({ weekly }: { weekly: { day: string; value: number }[]
   );
 }
 
+type AccordionKey = "about" | "details" | "care";
+
+function AccordionSection({
+  title,
+  open,
+  onOpen,
+  children,
+}: {
+  title: string;
+  open: boolean;
+  onOpen: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <div className="border-b border-[var(--border-subtle)]">
+      <button onClick={onOpen} className="w-full flex items-center justify-between py-4 text-left">
+        <span className="label-uppercase">{title}</span>
+        <span
+          className="text-ash text-[16px] leading-none transition-transform duration-[180ms]"
+          style={{ transform: open ? "rotate(45deg)" : "rotate(0deg)" }}
+        >
+          +
+        </span>
+      </button>
+      <div className="accordion-panel" data-open={open}>
+        <div>
+          <div className="pb-5 text-[15px] leading-relaxed text-smoke">{children}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RelatedProducts({
+  categorySlug,
+  categoryLabel,
+  excludeId,
+}: {
+  categorySlug: string | undefined;
+  categoryLabel: string | undefined;
+  excludeId: string;
+}) {
+  const [data, setData] = useState<ProductListResponse | null>(null);
+
+  useEffect(() => {
+    if (!categorySlug) return;
+    api
+      .get<ProductListResponse>(`/products?category=${categorySlug}&pageSize=11`)
+      .then(setData)
+      .catch(() => setData(null));
+  }, [categorySlug]);
+
+  if (!categorySlug) return null;
+  const items = (data?.items ?? []).filter((p) => p.id !== excludeId).slice(0, 10);
+  if (items.length === 0) return null;
+
+  return (
+    <section className="mx-auto max-w-[1440px] px-5 md:px-12 pb-20 md:pb-28">
+      <div className="mb-8 border-t border-[var(--border-subtle)] pt-16 md:pt-20">
+        <p className="eyebrow-on-light">Keşfet</p>
+        <h2
+          className="mt-2 font-display text-[28px] md:text-[36px] font-normal text-ink"
+          style={{ lineHeight: 1.05 }}
+        >
+          Daha Fazla {categoryLabel}
+        </h2>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-5">
+        {items.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function ProductClient({ slug, initialProduct }: { slug: string; initialProduct: Product | null }) {
   const router = useRouter();
 
@@ -72,6 +150,12 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
   const [quantity, setQuantity] = useState(1);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [imageIndex, setImageIndex] = useState(0);
+  const [openSection, setOpenSection] = useState<AccordionKey>("about");
+
+  useEffect(() => {
+    setImageIndex(0);
+  }, [product?.id]);
 
   useEffect(() => {
     if (initialProduct) return; // sunucuda zaten alındı, tekrar çekmeye gerek yok
@@ -118,15 +202,58 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
       : null;
   const variantGroups = Array.from(new Set(product.variants.map((v) => v.name)));
   const stats = getSalesStats(product.id, product.createdAt);
+  const parsed = parseProductDescription(product);
+  const images = product.images;
 
   return (
+    <>
     <div className="mx-auto max-w-5xl px-5 md:px-12 py-16 md:py-24 grid md:grid-cols-2 gap-12 md:gap-16">
-      <div className="aspect-square bg-stone-100 rounded-sm overflow-hidden flex items-center justify-center">
-        {product.images[0] ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={product.images[0].url} alt={product.name} className="h-full w-full object-cover" />
-        ) : (
-          <span className="text-stone-500 text-sm">Görsel yok</span>
+      <div>
+        <div className="relative aspect-square bg-stone-100 rounded-sm overflow-hidden flex items-center justify-center">
+          {images[imageIndex] ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={images[imageIndex].url} alt={product.name} className="h-full w-full object-cover" />
+          ) : (
+            <span className="text-stone-500 text-sm">Görsel yok</span>
+          )}
+          {images.length > 1 && (
+            <>
+              {imageIndex > 0 && (
+                <button
+                  onClick={() => setImageIndex((i) => i - 1)}
+                  aria-label="Önceki görsel"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--ivory-50)]/90 text-ink shadow-[var(--shadow-sm)] hover:bg-[var(--ivory-50)] transition-colors duration-[180ms]"
+                >
+                  ‹
+                </button>
+              )}
+              {imageIndex < images.length - 1 && (
+                <button
+                  onClick={() => setImageIndex((i) => i + 1)}
+                  aria-label="Sonraki görsel"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--ivory-50)]/90 text-ink shadow-[var(--shadow-sm)] hover:bg-[var(--ivory-50)] transition-colors duration-[180ms]"
+                >
+                  ›
+                </button>
+              )}
+            </>
+          )}
+        </div>
+        {images.length > 1 && (
+          <div className="mt-3 flex justify-center gap-2">
+            {images.map((img, i) => (
+              <button
+                key={img.id}
+                onClick={() => setImageIndex(i)}
+                aria-label={`${i + 1}. görsel`}
+                className="h-1.5 rounded-full transition-all duration-[180ms]"
+                style={{
+                  width: i === imageIndex ? "20px" : "6px",
+                  background: i === imageIndex ? "var(--champagne-300)" : "var(--border-subtle)",
+                }}
+              />
+            ))}
+          </div>
         )}
       </div>
 
@@ -144,10 +271,23 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
           {product.salePrice && <span className="text-dim line-through">{formatPrice(product.price)}</span>}
         </div>
 
-        {product.description && (
-          <p className="mt-6 text-[15px] leading-relaxed text-smoke whitespace-pre-line">{product.description}</p>
-        )}
-        {product.productionTime && <p className="mt-3 text-sm text-ash">Üretim: {product.productionTime}</p>}
+        <div className="mt-8 border-t border-[var(--border-subtle)]">
+          <AccordionSection title="Hakkında" open={openSection === "about"} onOpen={() => setOpenSection("about")}>
+            <p className="whitespace-pre-line">{parsed.about}</p>
+          </AccordionSection>
+          {parsed.details.length > 0 && (
+            <AccordionSection title="Detaylar" open={openSection === "details"} onOpen={() => setOpenSection("details")}>
+              <ul className="space-y-1.5">
+                {parsed.details.map((line, i) => (
+                  <li key={i}>{line}</li>
+                ))}
+              </ul>
+            </AccordionSection>
+          )}
+          <AccordionSection title="Bakım" open={openSection === "care"} onOpen={() => setOpenSection("care")}>
+            <p>{parsed.care}</p>
+          </AccordionSection>
+        </div>
 
         {variantGroups.map((groupName) => (
           <div key={groupName} className="mt-6">
@@ -230,5 +370,12 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
         </div>
       </div>
     </div>
+
+    <RelatedProducts
+      categorySlug={product.category?.slug}
+      categoryLabel={product.category?.name}
+      excludeId={product.id}
+    />
+    </>
   );
 }

@@ -386,3 +386,15 @@ body {
   background: var(--charcoal-700);
   border-radius: var(--radius-xs);
 }
+
+/* Single-open accordion panel (product detail Hakkında/Detaylar/Bakım) —
+   max-height transition, capped generously above any realistic content
+   height so real text never gets clipped while still animating smoothly. */
+.accordion-panel > div {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-slow) var(--ease-luxury);
+}
+.accordion-panel[data-open="true"] > div {
+  max-height: 640px;
+}
