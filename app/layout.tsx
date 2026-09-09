@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#11130D",
+  themeColor: "#FAF9F6",
 };
 
 const ORGANIZATION_JSON_LD = {
@@ -142,24 +142,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
         <main className="flex-1 bg-onyx-900">{children}</main>
 
-        <footer className="bg-onyx-950 border-t border-[var(--border-subtle)] mt-32">
+        <footer className="bg-onyx-950 border-t border-[var(--border-light)] mt-32">
           <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 grid gap-10 md:grid-cols-[1.2fr_2fr]">
             <div>
               <Image src="/logo.png" alt="Zesta" width={2172} height={724} className="h-7 w-auto" />
-              <p className="mt-4 text-sm text-stone-400 max-w-xs leading-relaxed">
+              <p className="mt-4 text-sm text-stone-300 max-w-xs leading-relaxed">
                 El emeği, özenle hazırlanmış ürünler. Her parça elde, sipariş üzerine üretilir.
               </p>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
               <div>
-                <div className="label-uppercase mb-4">Mağaza</div>
+                <div className="label-uppercase-on-dark mb-4">Mağaza</div>
                 <div className="flex flex-col gap-3 text-sm">
                   {FOOTER_LINKS.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="text-stone-400 hover:text-ink transition-colors duration-[180ms]"
+                      className="text-mist-200 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]"
                     >
                       {link.label}
                     </Link>
@@ -168,13 +168,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               </div>
 
               <div>
-                <div className="label-uppercase mb-4">Yasal</div>
+                <div className="label-uppercase-on-dark mb-4">Yasal</div>
                 <div className="flex flex-col gap-3 text-sm">
                   {LEGAL_LINKS.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="text-stone-400 hover:text-ink transition-colors duration-[180ms]"
+                      className="text-mist-200 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]"
                     >
                       {link.label}
                     </Link>
@@ -184,10 +184,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </div>
           </div>
 
-          <div className="border-t border-[var(--border-subtle)]">
-            <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-6 flex flex-col items-center gap-3 text-xs leading-relaxed text-stone-600 sm:flex-row sm:justify-between">
+          <div className="border-t border-[var(--border-light)]">
+            <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-6 flex flex-col items-center gap-3 text-xs leading-relaxed text-charcoal-200 sm:flex-row sm:justify-between">
               <p>{renderCopyrightWithBrandHighlight(copyrightText)}</p>
-              <a href="/sitemap.xml" className="hover:text-stone-400 transition-colors duration-[180ms]">
+              <a href="/sitemap.xml" className="hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
                 Site Haritası
               </a>
             </div>

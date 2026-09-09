@@ -98,7 +98,7 @@ export default function CartPage() {
 
       <Link
         href="/checkout"
-        className="mt-8 flex h-12 items-center justify-center rounded-xs bg-ivory text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke"
+        className="mt-8 flex h-12 items-center justify-center rounded-xs bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
         style={{ letterSpacing: "0.1em" }}
       >
         ÖDEMEYE GEÇ

@@ -179,7 +179,7 @@ export default function AdminProductsPage() {
             <button
               onClick={submit}
               disabled={busy}
-              className="h-11 rounded-xs bg-ivory px-6 text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke disabled:opacity-40"
+              className="h-11 rounded-xs bg-charcoal-700 px-6 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
               style={{ letterSpacing: "0.1em" }}
             >
               {form.id ? "GÜNCELLE" : "EKLE"}

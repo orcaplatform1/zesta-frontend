@@ -18,7 +18,7 @@ export function HomeClient() {
       <section
         className="grain relative flex min-h-[620px] md:min-h-[680px] items-center justify-center text-center overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, var(--onyx-900) 0%, var(--onyx-800) 55%, var(--onyx-700) 100%)",
+          background: "linear-gradient(180deg, var(--ivory-50) 0%, var(--ivory-200) 55%, var(--mist-200) 100%)",
         }}
       >
         <div className="mx-auto max-w-3xl px-5">
@@ -36,7 +36,7 @@ export function HomeClient() {
           </p>
           <Link
             href="/shop"
-            className="mt-10 inline-flex h-12 items-center justify-center rounded-xs bg-ivory px-7 text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke"
+            className="mt-10 inline-flex h-12 items-center justify-center rounded-xs bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
             style={{ letterSpacing: "0.1em" }}
           >
             ÜRÜNLERİ KEŞFET

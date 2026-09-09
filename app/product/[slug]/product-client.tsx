@@ -96,8 +96,8 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
                       className="rounded-xs border px-4 py-2 text-sm transition-colors duration-[180ms]"
                       style={{
                         borderColor: selected ? "var(--border-accent)" : "var(--border-subtle)",
-                        color: selected ? "var(--champagne-200)" : "var(--text-secondary)",
-                        background: selected ? "var(--onyx-600)" : "transparent",
+                        color: selected ? "var(--text-on-dark)" : "var(--text-secondary)",
+                        background: selected ? "var(--champagne-300)" : "transparent",
                       }}
                     >
                       {v.value}
@@ -120,7 +120,7 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
           <button
             onClick={addToCart}
             disabled={busy || availableStock <= 0}
-            className="flex-1 h-12 rounded-xs bg-ivory text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke disabled:opacity-40"
+            className="flex-1 h-12 rounded-xs bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
             style={{ letterSpacing: "0.1em" }}
           >
             {availableStock <= 0 ? "TÜKENDİ" : busy ? "EKLENİYOR..." : "SEPETE EKLE"}

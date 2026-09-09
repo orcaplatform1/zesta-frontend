@@ -114,7 +114,7 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
         <button
           type="submit"
           disabled={busy}
-          className="w-full h-12 rounded-xs bg-ivory text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke disabled:opacity-40"
+          className="w-full h-12 rounded-xs bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
           style={{ letterSpacing: "0.1em" }}
         >
           {busy ? "..." : mode === "login" ? "GİRİŞ YAP" : "ÜYE OL"}

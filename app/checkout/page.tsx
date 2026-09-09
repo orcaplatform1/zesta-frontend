@@ -83,7 +83,7 @@ export default function CheckoutPage() {
         </p>
         <Link
           href="/account"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-xs bg-ivory px-7 text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke"
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-xs bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
           style={{ letterSpacing: "0.1em" }}
         >
           GİRİŞ YAP / ÜYE OL
@@ -117,7 +117,7 @@ export default function CheckoutPage() {
         <button
           type="submit"
           disabled={busy}
-          className="w-full h-12 rounded-xs bg-ivory text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke disabled:opacity-40"
+          className="w-full h-12 rounded-xs bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
           style={{ letterSpacing: "0.1em" }}
         >
           {busy ? "GÖNDERİLİYOR..." : "SİPARİŞİ TAMAMLA"}

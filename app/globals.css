@@ -1,100 +1,134 @@
 @import "tailwindcss";
 
 /* ============================================================
-   ZESTA — OLIVE Design System (v03)
-   Minimalist / premium / organic / artisanal / editorial luxury.
-   Olive-green-led palette balanced with warm stone + warm ivory,
-   muted champagne used only for small accent details.
+   ZESTA — MIST BLUE & STONE Design System (Palette 03)
+   Minimalist / premium / calm / editorial / artisanal.
+   Light, airy, "light editorial artisan boutique" — the page is
+   bright by default (mist blue + stone/greige + ivory), dark
+   charcoal is used only for real contrast sections (footer).
+   Replaces the previous OLIVE (v03) system.
    ============================================================ */
 :root {
-  /* Olive scale — primary hue of the system */
-  --olive-950: #11130d;
-  --olive-900: #181a11;
-  --olive-850: #202217;
-  --olive-800: #292b1c;
-  --olive-700: #343624;
-  --olive-600: #41432d;
-  --olive-500: #50523a;
-  --olive-400: #666a4c;
-  --olive-300: #7e8363;
-  --olive-200: #9ca184;
-  --olive-100: #c3c5af;
-  --olive-50: #e6e6db;
+  /* Mist blue scale — primary accent hue */
+  --mist-950: #26383d;
+  --mist-900: #30484e;
+  --mist-800: #405c63;
+  --mist-700: #506a70;
+  --mist-600: #60777c;
+  --mist-500: #72898d;
+  --mist-400: #91a5a8;
+  --mist-300: #afc0c2;
+  --mist-200: #cbd7d8;
+  --mist-100: #e0e8e9;
+  --mist-50: #f0f4f4;
 
-  /* Deepest, below the olive scale — used only for footer / deep sections */
-  --deep-section: #0e100b;
+  /* Stone / greige scale */
+  --stone-950: #35322d;
+  --stone-900: #4a4741;
+  --stone-800: #625f58;
+  --stone-700: #77736b;
+  --stone-600: #918c83;
+  --stone-500: #aaa59c;
+  --stone-400: #beb9af;
+  --stone-300: #ccc7bd;
+  --stone-200: #ddd9d0;
+  --stone-100: #ece9e2;
+  --stone-50: #f5f3ee;
 
-  /* Earth / dark-olive-brown tones — backgrounds, cards, overlays, borders */
-  --earth-950: #110e04;
-  --earth-900: #231e0d;
-  --earth-800: #2e2a1a;
-  --earth-700: #383322;
-  --earth-600: #463f2c;
-  --earth-500: #584d37;
-  --earth-400: #6d5f45;
-  --earth-300: #857356;
-  --earth-200: #998c70;
+  /* Ivory / porcelain scale */
+  --ivory-950: #35332f;
+  --ivory-900: #504d47;
+  --ivory-800: #69665f;
+  --ivory-700: #858179;
+  --ivory-600: #a19d94;
+  --ivory-500: #bdb8ae;
+  --ivory-400: #d5d1c8;
+  --ivory-300: #e4e1d9;
+  --ivory-200: #f3f1eb;
+  --ivory-100: #f7f5f0;
+  --ivory-50: #faf9f6;
+
+  /* Charcoal scale — dark contrast sections only */
+  --charcoal-950: #202527;
+  --charcoal-900: #282e30;
+  --charcoal-800: #303638;
+  --charcoal-700: #353b3d;
+  --charcoal-600: #454c4e;
+  --charcoal-500: #5a6264;
+  --charcoal-400: #70787a;
+  --charcoal-300: #899193;
+  --charcoal-200: #aab1b2;
+  --charcoal-100: #d2d6d6;
 
   /* Legacy "onyx" alias scale — kept so existing bg-onyx-* / text-onyx-*
-     utility classes across the app keep working, now resolving to OLIVE
-     roles: 950=deep section, 900=page bg, 800=primary dark,
-     700=secondary surface, 600=card, 500=elevated card, 400=image section. */
-  --onyx-950: var(--deep-section);
-  --onyx-900: var(--olive-950);
-  --onyx-800: var(--olive-900);
-  --onyx-700: var(--olive-850);
-  --onyx-600: var(--olive-800);
-  --onyx-500: var(--olive-700);
-  --onyx-400: var(--olive-600);
+     utility classes across the app keep working, now resolving to the
+     MIST BLUE & STONE surface roles: 950=dark section (footer), 900=main
+     page bg, 800=primary light surface, 700=secondary/stone surface,
+     600=elevated/selected surface, 500/400=further light surfaces. */
+  --onyx-950: var(--charcoal-700);
+  --onyx-900: var(--ivory-50);
+  --onyx-800: var(--ivory-200);
+  --onyx-700: var(--ivory-50);
+  --onyx-600: var(--mist-200);
+  --onyx-500: var(--stone-100);
+  --onyx-400: var(--stone-200);
 
-  /* Warm stone scale */
-  --stone-50: #f5f1e9;
-  --stone-100: #e8e1d7;
-  --stone-200: #d6cec1;
-  --stone-300: #c1b7a8;
-  --stone-400: #a79d8e;
-  --stone-500: #8b8171;
-  --stone-600: #71695c;
-  --stone-700: #585147;
-  --stone-800: #3e3a32;
-  --stone-900: #292721;
+  /* Ivory / cream singles (legacy) */
+  --ivory: var(--ivory-50);
+  --cream: var(--ivory-100);
+  --warm-ivory: var(--stone-200);
 
-  /* Warm ivory / cream */
-  --ivory: #f1eee6;
-  --cream: #f7f3ec;
-  --warm-ivory: #ebe0d0;
+  /* Legacy "champagne" accent alias — repointed to the mist-blue accent
+     scale (this system's only accent hue; no gold/champagne remains). */
+  --champagne-100: var(--mist-200);
+  --champagne-200: var(--mist-300);
+  --champagne-300: var(--mist-800);
+  --champagne-400: var(--mist-900);
+  --champagne-500: var(--mist-950);
 
-  /* Muted champagne accent — small details only, never bright/metallic gold */
-  --champagne-100: #e8ded0;
-  --champagne-200: #d5c6b3;
-  --champagne-300: #b9a58d;
-  --champagne-400: #9d896f;
-  --champagne-500: #806d57;
+  /* Text */
+  --text-primary: #353b3d;
+  --text-strong: #26383d;
+  --text-secondary: #60777c;
+  --text-muted: #778487;
+  --text-soft: #91a5a8;
+  --text-disabled: #aab1b2;
+  --text-on-dark: #faf9f6;
+  --text-olive: var(--mist-800);
+  --text-champagne: var(--mist-800);
 
-  /* Text (on dark) */
-  --text-primary: #f1eee6;
-  --text-secondary: #d6d0c7;
-  --text-muted: #a8a69a;
-  --text-disabled: #747266;
-  --text-olive: #c3c5af;
-  --text-champagne: #b9a58d;
+  /* Legacy on-light aliases — now identical to the defaults since the
+     whole site is light-led, kept so pre-existing markup keeps working. */
+  --text-on-light-primary: var(--text-primary);
+  --text-on-light-secondary: var(--text-secondary);
 
-  /* Text (on light / açık sections) */
-  --text-on-light-primary: #292721;
-  --text-on-light-secondary: #585147;
+  /* Background roles */
+  --bg-primary: #faf9f6;
+  --bg-secondary: #f3f1eb;
+  --bg-stone: #ddd9d0;
+  --bg-blue: #cbd7d8;
+  --bg-mist: #91a5a8;
+  --bg-dark: #353b3d;
+  --bg-deep: #26383d;
+  --bg-blue-dark: #405c63;
 
   /* Borders */
-  --border-subtle: rgba(241, 238, 230, 0.1);
-  --border-hover: rgba(241, 238, 230, 0.18);
-  --border-accent: rgba(185, 165, 141, 0.45);
-  --border-accent-soft: rgba(185, 165, 141, 0.25);
-  --border-olive: rgba(195, 197, 175, 0.28);
-  --border-on-light: rgba(41, 39, 33, 0.12);
+  --border-subtle: rgba(53, 59, 61, 0.08);
+  --border-default: rgba(53, 59, 61, 0.12);
+  --border-hover: rgba(53, 59, 61, 0.22);
+  --border-strong: rgba(53, 59, 61, 0.3);
+  --border-blue: rgba(64, 92, 99, 0.25);
+  --border-accent: rgba(64, 92, 99, 0.45);
+  --border-accent-soft: rgba(64, 92, 99, 0.25);
+  --border-olive: rgba(64, 92, 99, 0.2);
+  --border-light: rgba(250, 249, 246, 0.2);
+  --border-on-light: var(--border-default);
 
-  /* Shadows — always soft */
-  --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.18);
-  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.22);
-  --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.4);
+  /* Shadows — soft, charcoal-tinted (not pure black) */
+  --shadow-sm: 0 10px 30px rgba(53, 59, 61, 0.08);
+  --shadow-md: 0 15px 40px rgba(53, 59, 61, 0.1);
+  --shadow-lg: 0 20px 50px rgba(53, 59, 61, 0.12);
+  --shadow-xl: 0 30px 80px rgba(53, 59, 61, 0.18);
 
   /* Radius — sharp, editorial, never rounded like SaaS */
   --radius-xs: 2px;
@@ -109,40 +143,69 @@
   --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Semantic status — muted, never traffic-light colors */
-  --status-success: #a8b09a;
-  --status-success-bg: rgba(168, 176, 154, 0.1);
-  --status-error: #b58d87;
-  --status-error-bg: rgba(181, 141, 135, 0.1);
-  --status-warning: #b9a58d;
-  --status-warning-bg: rgba(185, 165, 141, 0.1);
+  --status-success: #60776c;
+  --status-success-bg: rgba(96, 119, 108, 0.1);
+  --status-error: #9b716d;
+  --status-error-bg: rgba(155, 113, 109, 0.1);
+  --status-warning: #8c8067;
+  --status-warning-bg: rgba(140, 128, 103, 0.1);
+  --status-info: #60777c;
+  --status-info-bg: rgba(96, 119, 124, 0.1);
+
+  --font-display: "Bodoni Moda", "Cormorant Garamond", serif;
+  --font-body: "Inter", sans-serif;
 }
 
 @theme inline {
   --font-display: "Bodoni Moda", "Cormorant Garamond", serif;
   --font-sans: var(--font-inter), Inter, sans-serif;
 
-  --color-olive-950: var(--olive-950);
-  --color-olive-900: var(--olive-900);
-  --color-olive-850: var(--olive-850);
-  --color-olive-800: var(--olive-800);
-  --color-olive-700: var(--olive-700);
-  --color-olive-600: var(--olive-600);
-  --color-olive-500: var(--olive-500);
-  --color-olive-400: var(--olive-400);
-  --color-olive-300: var(--olive-300);
-  --color-olive-200: var(--olive-200);
-  --color-olive-100: var(--olive-100);
-  --color-olive-50: var(--olive-50);
+  --color-mist-950: var(--mist-950);
+  --color-mist-900: var(--mist-900);
+  --color-mist-800: var(--mist-800);
+  --color-mist-700: var(--mist-700);
+  --color-mist-600: var(--mist-600);
+  --color-mist-500: var(--mist-500);
+  --color-mist-400: var(--mist-400);
+  --color-mist-300: var(--mist-300);
+  --color-mist-200: var(--mist-200);
+  --color-mist-100: var(--mist-100);
+  --color-mist-50: var(--mist-50);
 
-  --color-earth-950: var(--earth-950);
-  --color-earth-900: var(--earth-900);
-  --color-earth-800: var(--earth-800);
-  --color-earth-700: var(--earth-700);
-  --color-earth-600: var(--earth-600);
-  --color-earth-500: var(--earth-500);
-  --color-earth-400: var(--earth-400);
-  --color-earth-300: var(--earth-300);
-  --color-earth-200: var(--earth-200);
+  --color-stone-950: var(--stone-950);
+  --color-stone-900: var(--stone-900);
+  --color-stone-800: var(--stone-800);
+  --color-stone-700: var(--stone-700);
+  --color-stone-600: var(--stone-600);
+  --color-stone-500: var(--stone-500);
+  --color-stone-400: var(--stone-400);
+  --color-stone-300: var(--stone-300);
+  --color-stone-200: var(--stone-200);
+  --color-stone-100: var(--stone-100);
+  --color-stone-50: var(--stone-50);
+
+  --color-ivory-950: var(--ivory-950);
+  --color-ivory-900: var(--ivory-900);
+  --color-ivory-800: var(--ivory-800);
+  --color-ivory-700: var(--ivory-700);
+  --color-ivory-600: var(--ivory-600);
+  --color-ivory-500: var(--ivory-500);
+  --color-ivory-400: var(--ivory-400);
+  --color-ivory-300: var(--ivory-300);
+  --color-ivory-200: var(--ivory-200);
+  --color-ivory-100: var(--ivory-100);
+  --color-ivory-50: var(--ivory-50);
+
+  --color-charcoal-950: var(--charcoal-950);
+  --color-charcoal-900: var(--charcoal-900);
+  --color-charcoal-800: var(--charcoal-800);
+  --color-charcoal-700: var(--charcoal-700);
+  --color-charcoal-600: var(--charcoal-600);
+  --color-charcoal-500: var(--charcoal-500);
+  --color-charcoal-400: var(--charcoal-400);
+  --color-charcoal-300: var(--charcoal-300);
+  --color-charcoal-200: var(--charcoal-200);
+  --color-charcoal-100: var(--charcoal-100);
 
   --color-onyx-950: var(--onyx-950);
   --color-onyx-900: var(--onyx-900);
@@ -151,17 +214,6 @@
   --color-onyx-600: var(--onyx-600);
   --color-onyx-500: var(--onyx-500);
   --color-onyx-400: var(--onyx-400);
-
-  --color-stone-50: var(--stone-50);
-  --color-stone-100: var(--stone-100);
-  --color-stone-200: var(--stone-200);
-  --color-stone-300: var(--stone-300);
-  --color-stone-400: var(--stone-400);
-  --color-stone-500: var(--stone-500);
-  --color-stone-600: var(--stone-600);
-  --color-stone-700: var(--stone-700);
-  --color-stone-800: var(--stone-800);
-  --color-stone-900: var(--stone-900);
 
   --color-ivory: var(--ivory);
   --color-cream: var(--cream);
@@ -184,6 +236,8 @@
 
   --color-success: var(--status-success);
   --color-error: var(--status-error);
+  --color-warning: var(--status-warning);
+  --color-info: var(--status-info);
 
   --radius-xs: var(--radius-xs);
   --radius-sm: var(--radius-sm);
@@ -212,7 +266,7 @@ body {
 
 ::selection {
   background: var(--champagne-300);
-  color: var(--olive-900);
+  color: var(--text-on-dark);
 }
 
 /* Minimal scrollbar */
@@ -221,17 +275,18 @@ body {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--olive-950);
+  background: var(--ivory-200);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--olive-700);
+  background: var(--mist-200);
   border-radius: var(--radius-sm);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--stone-700);
+  background: var(--mist-400);
 }
 
-/* Faint paper-grain texture, used sparingly on hero/dark sections */
+/* Faint paper-grain texture, used sparingly on hero/dark sections.
+   Kept barely visible per spec (opacity 0.02-0.035 max). */
 .grain {
   position: relative;
 }
@@ -240,8 +295,8 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
+  opacity: 0.03;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -262,7 +317,7 @@ body {
 }
 
 /* Footer'daki "Traders.TR" marka gecisi icin — duz (premium/glow olmadan)
-   kirmizi ve beyaz. Sitenin OLIVE paletinden BAGIMSIZ (bilerek), ORCA/
+   kirmizi ve beyaz. Sitenin paletinden BAGIMSIZ (bilerek), ORCA/
    KriptoBeyan footer'larindaki AYNI class ile tutarli. */
 .text-traders-red {
   font-weight: 700;
@@ -285,8 +340,15 @@ body {
   text-transform: uppercase;
   color: var(--text-on-light-secondary);
 }
+/* Dark-section (footer) variant — the one place this design stays dark */
+.label-uppercase-on-dark {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+}
 
-/* Small "YENİ / EL YAPIMI / SINIRLI ÜRETİM" style badge */
+/* Small "EL YAPIMI / YENİ / SINIRLI ÜRETİM" style badge */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -295,8 +357,18 @@ body {
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--text-olive);
-  background: var(--olive-700);
+  color: var(--mist-800);
+  background: var(--ivory-200);
   border: 1px solid var(--border-olive);
   border-radius: var(--radius-xs);
+}
+.badge-new {
+  color: var(--text-strong);
+  background: var(--mist-200);
+  border-color: var(--border-blue);
+}
+.badge-limited {
+  color: var(--text-primary);
+  background: var(--bg-stone);
+  border-color: var(--border-strong);
 }
