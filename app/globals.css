@@ -183,6 +183,18 @@ body {
   color: var(--text-muted);
 }
 
+/* Footer'daki "Traders.TR" marka gecisi icin — duz (premium/glow olmadan)
+   kirmizi ve beyaz. Sitenin ONYX paletinden BAGIMSIZ (bilerek), ORCA/
+   KriptoBeyan footer'larindaki AYNI class ile tutarli. */
+.text-traders-red {
+  font-weight: 700;
+  color: #dc2626;
+}
+.text-traders-white {
+  font-weight: 700;
+  color: #ffffff;
+}
+
 .label-uppercase {
   font-size: 11px;
   letter-spacing: 0.16em;
