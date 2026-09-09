@@ -118,7 +118,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 width={2172}
                 height={724}
                 priority
-                className="h-8 md:h-9 w-auto"
+                unoptimized
+                className="h-10 md:h-14 w-auto"
               />
             </Link>
             <nav
@@ -145,7 +146,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <footer className="bg-onyx-950 border-t border-[var(--border-light)] mt-32">
           <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 grid gap-10 md:grid-cols-[1.2fr_2fr]">
             <div>
-              <Image src="/logo.png" alt="Zesta" width={2172} height={724} className="h-7 w-auto" />
+              <Image src="/logo.png" alt="Zesta" width={2172} height={724} unoptimized className="h-12 md:h-16 w-auto" />
               <p className="mt-4 text-sm text-stone-300 max-w-xs leading-relaxed">
                 El emeği, özenle hazırlanmış ürünler. Her parça elde, sipariş üzerine üretilir.
               </p>
