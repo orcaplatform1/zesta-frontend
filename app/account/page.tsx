@@ -23,7 +23,7 @@ export default function AccountPage() {
 
   useEffect(loadMe, []);
 
-  if (me === undefined) return <div className="mx-auto max-w-md px-4 py-16 text-neutral-500">Yükleniyor...</div>;
+  if (me === undefined) return <div className="mx-auto max-w-md px-5 py-24 text-sm text-ash">Yükleniyor...</div>;
   if (me) return <ProfileView me={me} onLogout={() => setMe(null)} />;
   return <AuthForms onAuthed={loadMe} />;
 }
@@ -35,15 +35,15 @@ function ProfileView({ me, onLogout }: { me: Me; onLogout: () => void }) {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-16">
-      <h1 className="text-2xl font-semibold mb-6">Hesabım</h1>
-      <p className="text-sm text-neutral-600">Ad Soyad: {me.name}</p>
-      <p className="text-sm text-neutral-600">E-posta: {me.email}</p>
-      <div className="mt-6 flex flex-col gap-2">
-        <Link href="/account/orders" className="underline text-sm">
+    <div className="mx-auto max-w-md px-5 py-24">
+      <h1 className="font-display text-[32px] font-normal text-ink mb-8">Hesabım</h1>
+      <p className="text-sm text-smoke">Ad Soyad: {me.name}</p>
+      <p className="mt-1 text-sm text-smoke">E-posta: {me.email}</p>
+      <div className="mt-8 flex flex-col gap-3">
+        <Link href="/account/orders" className="text-sm text-champagne-300 underline">
           Siparişlerim
         </Link>
-        <button onClick={logout} className="text-left text-sm text-red-600 underline">
+        <button onClick={logout} className="text-left text-sm text-dim hover:text-ink transition-colors duration-[180ms]">
           Çıkış yap
         </button>
       </div>
@@ -75,17 +75,22 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
     }
   }
 
+  const inputClass =
+    "w-full h-12 rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]";
+
   return (
-    <div className="mx-auto max-w-sm px-4 py-16">
-      <h1 className="text-2xl font-semibold mb-6">{mode === "login" ? "Giriş Yap" : "Üye Ol"}</h1>
-      <form onSubmit={submit} className="space-y-4">
+    <div className="mx-auto max-w-sm px-5 py-24">
+      <h1 className="font-display text-[32px] font-normal text-ink mb-8">
+        {mode === "login" ? "Giriş Yap" : "Üye Ol"}
+      </h1>
+      <form onSubmit={submit} className="space-y-3">
         {mode === "register" && (
           <input
             placeholder="Ad Soyad"
             required
             value={form.name}
             onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-            className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+            className={inputClass}
           />
         )}
         <input
@@ -94,7 +99,7 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
           required
           value={form.email}
           onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-          className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+          className={inputClass}
         />
         <input
           type="password"
@@ -103,24 +108,25 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
           minLength={8}
           value={form.password}
           onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
-          className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+          className={inputClass}
         />
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-[var(--status-error)]">{error}</p>}
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-full bg-neutral-900 text-white px-6 py-2.5 text-sm font-medium disabled:opacity-50"
+          className="w-full h-12 rounded-xs bg-ivory text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke disabled:opacity-40"
+          style={{ letterSpacing: "0.1em" }}
         >
-          {busy ? "..." : mode === "login" ? "Giriş Yap" : "Üye Ol"}
+          {busy ? "..." : mode === "login" ? "GİRİŞ YAP" : "ÜYE OL"}
         </button>
       </form>
       <button
         onClick={() => setMode(mode === "login" ? "register" : "login")}
-        className="mt-4 text-sm underline text-neutral-600"
+        className="mt-5 text-sm text-smoke hover:text-ink underline transition-colors duration-[180ms]"
       >
         {mode === "login" ? "Hesabın yok mu? Üye ol" : "Zaten üye misin? Giriş yap"}
       </button>
-      <p className="mt-6 text-xs text-neutral-400">Üye olmadan da misafir olarak alışveriş yapabilirsiniz.</p>
+      <p className="mt-6 text-xs text-dim">Üye olmadan da misafir olarak alışveriş yapabilirsiniz.</p>
     </div>
   );
 }

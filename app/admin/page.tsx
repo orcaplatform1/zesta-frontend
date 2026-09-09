@@ -19,28 +19,28 @@ export default function AdminDashboardPage() {
     api.get<Dashboard>("/admin/dashboard").then(setData).catch(() => setData(null));
   }, []);
 
-  if (!data) return <p className="text-neutral-500 text-sm">Yükleniyor...</p>;
+  if (!data) return <p className="text-sm text-ash">Yükleniyor...</p>;
 
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
         <Stat label="Bugünkü Satış" value={formatPrice(data.todaySales)} />
         <Stat label="Bugünkü Sipariş" value={String(data.todayOrders)} />
         <Stat label="Toplam Satış" value={formatPrice(data.totalSales)} />
         <Stat label="Toplam Sipariş" value={String(data.totalOrders)} />
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-10">
         <div>
-          <h2 className="font-semibold mb-3">Düşük Stoklu Ürünler</h2>
+          <h2 className="label-uppercase mb-4">Düşük Stoklu Ürünler</h2>
           {data.lowStockProducts.length === 0 ? (
-            <p className="text-sm text-neutral-500">Yok</p>
+            <p className="text-sm text-ash">Yok</p>
           ) : (
-            <ul className="text-sm space-y-1">
+            <ul className="text-sm space-y-2">
               {data.lowStockProducts.map((p) => (
-                <li key={p.id} className="flex justify-between">
-                  <span>{p.name}</span>
-                  <span className="text-red-600">{p.stock}</span>
+                <li key={p.id} className="flex justify-between border-b border-[var(--border-subtle)] pb-2">
+                  <span className="text-smoke">{p.name}</span>
+                  <span className="text-champagne-300">{p.stock}</span>
                 </li>
               ))}
             </ul>
@@ -48,17 +48,17 @@ export default function AdminDashboardPage() {
         </div>
 
         <div>
-          <h2 className="font-semibold mb-3">Son Siparişler</h2>
+          <h2 className="label-uppercase mb-4">Son Siparişler</h2>
           {data.recentOrders.length === 0 ? (
-            <p className="text-sm text-neutral-500">Yok</p>
+            <p className="text-sm text-ash">Yok</p>
           ) : (
-            <ul className="text-sm space-y-1">
+            <ul className="text-sm space-y-2">
               {data.recentOrders.map((o) => (
-                <li key={o.id} className="flex justify-between">
-                  <span>
+                <li key={o.id} className="flex justify-between border-b border-[var(--border-subtle)] pb-2">
+                  <span className="text-smoke">
                     {o.orderNumber} — {o.fullName}
                   </span>
-                  <span>{formatPrice(o.total)}</span>
+                  <span className="text-ink">{formatPrice(o.total)}</span>
                 </li>
               ))}
             </ul>
@@ -71,9 +71,9 @@ export default function AdminDashboardPage() {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border border-neutral-200 rounded-lg p-4">
-      <div className="text-xs text-neutral-500">{label}</div>
-      <div className="text-xl font-semibold mt-1">{value}</div>
+    <div className="border border-[var(--border-subtle)] rounded-sm bg-onyx-700 p-5">
+      <div className="label-uppercase">{label}</div>
+      <div className="mt-2 font-display text-2xl font-normal text-ink">{value}</div>
     </div>
   );
 }

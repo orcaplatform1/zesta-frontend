@@ -8,7 +8,7 @@ import type { Order } from "@/lib/types";
 
 export default function OrderSuccessPage() {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-xl px-4 py-16 text-neutral-500">Yükleniyor...</div>}>
+    <Suspense fallback={<div className="mx-auto max-w-xl px-5 py-24 text-sm text-ash">Yükleniyor...</div>}>
       <OrderSuccessContent />
     </Suspense>
   );
@@ -31,13 +31,13 @@ function OrderSuccessContent() {
       .catch(() => setOrder(null));
   }, [orderNumber, email]);
 
-  if (order === undefined) return <div className="mx-auto max-w-xl px-4 py-16 text-neutral-500">Yükleniyor...</div>;
+  if (order === undefined) return <div className="mx-auto max-w-xl px-5 py-24 text-sm text-ash">Yükleniyor...</div>;
 
   if (!order) {
     return (
-      <div className="mx-auto max-w-xl px-4 py-16 text-center">
-        <p>Sipariş bulunamadı.</p>
-        <Link href="/shop" className="mt-4 inline-block underline text-sm">
+      <div className="mx-auto max-w-xl px-5 py-24 text-center">
+        <p className="text-smoke">Sipariş bulunamadı.</p>
+        <Link href="/shop" className="mt-5 inline-block text-sm text-champagne-300 underline">
           Alışverişe devam et
         </Link>
       </div>
@@ -45,26 +45,27 @@ function OrderSuccessContent() {
   }
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-16 text-center">
-      <h1 className="text-2xl font-semibold">Siparişiniz Alındı 🎉</h1>
-      <p className="mt-2 text-neutral-600">Sipariş No: {order.orderNumber}</p>
+    <div className="mx-auto max-w-xl px-5 py-24 text-center">
+      <p className="label-uppercase text-champagne-300">Teşekkürler</p>
+      <h1 className="mt-3 font-display text-[32px] md:text-[40px] font-normal text-ink">Siparişiniz Alındı</h1>
+      <p className="mt-3 text-smoke">Sipariş No: {order.orderNumber}</p>
 
-      <div className="mt-8 text-left border border-neutral-200 rounded-lg divide-y divide-neutral-200">
+      <div className="mt-10 text-left border border-[var(--border-subtle)] rounded-sm bg-onyx-700 divide-y divide-[var(--border-subtle)]">
         {order.items.map((item) => (
-          <div key={item.id} className="flex justify-between px-4 py-3 text-sm">
+          <div key={item.id} className="flex justify-between px-5 py-3.5 text-sm text-smoke">
             <span>
               {item.productName} × {item.quantity}
             </span>
-            <span>{formatPrice(item.totalPrice)}</span>
+            <span className="text-ink">{formatPrice(item.totalPrice)}</span>
           </div>
         ))}
-        <div className="flex justify-between px-4 py-3 font-semibold">
-          <span>Toplam</span>
-          <span>{formatPrice(order.total)}</span>
+        <div className="flex justify-between px-5 py-4 text-[15px] font-medium">
+          <span className="text-ink">Toplam</span>
+          <span className="text-ink">{formatPrice(order.total)}</span>
         </div>
       </div>
 
-      <Link href="/shop" className="mt-8 inline-block underline text-sm">
+      <Link href="/shop" className="mt-10 inline-block text-sm text-champagne-300 underline">
         Alışverişe devam et
       </Link>
     </div>

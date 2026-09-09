@@ -13,14 +13,20 @@ export default function ShopPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-2xl font-semibold mb-6">Ürünler</h1>
+    <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 md:py-24">
+      <div className="mb-10">
+        <p className="eyebrow">Mağaza</p>
+        <h1 className="mt-3 font-display text-[32px] md:text-[44px] font-normal text-ink" style={{ lineHeight: 1.05 }}>
+          Tüm Ürünler
+        </h1>
+      </div>
+
       {!data ? (
-        <p className="text-neutral-500 text-sm">Yükleniyor...</p>
+        <p className="text-sm text-ash">Yükleniyor...</p>
       ) : data.items.length === 0 ? (
-        <p className="text-neutral-500 text-sm">Henüz ürün eklenmedi.</p>
+        <p className="text-sm text-ash">Henüz ürün eklenmedi.</p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-5">
           {data.items.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

@@ -9,25 +9,30 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/product/${product.slug}`}
-      className="group block border border-neutral-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+      className="group block border border-[var(--border-subtle)] rounded-sm bg-onyx-700 overflow-hidden transition-all duration-[250ms] ease-[var(--ease-luxury)] hover:-translate-y-[3px] hover:border-[var(--border-hover)] hover:shadow-[var(--shadow-lg)]"
     >
-      <div className="aspect-square bg-neutral-100 flex items-center justify-center overflow-hidden">
+      <div className="aspect-square bg-stone-100 flex items-center justify-center overflow-hidden">
         {image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={image} alt={product.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform" />
+          <img
+            src={image}
+            alt={product.name}
+            className="h-full w-full object-cover transition-transform duration-[250ms] ease-[var(--ease-luxury)] group-hover:scale-[1.025]"
+          />
         ) : (
-          <span className="text-neutral-400 text-sm">Görsel yok</span>
+          <span className="text-sm text-stone-500">Görsel yok</span>
         )}
       </div>
-      <div className="p-3">
-        <h3 className="text-sm font-medium line-clamp-2">{product.name}</h3>
-        <div className="mt-1 flex items-center gap-2">
-          <span className="font-semibold">{formatPrice(price)}</span>
+      <div className="p-4">
+        {product.category && <div className="label-uppercase mb-1.5">{product.category.name}</div>}
+        <h3 className="text-[18px] leading-tight font-medium text-ink line-clamp-2">{product.name}</h3>
+        <div className="mt-2 flex items-center gap-2">
+          <span className="text-[15px] font-medium text-ink">{formatPrice(price)}</span>
           {product.salePrice && (
-            <span className="text-xs text-neutral-400 line-through">{formatPrice(product.price)}</span>
+            <span className="text-[13px] text-dim line-through">{formatPrice(product.price)}</span>
           )}
         </div>
-        {product.stock <= 0 && <span className="text-xs text-red-600">Tükendi</span>}
+        {product.stock <= 0 && <span className="mt-1 block text-xs text-dim">Tükendi</span>}
       </div>
     </Link>
   );

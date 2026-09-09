@@ -12,14 +12,17 @@ export function StaticPage({ slug, fallbackTitle }: { slug: string; fallbackTitl
   }, [slug]);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-2xl font-semibold mb-6">{page?.title ?? fallbackTitle}</h1>
+    <div className="mx-auto max-w-2xl px-5 md:px-12 py-16 md:py-24">
+      <p className="eyebrow">Zesta</p>
+      <h1 className="mt-3 font-display text-[32px] md:text-[44px] font-normal text-ink" style={{ lineHeight: 1.05 }}>
+        {page?.title ?? fallbackTitle}
+      </h1>
       {page === undefined ? (
-        <p className="text-neutral-500 text-sm">Yükleniyor...</p>
+        <p className="mt-8 text-sm text-ash">Yükleniyor...</p>
       ) : page?.content ? (
-        <div className="prose prose-neutral whitespace-pre-line text-neutral-700">{page.content}</div>
+        <div className="mt-8 whitespace-pre-line text-[15px] leading-relaxed text-smoke">{page.content}</div>
       ) : (
-        <p className="text-neutral-500 text-sm">Bu içerik henüz eklenmedi.</p>
+        <p className="mt-8 text-sm text-ash">Bu içerik henüz eklenmedi.</p>
       )}
     </div>
   );

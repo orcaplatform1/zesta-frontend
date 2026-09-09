@@ -53,8 +53,8 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-10">
-      <h1 className="text-2xl font-semibold mb-6">Ödeme</h1>
+    <div className="mx-auto max-w-xl px-5 md:px-12 py-16 md:py-24">
+      <h1 className="font-display text-[32px] md:text-[40px] font-normal text-ink mb-10">Ödeme</h1>
       <form onSubmit={submit} className="space-y-4">
         <Field label="Ad Soyad" value={form.fullName} onChange={(v) => set("fullName", v)} required />
         <Field label="E-posta" type="email" value={form.email} onChange={(v) => set("email", v)} required />
@@ -72,17 +72,18 @@ export default function CheckoutPage() {
         <Field label="Posta Kodu" value={form.postalCode} onChange={(v) => set("postalCode", v)} />
         <Field label="Kupon Kodu (opsiyonel)" value={form.couponCode} onChange={(v) => set("couponCode", v)} />
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-[var(--status-error)]">{error}</p>}
 
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-full bg-neutral-900 text-white px-6 py-3 text-sm font-medium disabled:opacity-50"
+          className="w-full h-12 rounded-xs bg-ivory text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke disabled:opacity-40"
+          style={{ letterSpacing: "0.1em" }}
         >
-          {busy ? "Gönderiliyor..." : "Siparişi Tamamla"}
+          {busy ? "GÖNDERİLİYOR..." : "SİPARİŞİ TAMAMLA"}
         </button>
-        <p className="text-xs text-neutral-500">
-          Kart bilgileriniz sistemimizde saklanmaz — ödeme iyzico'nun güvenli sayfasında tamamlanır.
+        <p className="text-xs text-dim">
+          Kart bilgileriniz sistemimizde saklanmaz — ödeme iyzico&apos;nun güvenli sayfasında tamamlanır.
         </p>
       </form>
     </div>
@@ -104,13 +105,13 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-sm font-medium mb-1">{label}</span>
+      <span className="label-uppercase block mb-1.5">{label}</span>
       <input
         type={type}
         required={required}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+        className="w-full h-12 rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]"
       />
     </label>
   );

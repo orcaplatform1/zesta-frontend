@@ -26,31 +26,38 @@ export default function AdminLayout({ children }: LayoutProps<"/admin">) {
 
   useEffect(refresh, []);
 
-  if (admin === undefined) return <div className="mx-auto max-w-sm px-4 py-16 text-neutral-500">Yükleniyor...</div>;
+  if (admin === undefined)
+    return <div className="mx-auto max-w-sm px-5 py-24 text-sm text-ash">Yükleniyor...</div>;
   if (!admin) return <AdminLoginForm onLoggedIn={refresh} />;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
-        <nav className="flex gap-4 text-sm">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={pathname === item.href ? "font-semibold" : "text-neutral-500"}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <button
-          onClick={() => adminApi.logout().then(() => setAdmin(null))}
-          className="text-sm text-neutral-500 underline"
-        >
-          Çıkış ({admin.name})
-        </button>
+    <div className="min-h-[calc(100vh-76px)] bg-onyx-800">
+      <div className="border-b border-[var(--border-subtle)] bg-onyx-900">
+        <div className="mx-auto max-w-[1440px] px-5 md:px-12 flex items-center justify-between h-14">
+          <nav className="flex gap-6 text-[13px]" style={{ letterSpacing: "0.06em" }}>
+            {NAV.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="transition-colors duration-[180ms]"
+                  style={{ color: active ? "var(--champagne-300)" : "var(--text-secondary)" }}
+                >
+                  {item.label.toUpperCase()}
+                </Link>
+              );
+            })}
+          </nav>
+          <button
+            onClick={() => adminApi.logout().then(() => setAdmin(null))}
+            className="text-sm text-dim hover:text-ink transition-colors duration-[180ms]"
+          >
+            Çıkış ({admin.name})
+          </button>
+        </div>
       </div>
-      {children}
+      <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-10">{children}</div>
     </div>
   );
 }
@@ -75,17 +82,21 @@ function AdminLoginForm({ onLoggedIn }: { onLoggedIn: () => void }) {
     }
   }
 
+  const inputClass =
+    "w-full h-12 rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]";
+
   return (
-    <div className="mx-auto max-w-sm px-4 py-16">
-      <h1 className="text-2xl font-semibold mb-6">Admin Girişi</h1>
-      <form onSubmit={submit} className="space-y-4">
+    <div className="mx-auto max-w-sm px-5 py-24">
+      <p className="eyebrow text-center">Zesta</p>
+      <h1 className="mt-3 text-center font-display text-[28px] font-normal text-ink">Admin Girişi</h1>
+      <form onSubmit={submit} className="mt-8 space-y-3">
         <input
           type="email"
           placeholder="E-posta"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+          className={inputClass}
         />
         <input
           type="password"
@@ -93,15 +104,16 @@ function AdminLoginForm({ onLoggedIn }: { onLoggedIn: () => void }) {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+          className={inputClass}
         />
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-[var(--status-error)]">{error}</p>}
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-full bg-neutral-900 text-white px-6 py-2.5 text-sm font-medium disabled:opacity-50"
+          className="w-full h-12 rounded-xs bg-ivory text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke disabled:opacity-40"
+          style={{ letterSpacing: "0.1em" }}
         >
-          {busy ? "..." : "Giriş Yap"}
+          {busy ? "..." : "GİRİŞ YAP"}
         </button>
       </form>
     </div>

@@ -25,23 +25,23 @@ export default function MyOrdersPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-2xl font-semibold mb-6">Siparişlerim</h1>
+    <div className="mx-auto max-w-3xl px-5 md:px-12 py-16 md:py-24">
+      <h1 className="font-display text-[32px] font-normal text-ink mb-10">Siparişlerim</h1>
       {!orders ? (
-        <p className="text-neutral-500 text-sm">Yükleniyor...</p>
+        <p className="text-sm text-ash">Yükleniyor...</p>
       ) : orders.length === 0 ? (
-        <p className="text-neutral-500 text-sm">Henüz siparişiniz yok.</p>
+        <p className="text-sm text-ash">Henüz siparişiniz yok.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {orders.map((order) => (
-            <div key={order.id} className="border border-neutral-200 rounded-lg p-4">
+            <div key={order.id} className="border border-[var(--border-subtle)] rounded-sm bg-onyx-700 p-5">
               <div className="flex justify-between text-sm">
-                <span className="font-medium">{order.orderNumber}</span>
-                <span>{STATUS_LABELS[order.status] ?? order.status}</span>
+                <span className="font-medium text-ink">{order.orderNumber}</span>
+                <span className="text-champagne-300">{STATUS_LABELS[order.status] ?? order.status}</span>
               </div>
-              <div className="text-sm text-neutral-500 mt-1">{formatPrice(order.total)}</div>
+              <div className="mt-1.5 text-sm text-smoke">{formatPrice(order.total)}</div>
               {order.shipment?.trackingNumber && (
-                <div className="text-xs text-neutral-500 mt-1">
+                <div className="mt-1.5 text-xs text-ash">
                   Kargo: {order.shipment.carrier} — {order.shipment.trackingNumber}
                 </div>
               )}

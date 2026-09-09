@@ -51,64 +51,61 @@ export default function AdminSettingsPage() {
     }
   }
 
-  if (!config) return <p className="text-sm text-neutral-500">Yükleniyor...</p>;
+  if (!config) return <p className="text-sm text-ash">Yükleniyor...</p>;
+
+  const inputClass =
+    "w-full h-12 rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]";
 
   return (
     <div className="max-w-lg">
-      <h1 className="text-xl font-semibold mb-1">Ödeme Ayarları — iyzico</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="label-uppercase text-champagne-300 mb-2">Ödeme Ayarları</h1>
+      <h2 className="font-display text-[28px] font-normal text-ink mb-3">iyzico</h2>
+      <p className="text-sm text-ash mb-8 leading-relaxed">
         API bilgilerinizi iyzico Merchant panelinden (Ayarlar → API Anahtarları) alabilirsiniz. Test ederken sandbox
         adresini, canlıya geçince production adresini kullanın.
       </p>
 
       <form onSubmit={submit} className="space-y-4">
         <label className="block">
-          <span className="block text-sm font-medium mb-1">API Key</span>
-          <input
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
-          />
+          <span className="label-uppercase block mb-1.5">API Key</span>
+          <input value={apiKey} onChange={(e) => setApiKey(e.target.value)} className={inputClass} />
         </label>
 
         <label className="block">
-          <span className="block text-sm font-medium mb-1">
-            Secret Key {config.hasSecretKey && <span className="text-neutral-400">(kayıtlı — değiştirmek için doldurun)</span>}
+          <span className="label-uppercase block mb-1.5">
+            Secret Key {config.hasSecretKey && <span className="normal-case text-dim">(kayıtlı — değiştirmek için doldurun)</span>}
           </span>
           <input
             type="password"
             value={secretKey}
             onChange={(e) => setSecretKey(e.target.value)}
             placeholder={config.hasSecretKey ? "••••••••" : ""}
-            className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+            className={inputClass}
           />
         </label>
 
         <label className="block">
-          <span className="block text-sm font-medium mb-1">API Adresi</span>
-          <select
-            value={baseUrl}
-            onChange={(e) => setBaseUrl(e.target.value)}
-            className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
-          >
+          <span className="label-uppercase block mb-1.5">API Adresi</span>
+          <select value={baseUrl} onChange={(e) => setBaseUrl(e.target.value)} className={inputClass}>
             <option value="https://sandbox-api.iyzipay.com">Sandbox (test)</option>
             <option value="https://api.iyzipay.com">Production (canlı)</option>
           </select>
         </label>
 
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex items-center gap-2 text-sm text-smoke">
           <input type="checkbox" checked={enabled} onChange={(e) => setEnabled(e.target.checked)} />
-          Ödeme adımında iyzico'yu aktif et
+          Ödeme adımında iyzico&apos;yu aktif et
         </label>
 
-        {message && <p className="text-sm">{message}</p>}
+        {message && <p className="text-sm text-champagne-300">{message}</p>}
 
         <button
           type="submit"
           disabled={busy}
-          className="rounded-full bg-neutral-900 text-white px-6 py-2 text-sm font-medium disabled:opacity-50"
+          className="h-11 rounded-xs bg-ivory px-6 text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke disabled:opacity-40"
+          style={{ letterSpacing: "0.1em" }}
         >
-          {busy ? "Kaydediliyor..." : "Kaydet"}
+          {busy ? "KAYDEDİLİYOR..." : "KAYDET"}
         </button>
       </form>
     </div>

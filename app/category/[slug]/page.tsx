@@ -19,16 +19,21 @@ export default function CategoryPage(props: PageProps<"/category/[slug]">) {
   }, [slug]);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-2xl font-semibold mb-1">{category?.name ?? "Kategori"}</h1>
-      {category?.description && <p className="text-neutral-500 mb-6">{category.description}</p>}
+    <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 md:py-24">
+      <div className="mb-10">
+        <p className="eyebrow">Kategori</p>
+        <h1 className="mt-3 font-display text-[32px] md:text-[44px] font-normal text-ink" style={{ lineHeight: 1.05 }}>
+          {category?.name ?? "..."}
+        </h1>
+        {category?.description && <p className="mt-3 text-ash max-w-xl">{category.description}</p>}
+      </div>
 
       {!data ? (
-        <p className="text-neutral-500 text-sm mt-6">Yükleniyor...</p>
+        <p className="text-sm text-ash">Yükleniyor...</p>
       ) : data.items.length === 0 ? (
-        <p className="text-neutral-500 text-sm mt-6">Bu kategoride ürün yok.</p>
+        <p className="text-sm text-ash">Bu kategoride ürün yok.</p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-5">
           {data.items.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

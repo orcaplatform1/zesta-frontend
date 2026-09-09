@@ -17,17 +17,20 @@ function OrderFailedContent() {
   const orderNumber = params.get("orderNumber");
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-16 text-center">
-      <h1 className="text-2xl font-semibold">Ödeme Tamamlanamadı</h1>
-      {orderNumber && <p className="mt-2 text-neutral-600">Sipariş No: {orderNumber}</p>}
-      <p className="mt-2 text-neutral-500 text-sm">
+    <div className="mx-auto max-w-xl px-5 py-24 text-center">
+      <p className="label-uppercase" style={{ color: "var(--status-error)" }}>
+        Ödeme
+      </p>
+      <h1 className="mt-3 font-display text-[32px] md:text-[40px] font-normal text-ink">Tamamlanamadı</h1>
+      {orderNumber && <p className="mt-3 text-smoke">Sipariş No: {orderNumber}</p>}
+      <p className="mt-3 text-sm text-ash">
         Ödemeniz alınamadı. Kartınızı kontrol edip tekrar deneyebilir veya sepetinize dönebilirsiniz.
       </p>
-      <div className="mt-6 flex justify-center gap-4">
-        <Link href="/checkout" className="underline text-sm">
+      <div className="mt-8 flex justify-center gap-6">
+        <Link href="/checkout" className="text-sm text-champagne-300 underline">
           Tekrar dene
         </Link>
-        <Link href="/cart" className="underline text-sm">
+        <Link href="/cart" className="text-sm text-champagne-300 underline">
           Sepete dön
         </Link>
       </div>

@@ -107,9 +107,9 @@ export default function AdminProductsPage() {
   }
 
   return (
-    <div className="grid md:grid-cols-2 gap-10">
+    <div className="grid md:grid-cols-2 gap-12">
       <div>
-        <h1 className="text-xl font-semibold mb-4">{form.id ? "Ürünü Düzenle" : "Yeni Ürün"}</h1>
+        <h1 className="label-uppercase mb-6">{form.id ? "Ürünü Düzenle" : "Yeni Ürün"}</h1>
         <div className="space-y-3">
           <Input label="Ad" value={form.name} onChange={(v) => setForm((f) => ({ ...f, name: v }))} />
           <Input label="Slug" value={form.slug} onChange={(v) => setForm((f) => ({ ...f, slug: v }))} />
@@ -131,11 +131,11 @@ export default function AdminProductsPage() {
             <Input label="Stok" value={form.stock} onChange={(v) => setForm((f) => ({ ...f, stock: v }))} />
           </div>
           <label className="block">
-            <span className="block text-sm font-medium mb-1">Kategori</span>
+            <span className="label-uppercase block mb-1.5">Kategori</span>
             <select
               value={form.categoryId}
               onChange={(e) => setForm((f) => ({ ...f, categoryId: e.target.value }))}
-              className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+              className="w-full h-12 rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 text-sm text-ink focus:outline-none focus:border-[var(--border-accent)]"
             >
               <option value="">Yok</option>
               {categories.map((c) => (
@@ -151,20 +151,20 @@ export default function AdminProductsPage() {
             onChange={(v) => setForm((f) => ({ ...f, productionTime: v }))}
           />
           <label className="block">
-            <span className="block text-sm font-medium mb-1">Görsel</span>
+            <span className="label-uppercase block mb-1.5">Görsel</span>
             <input
               type="file"
               accept="image/*"
               onChange={(e) => e.target.files?.[0] && uploadImage(e.target.files[0])}
-              className="text-sm"
+              className="text-sm text-smoke file:mr-3 file:rounded-xs file:border file:border-[var(--border-subtle)] file:bg-onyx-700 file:px-3 file:py-1.5 file:text-ink file:text-xs"
             />
-            {uploading && <span className="text-xs text-neutral-500">Yükleniyor...</span>}
+            {uploading && <span className="ml-2 text-xs text-ash">Yükleniyor...</span>}
             {form.imageUrl && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={form.imageUrl} alt="" className="mt-2 h-20 w-20 object-cover rounded-md" />
+              <img src={form.imageUrl} alt="" className="mt-3 h-20 w-20 object-cover rounded-xs" />
             )}
           </label>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-sm text-smoke">
             <input
               type="checkbox"
               checked={form.isActive}
@@ -173,18 +173,19 @@ export default function AdminProductsPage() {
             Aktif
           </label>
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <p className="text-sm text-[var(--status-error)]">{error}</p>}
 
-          <div className="flex gap-2">
+          <div className="flex gap-3 pt-2">
             <button
               onClick={submit}
               disabled={busy}
-              className="rounded-full bg-neutral-900 text-white px-6 py-2 text-sm font-medium disabled:opacity-50"
+              className="h-11 rounded-xs bg-ivory px-6 text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke disabled:opacity-40"
+              style={{ letterSpacing: "0.1em" }}
             >
-              {form.id ? "Güncelle" : "Ekle"}
+              {form.id ? "GÜNCELLE" : "EKLE"}
             </button>
             {form.id && (
-              <button onClick={() => setForm(emptyForm)} className="text-sm text-neutral-500 underline">
+              <button onClick={() => setForm(emptyForm)} className="text-sm text-dim hover:text-ink transition-colors duration-[180ms]">
                 İptal
               </button>
             )}
@@ -193,26 +194,26 @@ export default function AdminProductsPage() {
       </div>
 
       <div>
-        <h1 className="text-xl font-semibold mb-4">Ürünler</h1>
+        <h1 className="label-uppercase mb-6">Ürünler</h1>
         {!products ? (
-          <p className="text-sm text-neutral-500">Yükleniyor...</p>
+          <p className="text-sm text-ash">Yükleniyor...</p>
         ) : (
-          <div className="divide-y divide-neutral-200 border-y border-neutral-200">
+          <div className="divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
             {products.map((p) => (
-              <div key={p.id} className="py-3 flex items-center justify-between">
+              <div key={p.id} className="py-4 flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-medium">
-                    {p.name} {!p.isActive && <span className="text-neutral-400">(pasif)</span>}
+                  <div className="text-sm font-medium text-ink">
+                    {p.name} {!p.isActive && <span className="text-dim">(pasif)</span>}
                   </div>
-                  <div className="text-xs text-neutral-500">
+                  <div className="mt-1 text-xs text-ash">
                     {formatPrice(p.salePrice ?? p.price)} · stok: {p.stock}
                   </div>
                 </div>
-                <div className="flex gap-3 text-sm">
-                  <button onClick={() => edit(p)} className="underline">
+                <div className="flex gap-4 text-sm">
+                  <button onClick={() => edit(p)} className="text-champagne-300 hover:text-champagne-200 transition-colors duration-[180ms]">
                     Düzenle
                   </button>
-                  <button onClick={() => remove(p.id)} className="text-red-600 underline">
+                  <button onClick={() => remove(p.id)} className="text-dim hover:text-[var(--status-error)] transition-colors duration-[180ms]">
                     Sil
                   </button>
                 </div>
@@ -228,11 +229,11 @@ export default function AdminProductsPage() {
 function Input({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
     <label className="block">
-      <span className="block text-sm font-medium mb-1">{label}</span>
+      <span className="label-uppercase block mb-1.5">{label}</span>
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+        className="w-full h-12 rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]"
       />
     </label>
   );

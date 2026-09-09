@@ -37,30 +37,33 @@ export default function AdminOrdersPage() {
     load();
   }
 
-  if (!orders) return <p className="text-sm text-neutral-500">Yükleniyor...</p>;
+  if (!orders) return <p className="text-sm text-ash">Yükleniyor...</p>;
+
+  const inputClass =
+    "h-10 w-32 rounded-xs border border-[var(--border-subtle)] bg-onyx-800 px-3 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]";
 
   return (
     <div>
-      <h1 className="text-xl font-semibold mb-4">Siparişler</h1>
+      <h1 className="label-uppercase mb-6">Siparişler</h1>
       <div className="space-y-3">
         {orders.map((order) => (
-          <div key={order.id} className="border border-neutral-200 rounded-lg p-4">
+          <div key={order.id} className="border border-[var(--border-subtle)] rounded-sm bg-onyx-700 p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <span className="font-medium">{order.orderNumber}</span>{" "}
-                <span className="text-neutral-500 text-sm">— {order.fullName}</span>
+                <span className="font-medium text-ink">{order.orderNumber}</span>{" "}
+                <span className="text-sm text-smoke">— {order.fullName}</span>
               </div>
-              <span className="text-sm font-medium">{formatPrice(order.total)}</span>
+              <span className="text-sm font-medium text-ink">{formatPrice(order.total)}</span>
             </div>
-            <div className="text-xs text-neutral-500 mt-1">
+            <div className="mt-1.5 text-xs text-ash">
               {order.city}/{order.district} — {order.addressLine}
             </div>
 
-            <div className="mt-3 flex flex-wrap items-center gap-3">
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               <select
                 value={order.status}
                 onChange={(e) => updateStatus(order.id, e.target.value)}
-                className="border border-neutral-300 rounded-md px-2 py-1 text-sm"
+                className="h-10 rounded-xs border border-[var(--border-subtle)] bg-onyx-800 px-3 text-sm text-ink focus:outline-none focus:border-[var(--border-accent)]"
               >
                 {STATUSES.map((s) => (
                   <option key={s} value={s}>
@@ -71,7 +74,7 @@ export default function AdminOrdersPage() {
 
               <input
                 placeholder="Kargo firması"
-                className="border border-neutral-300 rounded-md px-2 py-1 text-sm w-32"
+                className={inputClass}
                 value={tracking[order.id]?.carrier ?? ""}
                 onChange={(e) =>
                   setTracking((t) => ({ ...t, [order.id]: { carrier: e.target.value, trackingNumber: t[order.id]?.trackingNumber ?? "" } }))
@@ -79,13 +82,13 @@ export default function AdminOrdersPage() {
               />
               <input
                 placeholder="Takip No"
-                className="border border-neutral-300 rounded-md px-2 py-1 text-sm w-32"
+                className={inputClass}
                 value={tracking[order.id]?.trackingNumber ?? ""}
                 onChange={(e) =>
                   setTracking((t) => ({ ...t, [order.id]: { carrier: t[order.id]?.carrier ?? "", trackingNumber: e.target.value } }))
                 }
               />
-              <button onClick={() => ship(order.id)} className="text-sm underline">
+              <button onClick={() => ship(order.id)} className="text-sm text-champagne-300 hover:text-champagne-200 transition-colors duration-[180ms]">
                 Kargoya Ver
               </button>
             </div>
