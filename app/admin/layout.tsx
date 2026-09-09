@@ -93,8 +93,8 @@ function AdminLoginForm({ onLoggedIn }: { onLoggedIn: () => void }) {
       <h1 className="mt-3 text-center font-display text-[28px] font-normal text-ink">Admin Girişi</h1>
       <form onSubmit={submit} className="mt-8 space-y-3">
         <input
-          type="email"
-          placeholder="E-posta"
+          type="text"
+          placeholder="Kullanıcı Adı"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
