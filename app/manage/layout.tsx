@@ -7,15 +7,15 @@ import { adminApi, type AdminMe } from "@/lib/admin-api";
 import { ApiError } from "@/lib/api";
 
 const NAV = [
-  { href: "/admin", label: "Dashboard" },
-  { href: "/admin/products", label: "Ürünler" },
-  { href: "/admin/orders", label: "Siparişler" },
-  { href: "/admin/reviews", label: "Yorumlar" },
-  { href: "/admin/homepage", label: "Anasayfa" },
-  { href: "/admin/settings", label: "Ayarlar" },
+  { href: "/manage", label: "Dashboard" },
+  { href: "/manage/products", label: "Ürünler" },
+  { href: "/manage/orders", label: "Siparişler" },
+  { href: "/manage/reviews", label: "Yorumlar" },
+  { href: "/manage/homepage", label: "Anasayfa" },
+  { href: "/manage/settings", label: "Ayarlar" },
 ];
 
-export default function AdminLayout({ children }: LayoutProps<"/admin">) {
+export default function AdminLayout({ children }: LayoutProps<"/manage">) {
   const pathname = usePathname();
   const [admin, setAdmin] = useState<AdminMe | null | undefined>(undefined);
 

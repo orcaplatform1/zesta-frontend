@@ -7,7 +7,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin", "/account", "/cart", "/checkout", "/order-success", "/order-failed"],
+        // Yönetim paneli robots.txt'te BİLEREK listelenmiyor — burada
+        // listelemek adresi herkese ilan etmek anlamına gelir.
+        disallow: ["/account", "/cart", "/checkout", "/order-success", "/order-failed"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
