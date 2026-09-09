@@ -5,6 +5,8 @@ import { Bodoni_Moda, Inter } from "next/font/google";
 import { MobileNav } from "@/components/MobileNav";
 import { safeJsonLd } from "@/lib/json-ld";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { DEFAULT_HOMEPAGE_CONTENT, type HomepageContent } from "@/lib/homepage-content";
+import { serverApiGet } from "@/lib/server-api";
 import "./globals.css";
 
 const bodoniModa = Bodoni_Moda({
@@ -100,8 +102,12 @@ function renderCopyrightWithBrandHighlight(text: string) {
   );
 }
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
   const copyrightText = `© ${new Date().getFullYear()} Zesta. Tüm hakları saklıdır. Zesta bir Traders.TR ticari markasıdır. Bu platformda yer alan tüm içerikler, tasarımlar, marka unsurları ve fikrî mülkiyet hakları ilgili yasal mevzuat kapsamında korunmaktadır.`;
+
+  const settings = await serverApiGet<Record<string, unknown>>("/settings", 60);
+  const homepageContent = settings?.homepage_content as HomepageContent | undefined;
+  const promoBarText = homepageContent?.promoBarText ?? DEFAULT_HOMEPAGE_CONTENT.promoBarText;
 
   return (
     <html
@@ -114,7 +120,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             className="text-[10px] md:text-[11px] font-medium uppercase text-[var(--text-on-dark)]"
             style={{ letterSpacing: "0.14em" }}
           >
-            El Yapımı · Sipariş Üzerine Üretilir · Türkiye&apos;nin Her Yerine Kargo
+            {promoBarText}
           </p>
         </div>
         <header className="sticky top-0 z-40 bg-onyx-900/95 backdrop-blur-sm border-b border-[var(--border-subtle)]">

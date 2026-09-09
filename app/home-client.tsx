@@ -5,63 +5,46 @@ import Link from "next/link";
 import { api } from "@/lib/api";
 import type { ProductListResponse } from "@/lib/types";
 import { ProductCard } from "@/components/ProductCard";
-
-interface EditorialSplit {
-  eyebrow: string;
-  heading: string;
-  body: string;
-  categorySlug: string;
-  categoryLabel: string;
-}
-
-const ROW_CATEGORIES = [
-  { slug: "seramik", label: "Seramik" },
-  { slug: "cam-sanati", label: "Cam Sanatı" },
-  { slug: "biblolar", label: "Biblolar" },
-];
-
-const SPLITS: EditorialSplit[] = [
-  {
-    eyebrow: "Zanaat",
-    heading: "Ahşabın Sıcaklığı, Elin İzi",
-    body: "Zeytin, ceviz ve meşe ağacından doğan her obje, ustaların yıllara dayanan tecrübesiyle tek tek şekillendirilir. Seri üretim değil; sabırla, elle işlenmiş bir zanaat.",
-    categorySlug: "ahsap-objeler",
-    categoryLabel: "Ahşap Objeler",
-  },
-  {
-    eyebrow: "Doku",
-    heading: "İplikten Doğan Hikâyeler",
-    body: "Makrome düğümlerinden dokuma yüzeylere, her tekstil parçası elde, sabırla işlenir. Doğal lifler ve toprak tonlarıyla evinize sıcak bir doku katar.",
-    categorySlug: "el-yapimi-tekstil",
-    categoryLabel: "El Yapımı Tekstil",
-  },
-];
+import { DEFAULT_HOMEPAGE_CONTENT, type HomepageContent, type HomepageEditorialSplit } from "@/lib/homepage-content";
 
 export function HomeClient() {
+  const [content, setContent] = useState<HomepageContent>(DEFAULT_HOMEPAGE_CONTENT);
   const [rows, setRows] = useState<Record<string, ProductListResponse | null>>({});
   const [splitProducts, setSplitProducts] = useState<Record<string, ProductListResponse | null>>({});
   const [hero, setHero] = useState<ProductListResponse | null>(null);
 
   useEffect(() => {
-    ROW_CATEGORIES.forEach((c) => {
+    api
+      .get<Record<string, unknown>>("/settings")
+      .then((settings) => {
+        const stored = settings.homepage_content as HomepageContent | undefined;
+        if (stored) setContent(stored);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    content.categoryRows.forEach((c) => {
       api
         .get<ProductListResponse>(`/products?category=${c.slug}&pageSize=4`)
         .then((data) => setRows((r) => ({ ...r, [c.slug]: data })))
         .catch(() => setRows((r) => ({ ...r, [c.slug]: null })));
     });
-    SPLITS.forEach((s) => {
+    content.editorialSplits.forEach((s) => {
       api
         .get<ProductListResponse>(`/products?category=${s.categorySlug}&pageSize=1`)
         .then((data) => setSplitProducts((r) => ({ ...r, [s.categorySlug]: data })))
         .catch(() => setSplitProducts((r) => ({ ...r, [s.categorySlug]: null })));
     });
     api
-      .get<ProductListResponse>("/products?category=tasarim-heykeller&pageSize=1")
+      .get<ProductListResponse>(`/products?category=${content.hero.heroCategorySlug}&pageSize=1`)
       .then(setHero)
       .catch(() => setHero(null));
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content]);
 
   const heroProduct = hero?.items[0];
+  const rowCount = Math.max(content.categoryRows.length, content.editorialSplits.length);
 
   return (
     <div>
@@ -69,33 +52,30 @@ export function HomeClient() {
       <section className="relative overflow-hidden">
         <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 md:py-0 grid md:grid-cols-2 md:min-h-[640px] items-center gap-10 md:gap-16">
           <div className="grain relative">
-            <p className="eyebrow-on-light">El İşi Atölye</p>
+            <p className="eyebrow-on-light">{content.hero.eyebrow}</p>
             <h1
               className="mt-6 font-display font-normal text-ink text-[42px] md:text-[56px] lg:text-[64px]"
               style={{ lineHeight: 0.98, letterSpacing: "-0.025em" }}
             >
-              KÜÇÜK DETAYLAR.
+              {content.hero.headingLine1}
               <br />
-              <span className="text-[color:var(--text-secondary)]">BÜYÜK HİKÂYELER.</span>
+              <span className="text-[color:var(--text-secondary)]">{content.hero.headingLine2}</span>
             </h1>
-            <p className="mt-6 text-[15px] md:text-[17px] text-ash max-w-md leading-relaxed">
-              Her parça elde, sipariş üzerine, özenle üretilir. Türkiye&apos;nin dört bir yanındaki ustaların
-              atölyesinden evinize.
-            </p>
+            <p className="mt-6 text-[15px] md:text-[17px] text-ash max-w-md leading-relaxed">{content.hero.body}</p>
             <div className="mt-10 flex items-center gap-6">
               <Link
                 href="/shop"
                 className="inline-flex h-12 items-center justify-center rounded-xs bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
                 style={{ letterSpacing: "0.1em" }}
               >
-                ÜRÜNLERİ KEŞFET
+                {content.hero.ctaLabel}
               </Link>
               <Link
                 href="/about"
                 className="text-[13px] text-smoke hover:text-ink transition-colors duration-[180ms]"
                 style={{ letterSpacing: "0.08em" }}
               >
-                HİKÂYEMİZ →
+                {content.hero.secondaryCtaLabel}
               </Link>
             </div>
           </div>
@@ -129,20 +109,7 @@ export function HomeClient() {
       {/* TRUST STRIP */}
       <section className="bg-warm-ivory py-14 md:py-20">
         <div className="mx-auto max-w-[1440px] px-5 md:px-12 grid gap-10 sm:grid-cols-3 text-center sm:text-left">
-          {[
-            {
-              title: "El Yapımı",
-              body: "Her parça, usta ellerde tek tek şekillendirilir. Seri üretim değil, zanaat.",
-            },
-            {
-              title: "Sipariş Üzerine",
-              body: "Ürünler stoklamak için değil, siparişinize özel, özenle hazırlanır.",
-            },
-            {
-              title: "Özenle Paketlenir",
-              body: "Her sipariş, kırılmaya karşı özenle sarılıp elinize zarar görmeden ulaşır.",
-            },
-          ].map((item) => (
+          {content.trustStrip.map((item) => (
             <div key={item.title}>
               <p className="eyebrow-on-light">{item.title}</p>
               <p className="mt-3 text-[15px] leading-relaxed text-[color:var(--text-on-light-secondary)]">
@@ -153,15 +120,24 @@ export function HomeClient() {
         </div>
       </section>
 
-      <CategoryRow slug={ROW_CATEGORIES[0].slug} label={ROW_CATEGORIES[0].label} data={rows[ROW_CATEGORIES[0].slug]} />
-
-      <EditorialSplitSection split={SPLITS[0]} data={splitProducts[SPLITS[0].categorySlug]} reverse={false} />
-
-      <CategoryRow slug={ROW_CATEGORIES[1].slug} label={ROW_CATEGORIES[1].label} data={rows[ROW_CATEGORIES[1].slug]} />
-
-      <EditorialSplitSection split={SPLITS[1]} data={splitProducts[SPLITS[1].categorySlug]} reverse={true} />
-
-      <CategoryRow slug={ROW_CATEGORIES[2].slug} label={ROW_CATEGORIES[2].label} data={rows[ROW_CATEGORIES[2].slug]} />
+      {Array.from({ length: rowCount }).map((_, i) => (
+        <div key={i}>
+          {content.categoryRows[i] && (
+            <CategoryRow
+              slug={content.categoryRows[i].slug}
+              label={content.categoryRows[i].label}
+              data={rows[content.categoryRows[i].slug]}
+            />
+          )}
+          {content.editorialSplits[i] && (
+            <EditorialSplitSection
+              split={content.editorialSplits[i]}
+              data={splitProducts[content.editorialSplits[i].categorySlug]}
+              reverse={i % 2 === 1}
+            />
+          )}
+        </div>
+      ))}
     </div>
   );
 }
@@ -218,7 +194,7 @@ function EditorialSplitSection({
   data,
   reverse,
 }: {
-  split: EditorialSplit;
+  split: HomepageEditorialSplit;
   data: ProductListResponse | null | undefined;
   reverse: boolean;
 }) {
