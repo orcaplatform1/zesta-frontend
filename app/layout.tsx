@@ -109,6 +109,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${bodoniModa.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-onyx-900 text-ink font-sans">
+        <div className="bg-charcoal-700 text-center py-2 px-4">
+          <p
+            className="text-[10px] md:text-[11px] font-medium uppercase text-[var(--text-on-dark)]"
+            style={{ letterSpacing: "0.14em" }}
+          >
+            El Yapımı · Sipariş Üzerine Üretilir · Türkiye&apos;nin Her Yerine Kargo
+          </p>
+        </div>
         <header className="sticky top-0 z-40 bg-onyx-900/95 backdrop-blur-sm border-b border-[var(--border-subtle)]">
           <div className="mx-auto max-w-[1440px] h-16 md:h-[76px] flex items-center justify-between px-5 md:px-12">
             <Link href="/" className="flex items-center">

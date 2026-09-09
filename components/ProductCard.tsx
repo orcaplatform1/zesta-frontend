@@ -5,13 +5,20 @@ import type { Product } from "@/lib/types";
 export function ProductCard({ product }: { product: Product }) {
   const image = product.images[0]?.url;
   const price = product.salePrice ?? product.price;
+  const discountPct =
+    product.salePrice && Number(product.price) > 0
+      ? Math.round((1 - Number(product.salePrice) / Number(product.price)) * 100)
+      : null;
 
   return (
     <Link
       href={`/product/${product.slug}`}
       className="group block border border-[var(--border-subtle)] rounded-sm bg-onyx-700 overflow-hidden transition-all duration-[250ms] ease-[var(--ease-luxury)] hover:-translate-y-[3px] hover:border-[var(--border-hover)] hover:shadow-[var(--shadow-lg)]"
     >
-      <div className="aspect-square bg-stone-100 flex items-center justify-center overflow-hidden">
+      <div className="relative aspect-square bg-stone-100 flex items-center justify-center overflow-hidden">
+        {discountPct !== null && discountPct > 0 && (
+          <span className="badge-sale absolute left-2.5 top-2.5 z-10">-%{discountPct}</span>
+        )}
         {image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img

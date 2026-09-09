@@ -372,3 +372,17 @@ body {
   background: var(--bg-stone);
   border-color: var(--border-strong);
 }
+/* Sale-percent pill, overlaid top-left on a product image */
+.badge-sale {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+  background: var(--charcoal-700);
+  border-radius: var(--radius-xs);
+}
