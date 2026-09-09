@@ -67,6 +67,7 @@ const ORGANIZATION_JSON_LD = {
 
 const FOOTER_LINKS = [
   { href: "/about", label: "Hakkımızda" },
+  { href: "/faq", label: "Sıkça Sorulan Sorular" },
   { href: "/contact", label: "İletişim" },
   { href: "/shipping", label: "Kargo & Teslimat" },
   { href: "/returns", label: "İade & Değişim" },
@@ -77,6 +78,7 @@ const LEGAL_LINKS = [
   { href: "/legal/gizlilik-politikasi", label: "Gizlilik Politikası" },
   { href: "/legal/kvkk", label: "KVKK Aydınlatma Metni" },
   { href: "/legal/cerez-politikasi", label: "Çerez Politikası" },
+  { href: "/legal/kullanim-kosullari", label: "Kullanım Koşulları" },
 ];
 
 // "Traders.TR" gecen kismi ozel stille (kirmizi/beyaz + bayrak) vurguluyoruz —
@@ -208,9 +210,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <div className="border-t border-[var(--border-light)]">
             <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-6 flex flex-col items-center gap-3 text-xs leading-relaxed text-charcoal-200 sm:flex-row sm:justify-between">
               <p>{renderCopyrightWithBrandHighlight(copyrightText)}</p>
-              <a href="/sitemap.xml" className="hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
+              <Link href="/site-haritasi" className="hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
                 Site Haritası
-              </a>
+              </Link>
             </div>
           </div>
         </footer>
