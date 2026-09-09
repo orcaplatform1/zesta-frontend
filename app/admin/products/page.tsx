@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { api, formatPrice } from "@/lib/api";
-import type { Category, Product } from "@/lib/types";
+import type { Category, Product, ProductListResponse } from "@/lib/types";
+
+const PAGE_SIZE = 30;
 
 const emptyForm = {
   id: "",
@@ -21,20 +23,32 @@ const emptyForm = {
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[] | null>(null);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
   const [categories, setCategories] = useState<Category[]>([]);
   const [form, setForm] = useState(emptyForm);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
-  function loadProducts() {
-    api.get<Product[]>("/products/admin/list").then(setProducts).catch(() => setProducts([]));
+  function loadProducts(targetPage = page) {
+    api
+      .get<ProductListResponse>(`/products/admin/list?page=${targetPage}&pageSize=${PAGE_SIZE}`)
+      .then((data) => {
+        setProducts(data.items);
+        setTotal(data.total);
+        setPage(data.page);
+      })
+      .catch(() => setProducts([]));
   }
 
   useEffect(() => {
-    loadProducts();
+    loadProducts(1);
     api.get<Category[]>("/categories").then(setCategories).catch(() => setCategories([]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   function edit(p: Product) {
     setForm({
@@ -194,32 +208,58 @@ export default function AdminProductsPage() {
       </div>
 
       <div>
-        <h1 className="label-uppercase mb-6">Ürünler</h1>
+        <h1 className="label-uppercase mb-6">
+          Ürünler {total > 0 && <span className="text-dim">({total})</span>}
+        </h1>
         {!products ? (
           <p className="text-sm text-ash">Yükleniyor...</p>
         ) : (
-          <div className="divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
-            {products.map((p) => (
-              <div key={p.id} className="py-4 flex items-center justify-between">
-                <div>
-                  <div className="text-sm font-medium text-ink">
-                    {p.name} {!p.isActive && <span className="text-dim">(pasif)</span>}
+          <>
+            <div className="divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
+              {products.map((p) => (
+                <div key={p.id} className="py-4 flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-medium text-ink">
+                      {p.name} {!p.isActive && <span className="text-dim">(pasif)</span>}
+                    </div>
+                    <div className="mt-1 text-xs text-ash">
+                      {formatPrice(p.salePrice ?? p.price)} · stok: {p.stock}
+                    </div>
                   </div>
-                  <div className="mt-1 text-xs text-ash">
-                    {formatPrice(p.salePrice ?? p.price)} · stok: {p.stock}
+                  <div className="flex gap-4 text-sm">
+                    <button onClick={() => edit(p)} className="text-champagne-300 hover:text-champagne-200 transition-colors duration-[180ms]">
+                      Düzenle
+                    </button>
+                    <button onClick={() => remove(p.id)} className="text-dim hover:text-[var(--status-error)] transition-colors duration-[180ms]">
+                      Sil
+                    </button>
                   </div>
                 </div>
-                <div className="flex gap-4 text-sm">
-                  <button onClick={() => edit(p)} className="text-champagne-300 hover:text-champagne-200 transition-colors duration-[180ms]">
-                    Düzenle
-                  </button>
-                  <button onClick={() => remove(p.id)} className="text-dim hover:text-[var(--status-error)] transition-colors duration-[180ms]">
-                    Sil
-                  </button>
-                </div>
+              ))}
+            </div>
+
+            {pageCount > 1 && (
+              <div className="mt-5 flex items-center justify-between text-sm">
+                <button
+                  onClick={() => loadProducts(page - 1)}
+                  disabled={page <= 1}
+                  className="text-smoke hover:text-ink transition-colors duration-[180ms] disabled:opacity-30 disabled:pointer-events-none"
+                >
+                  ← Önceki
+                </button>
+                <span className="text-ash">
+                  Sayfa {page} / {pageCount}
+                </span>
+                <button
+                  onClick={() => loadProducts(page + 1)}
+                  disabled={page >= pageCount}
+                  className="text-smoke hover:text-ink transition-colors duration-[180ms] disabled:opacity-30 disabled:pointer-events-none"
+                >
+                  Sonraki →
+                </button>
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
     </div>
