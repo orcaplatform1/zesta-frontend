@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 
@@ -9,8 +10,14 @@ interface CheckoutResponse {
   payment: { configured: boolean; checkoutUrl: string | null };
 }
 
+interface Me {
+  email: string;
+  name: string;
+}
+
 export default function CheckoutPage() {
   const router = useRouter();
+  const [me, setMe] = useState<Me | null | undefined>(undefined);
   const [form, setForm] = useState({
     email: "",
     phone: "",
@@ -24,6 +31,16 @@ export default function CheckoutPage() {
   });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    api
+      .get<Me>("/auth/me")
+      .then((m) => {
+        setMe(m);
+        setForm((f) => ({ ...f, email: m.email, fullName: m.name }));
+      })
+      .catch(() => setMe(null));
+  }, []);
 
   function set<K extends keyof typeof form>(key: K, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -50,6 +67,29 @@ export default function CheckoutPage() {
     } finally {
       setBusy(false);
     }
+  }
+
+  if (me === undefined) {
+    return <div className="mx-auto max-w-xl px-5 py-24 text-sm text-ash">Yükleniyor...</div>;
+  }
+
+  if (me === null) {
+    return (
+      <div className="mx-auto max-w-md px-5 py-24 text-center">
+        <p className="label-uppercase text-champagne-300">Ödeme</p>
+        <h1 className="mt-3 font-display text-[28px] font-normal text-ink">Sipariş vermek için üye olun</h1>
+        <p className="mt-4 text-sm text-ash leading-relaxed">
+          Siparişlerinizi takip edebilmeniz için ödemeye geçmeden önce üye olmanız veya giriş yapmanız gerekiyor.
+        </p>
+        <Link
+          href="/account"
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-xs bg-ivory px-7 text-[12px] font-medium text-onyx-800 transition-colors duration-[180ms] hover:bg-smoke"
+          style={{ letterSpacing: "0.1em" }}
+        >
+          GİRİŞ YAP / ÜYE OL
+        </Link>
+      </div>
+    );
   }
 
   return (
