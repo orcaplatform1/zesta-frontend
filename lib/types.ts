@@ -31,6 +31,7 @@ export interface Product {
   stock: number;
   productionTime: string | null;
   isActive: boolean;
+  createdAt: string;
   images: ProductImage[];
   variants: ProductVariant[];
   category: Category | null;

@@ -3,10 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Bodoni_Moda, Inter } from "next/font/google";
 import { MobileNav } from "@/components/MobileNav";
+import { CategoryNav } from "@/components/CategoryNav";
 import { safeJsonLd } from "@/lib/json-ld";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { DEFAULT_HOMEPAGE_CONTENT, type HomepageContent } from "@/lib/homepage-content";
 import { serverApiGet } from "@/lib/server-api";
+import type { Category } from "@/lib/types";
 import "./globals.css";
 
 const bodoniModa = Bodoni_Moda({
@@ -109,6 +111,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const homepageContent = settings?.homepage_content as HomepageContent | undefined;
   const promoBarText = homepageContent?.promoBarText ?? DEFAULT_HOMEPAGE_CONTENT.promoBarText;
 
+  const categories = (await serverApiGet<Category[]>("/categories", 300)) ?? [];
+
   return (
     <html
       lang="tr"
@@ -143,6 +147,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               <Link href="/shop" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
                 ÜRÜNLER
               </Link>
+              <CategoryNav categories={categories} />
               <Link href="/account" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
                 HESABIM
               </Link>
@@ -151,7 +156,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               </Link>
             </nav>
 
-            <MobileNav />
+            <MobileNav categories={categories} />
           </div>
         </header>
 

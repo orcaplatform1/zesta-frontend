@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import type { Category } from "@/lib/types";
 
 const LINKS = [
   { href: "/shop", label: "Ürünler" },
@@ -10,7 +11,7 @@ const LINKS = [
   { href: "/cart", label: "Sepet" },
 ];
 
-export function MobileNav() {
+export function MobileNav({ categories = [] }: { categories?: Category[] }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -51,7 +52,7 @@ export function MobileNav() {
               </button>
             </div>
 
-            <nav className="flex flex-1 flex-col items-center justify-center gap-8">
+            <nav className="flex flex-1 flex-col items-center justify-center gap-8 overflow-y-auto py-10">
               {LINKS.map((link) => (
                 <Link
                   key={link.href}
@@ -62,6 +63,22 @@ export function MobileNav() {
                   {link.label}
                 </Link>
               ))}
+
+              {categories.length > 0 && (
+                <div className="mt-4 flex flex-col items-center gap-4 border-t border-[var(--border-subtle)] pt-8">
+                  <span className="label-uppercase">Kategoriler</span>
+                  {categories.map((c) => (
+                    <Link
+                      key={c.id}
+                      href={`/category/${c.slug}`}
+                      onClick={() => setOpen(false)}
+                      className="text-[15px] text-smoke hover:text-ink transition-colors duration-[180ms]"
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </nav>
           </div>,
           document.body,

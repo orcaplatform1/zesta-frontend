@@ -8,7 +8,7 @@ async function getCategory(slug: string) {
 }
 
 async function getProducts(slug: string) {
-  return serverApiGet<ProductListResponse>(`/products?category=${slug}&pageSize=48`, 60);
+  return serverApiGet<ProductListResponse>(`/products?category=${slug}&pageSize=24`, 60);
 }
 
 export async function generateMetadata(props: PageProps<"/category/[slug]">): Promise<Metadata> {

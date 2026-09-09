@@ -5,6 +5,8 @@ import { api } from "@/lib/api";
 import type { Category, ProductListResponse } from "@/lib/types";
 import { ProductCard } from "@/components/ProductCard";
 
+const PAGE_SIZE = 24;
+
 export function CategoryClient({
   slug,
   initialCategory,
@@ -15,17 +17,29 @@ export function CategoryClient({
   initialProducts: ProductListResponse | null;
 }) {
   const [category, setCategory] = useState<Category | null>(initialCategory);
+  const [page, setPage] = useState(1);
   const [data, setData] = useState<ProductListResponse | null>(initialProducts);
 
   useEffect(() => {
-    if (initialCategory && initialProducts) return; // sunucuda zaten alındı
-    api.get<Category>(`/categories/${slug}`).then(setCategory).catch(() => setCategory(null));
+    if (!initialCategory) {
+      api.get<Category>(`/categories/${slug}`).then(setCategory).catch(() => setCategory(null));
+    }
+  }, [slug, initialCategory]);
+
+  useEffect(() => {
+    if (page === 1 && initialProducts) {
+      setData(initialProducts);
+      return;
+    }
+    setData(null);
     api
-      .get<ProductListResponse>(`/products?category=${slug}&pageSize=48`)
+      .get<ProductListResponse>(`/products?category=${slug}&page=${page}&pageSize=${PAGE_SIZE}`)
       .then(setData)
       .catch(() => setData(null));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
+  }, [slug, page]);
+
+  const pageCount = data ? Math.max(1, Math.ceil(data.total / PAGE_SIZE)) : 1;
 
   return (
     <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 md:py-24">
@@ -42,11 +56,38 @@ export function CategoryClient({
       ) : data.items.length === 0 ? (
         <p className="text-sm text-ash">Bu kategoride ürün yok.</p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-5">
-          {data.items.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <>
+          <p className="mb-6 text-[13px] text-ash">{data.total} ürün</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-5">
+            {data.items.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+
+          {pageCount > 1 && (
+            <div className="mt-14 flex items-center justify-center gap-8 text-sm">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page <= 1}
+                className="text-smoke hover:text-ink transition-colors duration-[180ms] disabled:opacity-30 disabled:pointer-events-none"
+                style={{ letterSpacing: "0.08em" }}
+              >
+                ← ÖNCEKİ
+              </button>
+              <span className="text-ash">
+                Sayfa {page} / {pageCount}
+              </span>
+              <button
+                onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+                disabled={page >= pageCount}
+                className="text-smoke hover:text-ink transition-colors duration-[180ms] disabled:opacity-30 disabled:pointer-events-none"
+                style={{ letterSpacing: "0.08em" }}
+              >
+                SONRAKİ →
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
