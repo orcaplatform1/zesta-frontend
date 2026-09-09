@@ -10,10 +10,13 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
   { path: "/iletisim", priority: 0.5, changeFrequency: "monthly" },
   { path: "/kargo-teslimat", priority: 0.4, changeFrequency: "monthly" },
   { path: "/iade-degisim", priority: 0.4, changeFrequency: "monthly" },
+  { path: "/sss", priority: 0.5, changeFrequency: "monthly" },
+  { path: "/site-haritasi", priority: 0.3, changeFrequency: "monthly" },
   { path: "/yasal/mesafeli-satis-sozlesmesi", priority: 0.3, changeFrequency: "yearly" },
   { path: "/yasal/gizlilik-politikasi", priority: 0.3, changeFrequency: "yearly" },
   { path: "/yasal/kvkk", priority: 0.3, changeFrequency: "yearly" },
   { path: "/yasal/cerez-politikasi", priority: 0.3, changeFrequency: "yearly" },
+  { path: "/yasal/kullanim-kosullari", priority: 0.3, changeFrequency: "yearly" },
 ];
 
 // Katalog (ürün/kategori) her değiştiğinde site haritası da kendiliğinden
