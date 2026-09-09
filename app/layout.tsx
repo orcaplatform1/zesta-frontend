@@ -185,8 +185,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </div>
 
           <div className="border-t border-[var(--border-subtle)]">
-            <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-6 text-xs leading-relaxed text-stone-600">
-              {renderCopyrightWithBrandHighlight(copyrightText)}
+            <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-6 flex flex-col items-center gap-3 text-xs leading-relaxed text-stone-600 sm:flex-row sm:justify-between">
+              <p>{renderCopyrightWithBrandHighlight(copyrightText)}</p>
+              <a href="/sitemap.xml" className="hover:text-stone-400 transition-colors duration-[180ms]">
+                Site Haritası
+              </a>
             </div>
           </div>
         </footer>
