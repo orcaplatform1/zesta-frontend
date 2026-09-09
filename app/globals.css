@@ -398,3 +398,36 @@ body {
 .accordion-panel[data-open="true"] > div {
   max-height: 640px;
 }
+
+/* Top announcement bar — subtle moving light sweep, champagne-tinted,
+   understated (not a garish neon shimmer). Repeats slowly. Respects
+   reduced-motion. */
+.promo-bar-shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(185, 165, 141, 0.16) 45%,
+    rgba(185, 165, 141, 0.32) 50%,
+    rgba(185, 165, 141, 0.16) 55%,
+    transparent 70%
+  );
+  background-size: 220% 100%;
+  animation: promo-shimmer-sweep 5s ease-in-out infinite;
+}
+@keyframes promo-shimmer-sweep {
+  0% {
+    background-position: 140% 0;
+  }
+  55%,
+  100% {
+    background-position: -40% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .promo-bar-shimmer {
+    animation: none;
+  }
+}

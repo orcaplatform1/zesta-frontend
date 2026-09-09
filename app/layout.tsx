@@ -119,15 +119,16 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${bodoniModa.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-onyx-900 text-ink font-sans">
-        <div className="bg-charcoal-700 text-center py-2 px-4">
+        <div className="promo-bar sticky top-0 z-50 h-9 flex items-center justify-center overflow-hidden bg-charcoal-700 px-4 border-b border-[var(--border-accent-soft)]">
+          <span className="promo-bar-shimmer" aria-hidden />
           <p
-            className="text-[10px] md:text-[11px] font-medium uppercase text-[var(--text-on-dark)]"
+            className="relative max-w-full truncate text-[10px] md:text-[11px] font-medium uppercase text-[var(--text-on-dark)]"
             style={{ letterSpacing: "0.14em" }}
           >
             {promoBarText}
           </p>
         </div>
-        <header className="sticky top-0 z-40 bg-onyx-900/95 backdrop-blur-sm border-b border-[var(--border-subtle)]">
+        <header className="sticky top-9 z-40 bg-onyx-900/95 backdrop-blur-sm border-b border-[var(--border-subtle)]">
           <div className="mx-auto max-w-[1440px] h-16 md:h-[76px] flex items-center justify-between px-5 md:px-12">
             <Link href="/" className="flex items-center">
               <Image
