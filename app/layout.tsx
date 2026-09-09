@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Bodoni_Moda, Inter } from "next/font/google";
+import { MobileNav } from "@/components/MobileNav";
 import { safeJsonLd } from "@/lib/json-ld";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -121,7 +122,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               />
             </Link>
             <nav
-              className="flex items-center gap-6 md:gap-8 text-[13px]"
+              className="hidden md:flex items-center gap-6 md:gap-8 text-[13px]"
               style={{ letterSpacing: "0.08em" }}
             >
               <Link href="/shop" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
@@ -134,6 +135,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 SEPET
               </Link>
             </nav>
+
+            <MobileNav />
           </div>
         </header>
 
