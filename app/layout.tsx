@@ -7,6 +7,7 @@ import { CategoryNav } from "@/components/CategoryNav";
 import { AccountNavMenu } from "@/components/AccountNavMenu";
 import { DesignerNavMenu } from "@/components/DesignerNavMenu";
 import { PaymentBadges } from "@/components/PaymentBadges";
+import { CookieConsent } from "@/components/CookieConsent";
 import { safeJsonLd } from "@/lib/json-ld";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { DEFAULT_HOMEPAGE_CONTENT, type HomepageContent } from "@/lib/homepage-content";
@@ -262,6 +263,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             </div>
           </div>
         </footer>
+        <CookieConsent />
       </body>
     </html>
   );
