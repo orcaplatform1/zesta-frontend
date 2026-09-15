@@ -31,6 +31,8 @@ export interface Product {
   stock: number;
   productionTime: string | null;
   isActive: boolean;
+  approvalStatus?: "PENDING" | "APPROVED" | "REJECTED";
+  designerId?: string | null;
   createdAt: string;
   images: ProductImage[];
   variants: ProductVariant[];

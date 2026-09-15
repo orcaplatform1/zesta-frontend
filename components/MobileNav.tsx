@@ -97,6 +97,25 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                     {link.label}
                   </Link>
                 ))}
+                <span className="-mb-2 font-display text-[24px] text-ink">Tasarımcı Ol</span>
+                <div className="flex flex-col gap-2.5">
+                  <Link
+                    href="/tasarimci-basvuru"
+                    onClick={() => setOpen(false)}
+                    className="inline-flex h-10 items-center justify-center rounded-full bg-charcoal-700 px-5 text-[11px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
+                    style={{ letterSpacing: "0.08em" }}
+                  >
+                    TASARIMCI BAŞVURU
+                  </Link>
+                  <Link
+                    href="/tasarimci-giris"
+                    onClick={() => setOpen(false)}
+                    className="inline-flex h-10 items-center justify-center rounded-full border border-[var(--border-default)] px-5 text-[11px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink hover:border-[var(--border-hover)]"
+                    style={{ letterSpacing: "0.08em" }}
+                  >
+                    TASARIMCI GİRİŞİ
+                  </Link>
+                </div>
 
                 {categories.length > 0 && (
                   <div className="mt-4 flex flex-col items-start gap-4 border-t border-[var(--border-subtle)] pt-8">

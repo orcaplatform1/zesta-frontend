@@ -4,10 +4,20 @@ import { useState, type MouseEvent, type CSSProperties } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/api";
 import type { Product } from "@/lib/types";
+import { Stars } from "@/components/Stars";
+import { useBestsellerRank } from "@/lib/bestsellers";
 
 const glowRingStyle: CSSProperties = { "--zg-radius": "50%", "--zg-padding": "3px" } as CSSProperties;
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  rating,
+}: {
+  product: Product;
+  /** Verilirse fiyatın altında ortalama puan + yıldız gösterilir (gerçek yorum yoksa geçirilmemeli). */
+  rating?: { average: number; count: number };
+}) {
+  const bestsellerRank = useBestsellerRank(product.id);
   const [index, setIndex] = useState(0);
   const images = product.images;
   const image = images[index]?.url;
@@ -54,6 +64,17 @@ export function ProductCard({ product }: { product: Product }) {
                 Görsel yok
               </span>
             )}
+            {bestsellerRank !== null && (
+              <span
+                className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-1 py-1.5 text-[9px] font-semibold text-white"
+                style={{
+                  background: "linear-gradient(90deg, #f59e0b, #ef4444)",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                🔥 EN ÇOK SATILAN {bestsellerRank}.
+              </span>
+            )}
           </div>
         </span>
         {images.length > 1 && (
@@ -80,6 +101,13 @@ export function ProductCard({ product }: { product: Product }) {
             <span className="text-[13px] text-dim line-through">{formatPrice(product.price)}</span>
           )}
         </div>
+        {rating && rating.count > 0 && (
+          <div className="mt-1.5 flex items-center gap-1.5">
+            <span className="text-[12px] font-medium text-ink">{rating.average.toFixed(1)}</span>
+            <Stars rating={rating.average} size={12} />
+            <span className="text-[11px] text-dim">({rating.count})</span>
+          </div>
+        )}
         {product.stock <= 0 && <span className="mt-1 block text-xs text-dim">Tükendi</span>}
       </div>
     </Link>

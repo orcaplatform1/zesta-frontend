@@ -524,3 +524,14 @@ body {
     animation: none;
   }
 }
+
+/* Ana sayfadaki kayan ürün vitrini — native scroll-snap kullanır, tarayıcı
+   kaydırma çubuğu gizli (yerine altta kart noktası/scrollbar gösterilmiyor,
+   otomatik kaydırma + parmak/fare ile serbest sürükleme yeterli). */
+.carousel-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.carousel-scroll::-webkit-scrollbar {
+  display: none;
+}

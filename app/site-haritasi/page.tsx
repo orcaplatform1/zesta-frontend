@@ -27,6 +27,9 @@ const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
       { href: "/sss", label: "Sıkça Sorulan Sorular" },
       { href: "/kargo-teslimat", label: "Kargo & Teslimat" },
       { href: "/iade-degisim", label: "İade & Değişim" },
+      { href: "/kurumsal-cozumler", label: "Kurumsal Çözümler" },
+      { href: "/magazalarimiz", label: "Mağazalarımız" },
+      { href: "/siparis-takip", label: "Sipariş Takip" },
     ],
   },
   {

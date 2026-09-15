@@ -5,9 +5,12 @@ import { Bodoni_Moda, Inter } from "next/font/google";
 import { MobileNav } from "@/components/MobileNav";
 import { CategoryNav } from "@/components/CategoryNav";
 import { AccountNavMenu } from "@/components/AccountNavMenu";
+import { DesignerNavMenu } from "@/components/DesignerNavMenu";
+import { PaymentBadges } from "@/components/PaymentBadges";
 import { safeJsonLd } from "@/lib/json-ld";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { DEFAULT_HOMEPAGE_CONTENT, type HomepageContent } from "@/lib/homepage-content";
+import { DEFAULT_FOOTER_CONTACT, type FooterContactContent } from "@/lib/site-pages-content";
 import { serverApiGet } from "@/lib/server-api";
 import type { Category } from "@/lib/types";
 import "./globals.css";
@@ -74,6 +77,12 @@ const FOOTER_LINKS = [
   { href: "/iade-degisim", label: "İade & Değişim" },
 ];
 
+const CORPORATE_LINKS = [
+  { href: "/kurumsal-cozumler", label: "Kurumsal Çözümler" },
+  { href: "/magazalarimiz", label: "Mağazalarımız" },
+  { href: "/siparis-takip", label: "Sipariş Takip" },
+];
+
 const LEGAL_LINKS = [
   { href: "/yasal/mesafeli-satis-sozlesmesi", label: "Mesafeli Satış Sözleşmesi" },
   { href: "/yasal/gizlilik-politikasi", label: "Gizlilik Politikası" },
@@ -113,6 +122,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const settings = await serverApiGet<Record<string, unknown>>("/settings", 60);
   const homepageContent = settings?.homepage_content as HomepageContent | undefined;
   const promoBarText = homepageContent?.promoBarText ?? DEFAULT_HOMEPAGE_CONTENT.promoBarText;
+  const footerContact = (settings?.footer_contact_content as FooterContactContent | undefined) ?? DEFAULT_FOOTER_CONTACT;
 
   const categories = (await serverApiGet<Category[]>("/categories", 300)) ?? [];
 
@@ -150,6 +160,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               </Link>
               <CategoryNav categories={categories} />
               <AccountNavMenu />
+              <DesignerNavMenu />
               <Link href="/sepet" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
                 SEPET
               </Link>
@@ -162,7 +173,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1 bg-onyx-900">{children}</main>
 
         <footer className="bg-onyx-950 border-t border-[var(--border-light)] mt-32">
-          <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 grid gap-10 md:grid-cols-[1.2fr_2fr]">
+          <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 grid gap-10 md:grid-cols-[1fr_2.4fr]">
             <div>
               <Image src="/logo.png" alt="Zesta" width={2172} height={724} unoptimized className="h-12 md:h-16 w-auto" />
               <p className="mt-4 text-sm text-stone-300 max-w-xs leading-relaxed">
@@ -170,11 +181,26 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
               <div>
                 <div className="label-uppercase-on-dark mb-4">Mağaza</div>
                 <div className="flex flex-col gap-3 text-sm">
                   {FOOTER_LINKS.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-mist-200 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="label-uppercase-on-dark mb-4">Kurumsal</div>
+                <div className="flex flex-col gap-3 text-sm">
+                  {CORPORATE_LINKS.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
@@ -200,6 +226,30 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                   ))}
                 </div>
               </div>
+
+              <div>
+                <div className="label-uppercase-on-dark mb-4">İletişim</div>
+                <div className="flex flex-col gap-3 text-sm text-mist-200">
+                  <a href={`tel:${footerContact.phone.replace(/\s+/g, "")}`} className="flex items-center gap-2 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
+                    <span aria-hidden>📞</span>
+                    {footerContact.phone}
+                  </a>
+                  <a href={`mailto:${footerContact.email}`} className="flex items-center gap-2 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
+                    <span aria-hidden>✉️</span>
+                    {footerContact.email}
+                  </a>
+                  <p className="flex items-start gap-2 leading-relaxed">
+                    <span aria-hidden>📍</span>
+                    {footerContact.addressNote}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-[var(--border-light)] py-6">
+            <div className="mx-auto max-w-[1440px] px-5 md:px-12">
+              <PaymentBadges />
             </div>
           </div>
 

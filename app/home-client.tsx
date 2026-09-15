@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { api } from "@/lib/api";
 import type { ProductListResponse } from "@/lib/types";
-import { ProductCard } from "@/components/ProductCard";
+import { ProductCarousel } from "@/components/ProductCarousel";
+import { HomeProductCarousel } from "@/components/HomeProductCarousel";
 import { DEFAULT_HOMEPAGE_CONTENT, type HomepageContent, type HomepageEditorialSplit } from "@/lib/homepage-content";
+import { useInView } from "@/lib/use-in-view";
 
 export function HomeClient() {
   const [content, setContent] = useState<HomepageContent>(DEFAULT_HOMEPAGE_CONTENT);
   const [rows, setRows] = useState<Record<string, ProductListResponse | null>>({});
+  const [rowRatings, setRowRatings] = useState<Record<string, Record<string, { average: number; count: number }>>>({});
   const [splitProducts, setSplitProducts] = useState<Record<string, ProductListResponse | null>>({});
   const [hero, setHero] = useState<ProductListResponse | null>(null);
 
@@ -27,7 +31,16 @@ export function HomeClient() {
     content.categoryRows.forEach((c) => {
       api
         .get<ProductListResponse>(`/products?category=${c.slug}&pageSize=4`)
-        .then((data) => setRows((r) => ({ ...r, [c.slug]: data })))
+        .then((data) => {
+          setRows((r) => ({ ...r, [c.slug]: data }));
+          const ids = data.items.map((p) => p.id).join(",");
+          if (ids) {
+            api
+              .get<Record<string, { average: number; count: number }>>(`/reviews/summary?productIds=${ids}`)
+              .then((summary) => setRowRatings((r) => ({ ...r, [c.slug]: summary })))
+              .catch(() => {});
+          }
+        })
         .catch(() => setRows((r) => ({ ...r, [c.slug]: null })));
     });
     content.editorialSplits.forEach((s) => {
@@ -109,6 +122,46 @@ export function HomeClient() {
         </div>
       </section>
 
+      {/* ZESTA'DA SATIŞ YAP — tasarımcı/üretici davet bloğu */}
+      <section className="bg-onyx-950 py-16 md:py-20">
+        <div className="mx-auto max-w-[1440px] px-5 md:px-12 grid md:grid-cols-[1.4fr_1fr] gap-10 md:gap-16 items-center">
+          <div>
+            <p className="eyebrow-on-light" style={{ color: "var(--zesta-green)" }}>
+              Zesta&apos;da Satış Yap
+            </p>
+            <h2
+              className="mt-3 font-display font-normal text-[28px] md:text-[38px]"
+              style={{ lineHeight: 1.08, color: "var(--text-on-dark)" }}
+            >
+              Elinizin Emeğini Binlerce Kişiyle Buluşturun.
+            </h2>
+            <p className="mt-5 text-[15px] leading-relaxed text-mist-200 max-w-lg">
+              Seramikten cam sanatına, ahşap oymacılıktan tekstile — ürettiğiniz her parça için bir vitrin arıyorsanız
+              doğru yerdesiniz. Zesta Tasarımcı Paneli üzerinden ürünlerinizi ekleyin, satışlarınızı tek ekrandan
+              takip edin, kazancınızı düzenli olarak çekin.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3">
+            <span className="zesta-glow-ring">
+              <Link
+                href="/tasarimci-basvuru"
+                className="flex h-12 items-center justify-center rounded-full bg-[var(--zesta-green)] px-7 text-[12px] font-medium text-white transition-opacity duration-[180ms] hover:opacity-90"
+                style={{ letterSpacing: "0.1em" }}
+              >
+                ZESTA TASARIMCI PANELİ — BAŞVURU YAP
+              </Link>
+            </span>
+            <Link
+              href="/tasarimci-giris"
+              className="flex h-12 items-center justify-center rounded-full border border-[var(--border-light)] px-7 text-[12px] font-medium text-[var(--text-on-dark)] transition-colors duration-[180ms] hover:bg-onyx-700"
+              style={{ letterSpacing: "0.1em" }}
+            >
+              ZESTA TASARIMCI PANELİ — GİRİŞ YAP
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* TRUST STRIP */}
       <section className="bg-warm-ivory py-14 md:py-20">
         <div className="mx-auto max-w-[1440px] px-5 md:px-12 grid gap-10 sm:grid-cols-3 text-center sm:text-left">
@@ -123,6 +176,8 @@ export function HomeClient() {
         </div>
       </section>
 
+      <HomeProductCarousel />
+
       {Array.from({ length: rowCount }).map((_, i) => (
         <div key={i}>
           {content.categoryRows[i] && (
@@ -130,6 +185,7 @@ export function HomeClient() {
               slug={content.categoryRows[i].slug}
               label={content.categoryRows[i].label}
               data={rows[content.categoryRows[i].slug]}
+              ratings={rowRatings[content.categoryRows[i].slug] ?? {}}
             />
           )}
           {content.editorialSplits[i] && (
@@ -141,11 +197,27 @@ export function HomeClient() {
           )}
         </div>
       ))}
+
+      {/* Güvenli kargo banner'ı — footer'ın hemen üstünde, son kategori
+          satırının (Biblolar) altında, tam genişlik */}
+      <div className="relative w-full aspect-[3/1] md:aspect-[2172/724]">
+        <Image src="/guvenlikargo.png" alt="Güvenli Kargo" fill unoptimized className="object-cover" />
+      </div>
     </div>
   );
 }
 
-function CategoryRow({ slug, label, data }: { slug: string; label: string; data: ProductListResponse | null | undefined }) {
+function CategoryRow({
+  slug,
+  label,
+  data,
+  ratings,
+}: {
+  slug: string;
+  label: string;
+  data: ProductListResponse | null | undefined;
+  ratings: Record<string, { average: number; count: number }>;
+}) {
   return (
     <section className="py-14 md:py-20 border-t border-[var(--border-subtle)]">
       <div className="mx-auto max-w-[1440px] px-5 md:px-12">
@@ -173,11 +245,7 @@ function CategoryRow({ slug, label, data }: { slug: string; label: string; data:
         ) : data.items.length === 0 ? (
           <p className="text-sm text-ash">Bu kategoride henüz ürün yok.</p>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-5">
-            {data.items.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <ProductCarousel items={data.items} ratings={ratings} />
         )}
 
         <Link
@@ -202,6 +270,7 @@ function EditorialSplitSection({
   reverse: boolean;
 }) {
   const product = data?.items[0];
+  const { ref, inView } = useInView<HTMLDivElement>();
 
   return (
     <section className="bg-warm-ivory py-16 md:py-24">
@@ -226,13 +295,33 @@ function EditorialSplitSection({
           </Link>
         </div>
 
-        <div className={reverse ? "md:order-1" : ""}>
-          {product ? (
-            <div className="max-w-sm">
-              <ProductCard product={product} />
-            </div>
+        <div
+          ref={ref}
+          className={`relative aspect-[4/5] md:aspect-auto md:h-[480px] bg-stone-100 rounded-sm overflow-hidden transition-all duration-700 ease-[var(--ease-luxury)] ${
+            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          } ${reverse ? "md:order-1" : ""}`}
+        >
+          {product?.images[0]?.url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={product.images[0].url}
+              alt={product.name}
+              className="hero-kenburns h-full w-full object-cover"
+            />
           ) : (
-            <div className="aspect-square max-w-sm bg-stone-200 rounded-sm" />
+            <div className="h-full w-full flex items-center justify-center">
+              <span className="text-sm text-stone-500">{split.categoryLabel}</span>
+            </div>
+          )}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+          {product && (
+            <Link
+              href={`/urun/${product.slug}`}
+              className="absolute bottom-5 right-5 inline-flex h-11 items-center justify-center rounded-full bg-[var(--ivory-50)] px-6 text-[11px] font-medium text-ink shadow-[var(--shadow-md)] transition-colors duration-[180ms] hover:bg-mist-100"
+              style={{ letterSpacing: "0.1em" }}
+            >
+              ÜRÜNÜ İNCELE →
+            </Link>
           )}
         </div>
       </div>

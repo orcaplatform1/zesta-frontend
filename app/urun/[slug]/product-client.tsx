@@ -9,6 +9,9 @@ import { getSalesStats } from "@/lib/sales-stats";
 import { getViewCount } from "@/lib/view-stats";
 import { parseProductDescription } from "@/lib/product-description";
 import { ProductCard } from "@/components/ProductCard";
+import { Stars } from "@/components/Stars";
+import { PriceMatchButton } from "@/components/PriceMatchModal";
+import { InstallmentOptionsButton } from "@/components/InstallmentModal";
 
 const TRUST_ITEMS = [
   {
@@ -68,7 +71,7 @@ function WeeklyTrendChart({ weekly }: { weekly: { day: string; value: number }[]
   );
 }
 
-type AccordionKey = "about" | "details" | "care";
+type AccordionKey = "about" | "details" | "care" | "shipping";
 
 function AccordionSection({
   title,
@@ -98,19 +101,6 @@ function AccordionSection({
         </div>
       </div>
     </div>
-  );
-}
-
-function Stars({ rating, size = 14 }: { rating: number; size?: number }) {
-  const rounded = Math.round(rating);
-  return (
-    <span className="inline-flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} viewBox="0 0 20 20" width={size} height={size} fill={i < rounded ? "var(--champagne-300)" : "none"} stroke="var(--champagne-300)" strokeWidth={1.2}>
-          <path d="M10 1.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9L10 15l-5.2 2.8 1-5.9L1.5 7.7l5.9-.8z" />
-        </svg>
-      ))}
-    </span>
   );
 }
 
@@ -285,12 +275,17 @@ function RelatedProducts({
     <section className="mx-auto max-w-[1440px] px-5 md:px-12 pb-20 md:pb-28">
       <div className="mb-8 border-t border-[var(--border-subtle)] pt-16 md:pt-20">
         <p className="eyebrow-on-light">Keşfet</p>
-        <h2
-          className="mt-2 font-display text-[28px] md:text-[36px] font-normal text-ink"
-          style={{ lineHeight: 1.05 }}
-        >
-          Daha Fazla {categoryLabel}
-        </h2>
+        <div className="mt-2 flex flex-wrap items-center gap-3">
+          <h2 className="font-display text-[28px] md:text-[36px] font-normal text-ink" style={{ lineHeight: 1.05 }}>
+            Beğeneceğiniz Ürünler
+          </h2>
+          <span
+            className="inline-flex h-6 items-center rounded-full border border-[var(--border-default)] px-3 text-[10px] font-medium text-smoke"
+            style={{ letterSpacing: "0.03em" }}
+          >
+            (Yapay Zeka tarafından önerildi)
+          </span>
+        </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-5">
         {items.map((p) => (
@@ -439,6 +434,8 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
           {product.salePrice && <span className="text-dim line-through">{formatPrice(product.price)}</span>}
         </div>
 
+        <PriceMatchButton />
+
         <div className="mt-8 border-t border-[var(--border-subtle)]">
           <AccordionSection title="Hakkında" open={openSection === "about"} onOpen={() => setOpenSection("about")}>
             <p className="whitespace-pre-line">{parsed.about}</p>
@@ -455,7 +452,15 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
           <AccordionSection title="Bakım" open={openSection === "care"} onOpen={() => setOpenSection("care")}>
             <p>{parsed.care}</p>
           </AccordionSection>
+          <AccordionSection title="Kargo & İade" open={openSection === "shipping"} onOpen={() => setOpenSection("shipping")}>
+            <p>
+              Koşulsuz 14 gün ücretsiz iade hakkınız bulunmaktadır. Siparişlerim sayfasından ücretsiz olarak iade
+              kodunuzu oluşturabilirsiniz.
+            </p>
+          </AccordionSection>
         </div>
+
+        <InstallmentOptionsButton />
 
         {variantGroups.map((groupName) => (
           <div key={groupName} className="mt-6">
