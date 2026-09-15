@@ -62,7 +62,10 @@ export function ProductCarousel({ items, ratings = {} }: { items: Product[]; rat
     if (settleTimer.current) clearTimeout(settleTimer.current);
     settleTimer.current = setTimeout(() => {
       const el = containerRef.current;
-      if (el && loop) {
+      // Kullanıcı hâlâ sürüklüyorsa düzeltmeyi erteler — ortadaki üçte birde
+      // yeterince pay var, aksi halde sürükleme sırasında görünür bir
+      // "sıçrama" hissi oluşabiliyordu.
+      if (el && loop && !interactingRef.current) {
         const singleSetWidth = el.scrollWidth / 3;
         if (el.scrollLeft < singleSetWidth * 0.5) {
           el.scrollLeft += singleSetWidth;
@@ -84,7 +87,13 @@ export function ProductCarousel({ items, ratings = {} }: { items: Product[]; rat
       ref={containerRef}
       onScroll={handleScroll}
       onPointerDown={handlePointerDown}
-      className="carousel-scroll flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory"
+      // scroll-smooth BİLEREK yok: CSS scroll-behavior:smooth açıkken doğrudan
+      // scrollLeft ataması (sonsuz döngü kopyaları arası anlık/görünmez sıçrama
+      // için kullanılıyor) bazı tarayıcılarda da animasyonlu kayıyor — kullanıcı
+      // manuel kaydırdıktan sonra görünür şekilde "geri fırlıyormuş" gibi
+      // algılanıyordu. Otomatik adım (step()) zaten kendi smooth'unu scrollBy
+      // ile ayrıca istiyor, dokunmatik/trackpad kaydırma da doğal akıcı.
+      className="carousel-scroll flex gap-4 overflow-x-auto snap-x snap-mandatory"
     >
       {renderList.map((product, i) => (
         <div key={`${product.id}-${i}`} className="flex-none w-[80%] sm:w-[48%] md:w-[32%] lg:w-1/4 snap-start">

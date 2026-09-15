@@ -3,16 +3,15 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 
-const BANKS = ["Bonus", "Axess", "Paraf", "Maximum", "World", "Finansbank", "Bankkart"];
-
-function CardIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--champagne-300)" strokeWidth="1.4">
-      <rect x="2.5" y="5.5" width="19" height="13" rx="2" />
-      <path d="M2.5 9.5h19" />
-    </svg>
-  );
-}
+const BANKS = [
+  { name: "Bonus", color: "#00A19A" },
+  { name: "Axess", color: "#E4002B" },
+  { name: "Paraf", color: "#0033A0" },
+  { name: "Maximum", color: "#00205B" },
+  { name: "World", color: "#7A0C2E" },
+  { name: "Finansbank", color: "#5A2D82" },
+  { name: "Bankkart", color: "#00843D" },
+];
 
 export function InstallmentOptionsButton() {
   const [open, setOpen] = useState(false);
@@ -51,14 +50,19 @@ export function InstallmentOptionsButton() {
               </h2>
 
               <div className="mt-6 space-y-2">
-                {BANKS.map((bank) => (
+                {BANKS.map((b) => (
                   <div
-                    key={bank}
+                    key={b.name}
                     className="flex items-center gap-3 rounded-xs border border-[var(--border-subtle)] px-4 py-3"
                   >
-                    <CardIcon />
+                    <span
+                      className="flex h-9 w-14 flex-shrink-0 items-center justify-center rounded-xs text-[11px] font-bold italic text-white"
+                      style={{ background: b.color }}
+                    >
+                      {b.name}
+                    </span>
                     <div>
-                      <p className="text-[14px] font-medium text-ink">{bank}</p>
+                      <p className="text-[14px] font-medium text-ink">{b.name}</p>
                       <p className="text-[12px] text-ash">Vade farksız 3 taksite kadar</p>
                     </div>
                   </div>

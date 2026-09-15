@@ -10,10 +10,16 @@ interface DesignerApplication {
   brandName: string;
   email: string;
   phone: string;
+  country: string;
+  city: string;
   canInvoice: boolean;
+  companySize: string;
+  referralSource: string;
+  website: string | null;
+  instagram: string | null;
   category: string;
   otherCategory: string | null;
-  message: string;
+  message: string | null;
   status: "PENDING" | "APPROVED" | "REJECTED";
   createdAt: string;
 }
@@ -110,13 +116,28 @@ export default function ManageDesignersPage() {
                     <span className="text-xs text-dim">{new Date(a.createdAt).toLocaleDateString("tr-TR")}</span>
                   </div>
                   <p className="mt-1 text-sm text-smoke">
-                    {a.email} · {a.phone}
+                    {a.email} · {a.phone} · {a.city}, {a.country}
                   </p>
                   <p className="mt-1 text-sm text-ash">
                     Kategori: {a.category === "diger" ? a.otherCategory : a.category} · Fatura:{" "}
-                    {a.canInvoice ? "Kesebiliyor" : "Kesemiyor"}
+                    {a.canInvoice ? "Kesebiliyor" : "Kesemiyor"} · Büyüklük: {a.companySize} · Kaynak:{" "}
+                    {a.referralSource}
                   </p>
-                  <p className="mt-2 text-sm text-smoke">{a.message}</p>
+                  {(a.website || a.instagram) && (
+                    <p className="mt-1 text-sm text-ash space-x-3">
+                      {a.website && (
+                        <a href={a.website} target="_blank" rel="noreferrer" className="underline">
+                          {a.website}
+                        </a>
+                      )}
+                      {a.instagram && (
+                        <a href={a.instagram} target="_blank" rel="noreferrer" className="underline">
+                          {a.instagram}
+                        </a>
+                      )}
+                    </p>
+                  )}
+                  {a.message && <p className="mt-2 text-sm text-smoke">{a.message}</p>}
                   <div className="mt-3 flex gap-2">
                     <button
                       onClick={() => act(() => api.patch(`/designer-applications/admin/${a.id}/approve`), "Başvuru onaylandı")}

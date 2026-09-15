@@ -115,7 +115,7 @@ export function HomeClient() {
                 className="absolute bottom-5 right-5 inline-flex h-11 items-center justify-center rounded-full bg-[var(--ivory-50)] px-6 text-[11px] font-medium text-ink shadow-[var(--shadow-md)] transition-colors duration-[180ms] hover:bg-mist-100"
                 style={{ letterSpacing: "0.1em" }}
               >
-                ŞİMDİ KEŞFET →
+                ÜRÜNÜ İNCELE →
               </Link>
             )}
           </div>
@@ -142,18 +142,16 @@ export function HomeClient() {
             </p>
           </div>
           <div className="flex flex-col gap-3">
-            <span className="zesta-glow-ring">
-              <Link
-                href="/tasarimci-basvuru"
-                className="flex h-12 items-center justify-center rounded-full bg-[var(--zesta-green)] px-7 text-[12px] font-medium text-white transition-opacity duration-[180ms] hover:opacity-90"
-                style={{ letterSpacing: "0.1em" }}
-              >
-                BAŞVURU YAP
-              </Link>
-            </span>
+            <Link
+              href="/tasarimci-basvuru"
+              className="flex h-12 items-center justify-center rounded-full bg-[var(--zesta-green)] px-7 text-[12px] font-medium text-white transition-opacity duration-[180ms] hover:opacity-90"
+              style={{ letterSpacing: "0.1em" }}
+            >
+              BAŞVURU YAP
+            </Link>
             <Link
               href="/tasarimci-giris"
-              className="flex h-12 items-center justify-center rounded-full border border-[var(--border-light)] px-7 text-[12px] font-medium text-[var(--text-on-dark)] transition-colors duration-[180ms] hover:bg-onyx-700"
+              className="flex h-12 items-center justify-center rounded-full bg-mist-800 px-7 text-[12px] font-medium text-white transition-colors duration-[180ms] hover:bg-mist-700"
               style={{ letterSpacing: "0.1em" }}
             >
               PANELE GİRİŞ YAP
@@ -199,8 +197,9 @@ export function HomeClient() {
       ))}
 
       {/* Güvenli kargo banner'ı — footer'ın hemen üstünde, son kategori
-          satırının (Biblolar) altında, tam genişlik */}
-      <div className="relative w-full aspect-[3/1] md:aspect-[2172/724]">
+          satırının (Biblolar) altında, tam genişlik. -mb-32, footer'ın
+          mt-32'sini (layout.tsx) iptal edip aradaki beyaz boşluğu kapatır. */}
+      <div className="relative -mb-32 w-full aspect-[3/1] md:aspect-[2172/724]">
         <Image src="/guvenlikargo.png" alt="Güvenli Kargo" fill unoptimized className="object-cover" />
       </div>
     </div>

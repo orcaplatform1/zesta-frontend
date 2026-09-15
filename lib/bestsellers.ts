@@ -3,20 +3,22 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 
-// "En Çok Satılan" rozeti için elle seçilmiş 25 ürünlük sıralı liste — Settings
-// tablosunda tek bir key, admin panelinden değil şimdilik doğrudan veritabanından
-// girildi. Tüm ProductCard'lar aynı tek istekten (modül düzeyinde paylaşılan
-// promise) faydalanır, sayfa başına birden çok /settings isteği atılmaz.
-let idsPromise: Promise<string[]> | null = null;
+// "En Çok Satılan" rozeti — backend'in /products/bestsellers uç noktası,
+// ürün sayfasında zaten gösterilen simüle "X satıldı" sayısına göre sıralar
+// (bkz. backend/src/products/sales-stats.util.ts), böylece rozetteki sıra
+// ile ürünün kendi sayfasındaki satış sayısı hep tutarlı olur. Tüm
+// ProductCard'lar aynı tek istekten (modül düzeyinde paylaşılan promise)
+// faydalanır, sayfa başına birden çok istek atılmaz.
+let ranksPromise: Promise<Map<string, number>> | null = null;
 
-function loadBestsellerIds(): Promise<string[]> {
-  if (!idsPromise) {
-    idsPromise = api
-      .get<Record<string, unknown>>("/settings")
-      .then((s) => (s.bestseller_product_ids as string[] | undefined) ?? [])
-      .catch(() => []);
+function loadRanks(): Promise<Map<string, number>> {
+  if (!ranksPromise) {
+    ranksPromise = api
+      .get<{ id: string; rank: number }[]>("/products/bestsellers?limit=25")
+      .then((rows) => new Map(rows.map((r) => [r.id, r.rank])))
+      .catch(() => new Map());
   }
-  return idsPromise;
+  return ranksPromise;
 }
 
 /** Verilen ürün en çok satılanlar listesindeyse 1 tabanlı sırasını döner, değilse null. */
@@ -25,10 +27,9 @@ export function useBestsellerRank(productId: string): number | null {
 
   useEffect(() => {
     let alive = true;
-    loadBestsellerIds().then((ids) => {
+    loadRanks().then((ranks) => {
       if (!alive) return;
-      const idx = ids.indexOf(productId);
-      setRank(idx >= 0 ? idx + 1 : null);
+      setRank(ranks.get(productId) ?? null);
     });
     return () => {
       alive = false;

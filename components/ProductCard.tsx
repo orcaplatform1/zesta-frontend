@@ -64,19 +64,19 @@ export function ProductCard({
                 Görsel yok
               </span>
             )}
-            {bestsellerRank !== null && (
-              <span
-                className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-1 py-1.5 text-[9px] font-semibold text-white"
-                style={{
-                  background: "linear-gradient(90deg, #f59e0b, #ef4444)",
-                  letterSpacing: "0.02em",
-                }}
-              >
-                🔥 EN ÇOK SATILAN {bestsellerRank}.
-              </span>
-            )}
           </div>
         </span>
+        {bestsellerRank !== null && (
+          <span
+            className="absolute bottom-1 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full px-2.5 py-1 text-[9px] font-semibold text-white shadow-[var(--shadow-sm)]"
+            style={{
+              background: "linear-gradient(90deg, #f59e0b, #ef4444)",
+              letterSpacing: "0.02em",
+            }}
+          >
+            🔥 EN ÇOK SATILAN {bestsellerRank}.
+          </span>
+        )}
         {images.length > 1 && (
           <>
             {index > 0 && (

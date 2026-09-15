@@ -5,6 +5,7 @@ import Link from "next/link";
 import { api, ApiError } from "@/lib/api";
 import type { Category } from "@/lib/types";
 import { DesignerTermsButton } from "@/components/DesignerTermsModal";
+import { Field } from "@/components/admin/ManageFormControls";
 
 const inputClass =
   "w-full h-12 rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]";
@@ -20,12 +21,19 @@ const HIGHLIGHTS = [
 export default function DesignerApplyPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [form, setForm] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     brandName: "",
     email: "",
     phone: "",
     password: "",
+    country: "Türkiye",
+    city: "",
     canInvoice: "" as "" | "true" | "false",
+    companySize: "",
+    referralSource: "",
+    website: "",
+    instagram: "",
     category: "",
     otherCategory: "",
     message: "",
@@ -43,7 +51,12 @@ export default function DesignerApplyPage() {
     setBusy(true);
     setError(null);
     try {
-      await api.post("/designer-applications", { ...form, canInvoice: form.canInvoice === "true" });
+      const { firstName, lastName, ...rest } = form;
+      await api.post("/designer-applications", {
+        ...rest,
+        name: `${firstName} ${lastName}`.trim(),
+        canInvoice: form.canInvoice === "true",
+      });
       setDone(true);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Başvuru gönderilemedi");
@@ -102,75 +115,112 @@ export default function DesignerApplyPage() {
             </div>
           ) : (
             <>
-              <h2 className="font-display text-[24px] font-normal text-ink mb-6">Başvuru Formu</h2>
+              <h2 className="font-display text-[24px] font-normal text-ink mb-2">Tasarımcı Başvuru Formu</h2>
+              <p className="text-sm text-ash mb-6 leading-relaxed">
+                Temel bilgilerinizi doldurun. Ekibimiz başvurunuzu inceleyerek size dönüş yapacaktır.
+              </p>
               <form onSubmit={submit} className="space-y-3">
-                <input
-                  placeholder="Ad Soyad"
-                  required
-                  value={form.name}
-                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  className={inputClass}
-                />
-                <input
-                  placeholder="Marka / Atölye Adı"
-                  required
-                  value={form.brandName}
-                  onChange={(e) => setForm((f) => ({ ...f, brandName: e.target.value }))}
-                  className={inputClass}
-                />
-                <input
-                  type="email"
-                  placeholder="E-posta"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                  className={inputClass}
-                />
-                <input
-                  placeholder="Telefon"
-                  required
-                  value={form.phone}
-                  onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-                  className={inputClass}
-                />
-                <input
-                  type="password"
-                  placeholder="Panel Şifresi (6-20 karakter)"
-                  required
-                  minLength={6}
-                  maxLength={20}
-                  value={form.password}
-                  onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
-                  className={inputClass}
-                />
-                <select
-                  required
-                  value={form.canInvoice}
-                  onChange={(e) => setForm((f) => ({ ...f, canInvoice: e.target.value as "" | "true" | "false" }))}
-                  className={inputClass}
-                >
-                  <option value="" disabled>
-                    Fatura Kesebiliyor musunuz?
-                  </option>
-                  <option value="true">Evet, fatura kesebiliyorum</option>
-                  <option value="false">Hayır, fatura kesemiyorum</option>
-                </select>
-                <select
-                  required
-                  value={form.category}
-                  onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                  className={inputClass}
-                >
-                  <option value="" disabled>
-                    Üretim Kategorisi Seçin
-                  </option>
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.slug}>
-                      {c.name}
+                <Field label="Markanızın Adı">
+                  <input
+                    required
+                    value={form.brandName}
+                    onChange={(e) => setForm((f) => ({ ...f, brandName: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="İsim">
+                  <input
+                    required
+                    value={form.firstName}
+                    onChange={(e) => setForm((f) => ({ ...f, firstName: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Soyad">
+                  <input
+                    required
+                    value={form.lastName}
+                    onChange={(e) => setForm((f) => ({ ...f, lastName: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="E-posta">
+                  <input
+                    type="email"
+                    required
+                    value={form.email}
+                    onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Telefon Numarası">
+                  <input
+                    required
+                    value={form.phone}
+                    onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Panel Şifresi">
+                  <input
+                    type="password"
+                    placeholder="6-20 karakter"
+                    required
+                    minLength={6}
+                    maxLength={20}
+                    value={form.password}
+                    onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Ülke">
+                  <input
+                    required
+                    value={form.country}
+                    onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Şehir">
+                  <input
+                    required
+                    value={form.city}
+                    onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Fatura kesebiliyor musun?">
+                  <select
+                    required
+                    value={form.canInvoice}
+                    onChange={(e) => setForm((f) => ({ ...f, canInvoice: e.target.value as "" | "true" | "false" }))}
+                    className={inputClass}
+                  >
+                    <option value="" disabled>
+                      Seçiniz
                     </option>
-                  ))}
-                  <option value="diger">Diğer</option>
-                </select>
+                    <option value="true">Evet</option>
+                    <option value="false">Hayır</option>
+                  </select>
+                </Field>
+                <Field label="Kategori">
+                  <select
+                    required
+                    value={form.category}
+                    onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
+                    className={inputClass}
+                  >
+                    <option value="" disabled>
+                      Seçiniz
+                    </option>
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.slug}>
+                        {c.name}
+                      </option>
+                    ))}
+                    <option value="diger">Diğer</option>
+                  </select>
+                </Field>
                 {form.category === "diger" && (
                   <input
                     placeholder="Kategorinizi yazın"
@@ -180,14 +230,61 @@ export default function DesignerApplyPage() {
                     className={inputClass}
                   />
                 )}
-                <textarea
-                  placeholder="Kendinizden ve ürettiğiniz ürünlerden kısaca bahsedin"
-                  required
-                  rows={4}
-                  value={form.message}
-                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                  className={textareaClass}
-                />
+                <Field label="Şirket Büyüklüğü">
+                  <select
+                    required
+                    value={form.companySize}
+                    onChange={(e) => setForm((f) => ({ ...f, companySize: e.target.value }))}
+                    className={inputClass}
+                  >
+                    <option value="" disabled>
+                      Seçiniz
+                    </option>
+                    <option value="Sadece Ben">Sadece Ben</option>
+                    <option value="2-5">2-5</option>
+                    <option value="6-10">6-10</option>
+                    <option value="11-50">11-50</option>
+                    <option value="50+">50+</option>
+                  </select>
+                </Field>
+                <Field label="Zesta'yı nereden duydun?">
+                  <select
+                    required
+                    value={form.referralSource}
+                    onChange={(e) => setForm((f) => ({ ...f, referralSource: e.target.value }))}
+                    className={inputClass}
+                  >
+                    <option value="" disabled>
+                      Seçiniz
+                    </option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Google Arama">Google Arama</option>
+                    <option value="Arkadaş / Tanıdık Tavsiyesi">Arkadaş / Tanıdık Tavsiyesi</option>
+                    <option value="Diğer">Diğer</option>
+                  </select>
+                </Field>
+                <Field label="Website URL">
+                  <input
+                    value={form.website}
+                    onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Instagram URL">
+                  <input
+                    value={form.instagram}
+                    onChange={(e) => setForm((f) => ({ ...f, instagram: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Eklemek istediğin bir şey var mı?">
+                  <textarea
+                    rows={4}
+                    value={form.message}
+                    onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+                    className={textareaClass}
+                  />
+                </Field>
                 {error && <p className="text-sm text-[var(--status-error)]">{error}</p>}
                 <button
                   type="submit"

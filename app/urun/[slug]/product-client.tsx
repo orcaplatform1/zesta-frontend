@@ -9,6 +9,7 @@ import { getSalesStats } from "@/lib/sales-stats";
 import { getViewCount } from "@/lib/view-stats";
 import { parseProductDescription } from "@/lib/product-description";
 import { ProductCard } from "@/components/ProductCard";
+import { useBestsellerRank } from "@/lib/bestsellers";
 import { Stars } from "@/components/Stars";
 import { PriceMatchButton } from "@/components/PriceMatchModal";
 import { InstallmentOptionsButton } from "@/components/InstallmentModal";
@@ -329,6 +330,7 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
   );
 
   const availableStock = selectedVariant?.stock ?? product?.stock ?? 0;
+  const bestsellerRank = useBestsellerRank(product?.id ?? "");
 
   async function addToCart() {
     if (!product) return;
@@ -419,6 +421,14 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
       </div>
 
       <div>
+        {bestsellerRank !== null && (
+          <span
+            className="mb-3 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-[11px] font-semibold text-white"
+            style={{ background: "linear-gradient(90deg, #f59e0b, #ef4444)", letterSpacing: "0.02em" }}
+          >
+            🔥 EN ÇOK SATILAN {bestsellerRank}. ÜRÜN
+          </span>
+        )}
         {product.category && <div className="label-uppercase mb-2">{product.category.name}</div>}
         <h1 className="font-display text-[32px] md:text-[40px] font-normal text-ink" style={{ lineHeight: 1.05 }}>
           {product.name}

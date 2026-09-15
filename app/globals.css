@@ -412,13 +412,13 @@ body {
   background: linear-gradient(
     100deg,
     transparent 30%,
-    rgba(185, 165, 141, 0.16) 45%,
-    rgba(185, 165, 141, 0.32) 50%,
-    rgba(185, 165, 141, 0.16) 55%,
+    rgba(79, 138, 99, 0.22) 45%,
+    rgba(79, 138, 99, 0.4) 50%,
+    rgba(79, 138, 99, 0.22) 55%,
     transparent 70%
   );
   background-size: 220% 100%;
-  animation: promo-shimmer-sweep 5s ease-in-out infinite;
+  animation: promo-shimmer-sweep 8s ease-in-out infinite;
 }
 @keyframes promo-shimmer-sweep {
   0% {
