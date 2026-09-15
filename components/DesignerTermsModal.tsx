@@ -56,7 +56,7 @@ export function DesignerTermsButton({ className }: { className?: string }) {
         }
         style={{ letterSpacing: "0.06em" }}
       >
-        HAKLARIMIZ
+        TASARIMCI HAKLARI
       </button>
 
       {open &&
@@ -74,7 +74,7 @@ export function DesignerTermsButton({ className }: { className?: string }) {
               </button>
               <p className="eyebrow-on-light">Zesta Tasarımcı Paneli</p>
               <h2 className="mt-2 font-display text-[24px] font-normal text-ink" style={{ lineHeight: 1.1 }}>
-                Haklarımız
+                Tasarımcı Hakları
               </h2>
               <div className="mt-6 space-y-6">
                 {SECTIONS.map((s) => (

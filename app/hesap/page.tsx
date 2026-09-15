@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
 import { PasswordField } from "@/components/PasswordField";
+import { TermsAcceptField } from "@/components/TermsAcceptField";
 
 interface Me {
   id: string;
@@ -200,11 +201,16 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
   const [form, setForm] = useState({ name: "", email: "", password: "", phone: "", birthDate: "" });
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
-    setBusy(true);
     setError(null);
+    if (mode === "register" && !termsAccepted) {
+      setError("Devam etmek için Gizlilik Politikası ve Kullanım Şartları'nı okuyup kabul etmelisiniz");
+      return;
+    }
+    setBusy(true);
     try {
       if (mode === "register") {
         await api.post("/auth/register", {
@@ -275,6 +281,9 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
               className={inputClass}
             />
           </label>
+        )}
+        {mode === "register" && (
+          <TermsAcceptField accepted={termsAccepted} onChange={setTermsAccepted} />
         )}
         {error && <p className="text-sm text-[var(--status-error)]">{error}</p>}
         <button

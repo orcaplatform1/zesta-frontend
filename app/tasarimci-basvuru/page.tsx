@@ -8,6 +8,7 @@ import { DesignerTermsButton } from "@/components/DesignerTermsModal";
 import { Field } from "@/components/admin/ManageFormControls";
 import { Dropdown } from "@/components/Dropdown";
 import { PasswordField } from "@/components/PasswordField";
+import { TermsAcceptField } from "@/components/TermsAcceptField";
 
 const inputClass =
   "w-full h-12 rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]";
@@ -63,6 +64,7 @@ export default function DesignerApplyPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   useEffect(() => {
     api.get<Category[]>("/categories").then(setCategories).catch(() => setCategories([]));
@@ -99,6 +101,10 @@ export default function DesignerApplyPage() {
     }
     if (!form.referralSource) {
       setError("Lütfen Zesta'yı nereden duyduğunuzu seçin");
+      return;
+    }
+    if (!termsAccepted) {
+      setError("Devam etmek için Gizlilik Politikası ve Kullanım Şartları'nı okuyup kabul etmelisiniz");
       return;
     }
 
@@ -170,12 +176,12 @@ export default function DesignerApplyPage() {
             </div>
           ) : (
             <>
-              <h2 className="font-display text-[24px] font-normal text-ink mb-2">Tasarımcı Başvuru Formu</h2>
-              <p className="text-sm text-ash mb-6 leading-relaxed">
+              <h2 className="font-display text-[24px] font-normal text-ink mb-3">Tasarımcı Başvuru Formu</h2>
+              <p className="text-sm text-ash mb-8 leading-relaxed">
                 Temel bilgilerinizi doldurun. Ekibimiz başvurunuzu inceleyerek size dönüş yapacaktır.
               </p>
               <form onSubmit={submit} className="space-y-3">
-                <Field label="Markanızın Adı" required>
+                <Field label="Markanızın Adı" required accent>
                   <input
                     required
                     value={form.brandName}
@@ -322,6 +328,7 @@ export default function DesignerApplyPage() {
                     className={textareaClass}
                   />
                 </Field>
+                <TermsAcceptField accepted={termsAccepted} onChange={setTermsAccepted} />
                 {error && <p className="text-sm text-[var(--status-error)]">{error}</p>}
                 <button
                   type="submit"

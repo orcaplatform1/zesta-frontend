@@ -62,15 +62,21 @@ export function ImageUploadField({
 export function Field({
   label,
   required,
+  accent,
   children,
 }: {
   label: string;
   required?: boolean;
+  /** Etiketi Zesta yeşiliyle vurgular — ör. formdaki en öne çıkması gereken alan. */
+  accent?: boolean;
   children: ReactNode;
 }) {
   return (
     <label className="block">
-      <span className="label-uppercase block mb-1.5">
+      <span
+        className="label-uppercase block mb-1.5"
+        style={accent ? { color: "var(--zesta-green)" } : undefined}
+      >
         {label}
         {required && <span style={{ color: "var(--status-error)" }}> *</span>}
       </span>
