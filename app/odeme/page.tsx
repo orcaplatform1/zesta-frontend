@@ -117,7 +117,7 @@ export default function CheckoutPage() {
         </p>
         <Link
           href="/hesap"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-xs bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
           style={{ letterSpacing: "0.1em" }}
         >
           GİRİŞ YAP / ÜYE OL
@@ -147,7 +147,7 @@ export default function CheckoutPage() {
             <button
               type="button"
               onClick={() => setInvoiceType("individual")}
-              className="h-11 flex-1 rounded-xs border text-[12px] font-medium transition-colors duration-[180ms]"
+              className="h-11 flex-1 rounded-full border text-[12px] font-medium transition-colors duration-[180ms]"
               style={{
                 borderColor: invoiceType === "individual" ? "var(--border-accent)" : "var(--border-subtle)",
                 background: invoiceType === "individual" ? "var(--champagne-300)" : "transparent",
@@ -159,7 +159,7 @@ export default function CheckoutPage() {
             <button
               type="button"
               onClick={() => setInvoiceType("corporate")}
-              className="h-11 flex-1 rounded-xs border text-[12px] font-medium transition-colors duration-[180ms]"
+              className="h-11 flex-1 rounded-full border text-[12px] font-medium transition-colors duration-[180ms]"
               style={{
                 borderColor: invoiceType === "corporate" ? "var(--border-accent)" : "var(--border-subtle)",
                 background: invoiceType === "corporate" ? "var(--champagne-300)" : "transparent",
@@ -213,7 +213,7 @@ export default function CheckoutPage() {
         <button
           type="submit"
           disabled={busy}
-          className="w-full h-12 rounded-xs bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
+          className="w-full h-12 rounded-full bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
           style={{ letterSpacing: "0.1em" }}
         >
           {busy ? "GÖNDERİLİYOR..." : "SİPARİŞİ TAMAMLA"}

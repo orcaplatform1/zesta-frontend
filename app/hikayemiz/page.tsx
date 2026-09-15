@@ -75,7 +75,7 @@ export default function AboutPage() {
           </h2>
           <Link
             href="/magaza"
-            className="mt-8 inline-flex h-12 items-center justify-center rounded-xs bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
+            className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
             style={{ letterSpacing: "0.1em" }}
           >
             KOLEKSİYONLARI KEŞFET

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
 
 interface Me {
@@ -187,7 +188,7 @@ function ProfileView({
         <button
           type="submit"
           disabled={profileBusy}
-          className="h-11 rounded-xs bg-charcoal-700 px-6 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
+          className="h-11 rounded-full bg-charcoal-700 px-6 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
           style={{ letterSpacing: "0.1em" }}
         >
           {profileBusy ? "KAYDEDİLİYOR..." : "BİLGİLERİ KAYDET"}
@@ -219,7 +220,7 @@ function ProfileView({
           <button
             type="submit"
             disabled={passwordBusy}
-            className="h-11 rounded-xs bg-charcoal-700 px-6 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
+            className="h-11 rounded-full bg-charcoal-700 px-6 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
             style={{ letterSpacing: "0.1em" }}
           >
             {passwordBusy ? "GÜNCELLENİYOR..." : "ŞİFREYİ GÜNCELLE"}
@@ -240,7 +241,16 @@ function ProfileView({
 }
 
 function AuthForms({ onAuthed }: { onAuthed: () => void }) {
-  const [mode, setMode] = useState<"login" | "register">("login");
+  const searchParams = useSearchParams();
+  const [mode, setMode] = useState<"login" | "register">(
+    searchParams.get("islem") === "kayit" ? "register" : "login",
+  );
+  // searchParams değişse bile bu bileşen aynı rotada kaldığı için yeniden
+  // mount olmuyor — useState'in ilk değeri tekrar hesaplanmıyor, bu yüzden
+  // "Kayıt Ol" linkinden gelindiğinde bazen eski (login) mod kalıyordu.
+  useEffect(() => {
+    setMode(searchParams.get("islem") === "kayit" ? "register" : "login");
+  }, [searchParams]);
   const [form, setForm] = useState({ name: "", email: "", password: "", phone: "", birthDate: "" });
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -324,7 +334,7 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
         <button
           type="submit"
           disabled={busy}
-          className="w-full h-12 rounded-xs bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
+          className="w-full h-12 rounded-full bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
           style={{ letterSpacing: "0.1em" }}
         >
           {busy ? "..." : mode === "login" ? "GİRİŞ YAP" : "ÜYE OL"}

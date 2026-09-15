@@ -142,6 +142,9 @@
   --transition-slow: 250ms;
   --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
 
+  /* Zesta green — decorative accent (product image star ring) */
+  --zesta-green: #4f8a63;
+
   /* Semantic status — muted, never traffic-light colors */
   --status-success: #60776c;
   --status-success-bg: rgba(96, 119, 108, 0.1);
@@ -428,6 +431,96 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .promo-bar-shimmer {
+    animation: none;
+  }
+}
+
+/* Premium dönen gradient çerçeve (ORCA/traders.tr'deki .premium-glow-ring ile aynı
+   teknik — bkz. o projenin globals.css'i) — burada Zesta yeşili tonlarında. Ana
+   sayfa "ÜRÜNLERİ KEŞFET" CTA'sını ve dairesel ürün fotoğraflarını sarmalar
+   (ikincisinde --zg-radius: 50% ve daha kalın bir --zg-padding verilir). */
+@keyframes zesta-glow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.zesta-glow-ring {
+  position: relative;
+  display: inline-flex;
+  border-radius: var(--zg-radius, 9999px);
+  padding: var(--zg-padding, 2px);
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 0 18px -6px rgba(79, 138, 99, 0.4),
+    0 0 26px -10px rgba(79, 138, 99, 0.3);
+}
+.zesta-glow-ring::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    from 0deg,
+    var(--zesta-green) 0%,
+    var(--zesta-green) 45%,
+    #8fd6a8 60%,
+    #ffffff 72%,
+    #bff0d0 80%,
+    var(--zesta-green) 92%,
+    var(--zesta-green) 100%
+  );
+  animation: zesta-glow-spin 5s linear infinite;
+  will-change: transform;
+}
+.zesta-glow-ring > :first-child {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+}
+@media (prefers-reduced-motion: reduce) {
+  .zesta-glow-ring::before {
+    animation: none;
+  }
+}
+
+/* Ana sayfa hero'su: giriş animasyonu (metin + görsel yumuşakça yukarı doğru
+   belirir, görsel hafif gecikmeli) ve görsel üzerinde sürekli, çok yavaş bir
+   "Ken Burns" zoom — statik durmasın diye. */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-copy-in {
+  animation: hero-fade-up 700ms var(--ease-luxury) both;
+}
+.hero-image-in {
+  animation: hero-fade-up 800ms var(--ease-luxury) 150ms both;
+}
+@keyframes hero-kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.14);
+  }
+}
+.hero-kenburns {
+  animation: hero-kenburns 6s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy-in,
+  .hero-image-in,
+  .hero-kenburns {
     animation: none;
   }
 }

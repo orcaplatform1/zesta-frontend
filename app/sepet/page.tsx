@@ -98,7 +98,7 @@ export default function CartPage() {
 
       <Link
         href="/odeme"
-        className="mt-8 flex h-12 items-center justify-center rounded-xs bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
+        className="mt-8 flex h-12 items-center justify-center rounded-full bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
         style={{ letterSpacing: "0.1em" }}
       >
         ÖDEMEYE GEÇ

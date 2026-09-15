@@ -37,7 +37,7 @@ export function StaticPage({ slug, fallbackTitle }: { slug: string; fallbackTitl
                     s.heading ? (
                       <li key={i}>
                         <a
-                          href={`#legal-section-${i}`}
+                          href={`#yasal-bolum-${i}`}
                           className="block pl-4 -ml-px border-l border-transparent text-[13px] leading-snug text-ash hover:text-ink hover:border-[var(--border-accent)] transition-colors duration-[180ms]"
                         >
                           {s.heading}

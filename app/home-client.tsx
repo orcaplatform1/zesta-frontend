@@ -50,8 +50,8 @@ export function HomeClient() {
     <div>
       {/* HERO — split: editorial copy left, a real featured product showcased right */}
       <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 md:py-0 grid md:grid-cols-2 md:min-h-[640px] items-center gap-10 md:gap-16">
-          <div className="grain relative">
+        <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 md:py-0 grid md:grid-cols-2 md:min-h-[680px] items-center gap-10 md:gap-16">
+          <div className="hero-copy-in grain relative">
             <p className="eyebrow-on-light">{content.hero.eyebrow}</p>
             <h1
               className="mt-6 font-display font-normal text-ink text-[42px] md:text-[56px] lg:text-[64px]"
@@ -63,13 +63,15 @@ export function HomeClient() {
             </h1>
             <p className="mt-6 text-[15px] md:text-[17px] text-ash max-w-md leading-relaxed">{content.hero.body}</p>
             <div className="mt-10 flex items-center gap-6">
-              <Link
-                href="/magaza"
-                className="inline-flex h-12 items-center justify-center rounded-xs bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
-                style={{ letterSpacing: "0.1em" }}
-              >
-                {content.hero.ctaLabel}
-              </Link>
+              <span className="zesta-glow-ring">
+                <Link
+                  href="/magaza"
+                  className="inline-flex h-12 items-center justify-center rounded-full bg-charcoal-700 px-7 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
+                  style={{ letterSpacing: "0.1em" }}
+                >
+                  {content.hero.ctaLabel}
+                </Link>
+              </span>
               <Link
                 href="/hikayemiz"
                 className="text-[13px] text-smoke hover:text-ink transition-colors duration-[180ms]"
@@ -80,19 +82,20 @@ export function HomeClient() {
             </div>
           </div>
 
-          <div className="relative aspect-[4/5] md:aspect-auto md:h-[520px] bg-stone-100 rounded-sm overflow-hidden">
+          <div className="hero-image-in relative aspect-[4/5] md:aspect-auto md:h-[620px] bg-stone-100 rounded-sm overflow-hidden">
             {heroProduct?.images[0]?.url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={heroProduct.images[0].url}
                 alt={heroProduct.name}
-                className="h-full w-full object-cover"
+                className="hero-kenburns h-full w-full object-cover"
               />
             ) : (
               <div className="h-full w-full flex items-center justify-center">
                 <span className="text-sm text-stone-500">Öne çıkan ürün</span>
               </div>
             )}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
             {heroProduct && (
               <Link
                 href={`/urun/${heroProduct.slug}`}

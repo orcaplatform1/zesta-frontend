@@ -106,7 +106,7 @@ function FilterChip({
   return (
     <button
       onClick={onClick}
-      className="h-9 rounded-xs border px-4 text-[12px] transition-colors duration-[180ms]"
+      className="h-9 rounded-full border px-4 text-[12px] transition-colors duration-[180ms]"
       style={{
         letterSpacing: "0.05em",
         borderColor: active ? "var(--border-accent)" : "var(--border-subtle)",

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Bodoni_Moda, Inter } from "next/font/google";
 import { MobileNav } from "@/components/MobileNav";
 import { CategoryNav } from "@/components/CategoryNav";
+import { AccountNavMenu } from "@/components/AccountNavMenu";
 import { safeJsonLd } from "@/lib/json-ld";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { DEFAULT_HOMEPAGE_CONTENT, type HomepageContent } from "@/lib/homepage-content";
@@ -148,9 +149,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                 ÜRÜNLER
               </Link>
               <CategoryNav categories={categories} />
-              <Link href="/hesap" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
-                HESABIM
-              </Link>
+              <AccountNavMenu />
               <Link href="/sepet" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
                 SEPET
               </Link>
@@ -205,9 +204,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           </div>
 
           <div className="border-t border-[var(--border-light)]">
-            <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-6 flex flex-col items-center gap-3 text-xs leading-relaxed text-charcoal-200 sm:flex-row sm:justify-between">
+            <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-6 flex flex-col items-center text-center gap-3 text-xs leading-relaxed text-charcoal-200">
               <p>{renderCopyrightWithBrandHighlight(copyrightText)}</p>
-              <Link href="/site-haritasi" className="hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
+              <Link href="/site-haritasi" className="mt-2 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
                 Site Haritası
               </Link>
             </div>

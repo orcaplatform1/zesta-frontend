@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type ReactNode, type FormEvent, type CSSProperties } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api, formatPrice } from "@/lib/api";
@@ -192,7 +192,7 @@ function ReviewsSection({ productId }: { productId: string }) {
           )}
           <button
             onClick={() => setFormOpen((v) => !v)}
-            className="ml-auto h-11 rounded-xs border border-[var(--border-subtle)] px-6 text-[12px] font-medium text-ink transition-colors duration-[180ms] hover:bg-onyx-700"
+            className="ml-auto h-11 rounded-full border border-[var(--border-subtle)] px-6 text-[12px] font-medium text-ink transition-colors duration-[180ms] hover:bg-onyx-700"
             style={{ letterSpacing: "0.1em" }}
           >
             YORUM YAZ
@@ -226,7 +226,7 @@ function ReviewsSection({ productId }: { productId: string }) {
                 <button
                   type="submit"
                   disabled={busy}
-                  className="h-11 rounded-xs bg-charcoal-700 px-6 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
+                  className="h-11 rounded-full bg-charcoal-700 px-6 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
                   style={{ letterSpacing: "0.1em" }}
                 >
                   {busy ? "GÖNDERİLİYOR..." : "GÖNDER"}
@@ -369,13 +369,19 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
     <>
     <div className="mx-auto max-w-5xl px-5 md:px-12 py-16 md:py-24 grid md:grid-cols-2 gap-12 md:gap-16">
       <div>
-        <div className="relative aspect-square bg-stone-100 rounded-sm overflow-hidden flex items-center justify-center">
-          {images[imageIndex] ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={images[imageIndex].url} alt={product.name} className="h-full w-full object-cover" />
-          ) : (
-            <span className="text-stone-500 text-sm">Görsel yok</span>
-          )}
+        <div className="relative aspect-square flex items-center justify-center">
+          <span className="zesta-glow-ring h-[92%] w-[92%]" style={{ "--zg-radius": "50%", "--zg-padding": "3px" } as CSSProperties}>
+            <div className="relative h-full w-full rounded-full bg-stone-100 overflow-hidden">
+              {images[imageIndex] ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={images[imageIndex].url} alt={product.name} className="h-full w-full object-cover" />
+              ) : (
+                <span className="absolute inset-0 flex items-center justify-center text-center text-stone-500 text-sm">
+                  Görsel yok
+                </span>
+              )}
+            </div>
+          </span>
           {images.length > 1 && (
             <>
               {imageIndex > 0 && (
@@ -463,7 +469,7 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
                     <button
                       key={v.id}
                       onClick={() => setVariantId(v.id)}
-                      className="rounded-xs border px-4 py-2 text-sm transition-colors duration-[180ms]"
+                      className="rounded-full border px-4 py-2 text-sm transition-colors duration-[180ms]"
                       style={{
                         borderColor: selected ? "var(--border-accent)" : "var(--border-subtle)",
                         color: selected ? "var(--text-on-dark)" : "var(--text-secondary)",
@@ -490,7 +496,7 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
           <button
             onClick={addToCart}
             disabled={busy || availableStock <= 0}
-            className="flex-1 h-12 rounded-xs bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
+            className="flex-1 h-12 rounded-full bg-charcoal-700 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800 disabled:opacity-40"
             style={{ letterSpacing: "0.1em" }}
           >
             {availableStock <= 0 ? "TÜKENDİ" : busy ? "EKLENİYOR..." : "SEPETE EKLE"}

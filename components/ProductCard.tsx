@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, type MouseEvent } from "react";
+import { useState, type MouseEvent, type CSSProperties } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/api";
 import type { Product } from "@/lib/types";
+
+const glowRingStyle: CSSProperties = { "--zg-radius": "50%", "--zg-padding": "3px" } as CSSProperties;
 
 export function ProductCard({ product }: { product: Product }) {
   const [index, setIndex] = useState(0);
@@ -34,20 +36,26 @@ export function ProductCard({ product }: { product: Product }) {
       href={`/urun/${product.slug}`}
       className="group block border border-[var(--border-subtle)] rounded-sm bg-onyx-700 overflow-hidden transition-all duration-[250ms] ease-[var(--ease-luxury)] hover:-translate-y-[3px] hover:border-[var(--border-hover)] hover:shadow-[var(--shadow-lg)]"
     >
-      <div className="relative aspect-square bg-stone-100 flex items-center justify-center overflow-hidden">
+      <div className="relative aspect-square flex items-center justify-center">
         {discountPct !== null && discountPct > 0 && (
           <span className="badge-sale absolute left-2.5 top-2.5 z-10">-%{discountPct}</span>
         )}
-        {image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={image}
-            alt={product.name}
-            className="h-full w-full object-cover transition-transform duration-[250ms] ease-[var(--ease-luxury)] group-hover:scale-[1.025]"
-          />
-        ) : (
-          <span className="text-sm text-stone-500">Görsel yok</span>
-        )}
+        <span className="zesta-glow-ring h-[92%] w-[92%]" style={glowRingStyle}>
+          <div className="relative h-full w-full rounded-full bg-stone-100 overflow-hidden">
+            {image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={image}
+                alt={product.name}
+                className="h-full w-full object-cover transition-transform duration-[250ms] ease-[var(--ease-luxury)] group-hover:scale-[1.025]"
+              />
+            ) : (
+              <span className="absolute inset-0 flex items-center justify-center text-center text-xs text-stone-500">
+                Görsel yok
+              </span>
+            )}
+          </div>
+        </span>
         {images.length > 1 && (
           <>
             {index > 0 && (
