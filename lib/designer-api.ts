@@ -4,6 +4,7 @@ import type { Product } from "./types";
 export interface DesignerMe {
   id: string;
   name: string;
+  brandName: string;
   email: string;
   phone: string;
   commissionPct: number;

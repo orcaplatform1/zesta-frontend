@@ -52,7 +52,7 @@ export function StaticPage({ slug, fallbackTitle }: { slug: string; fallbackTitl
 
           <div className="max-w-[680px] space-y-10">
             {sections.map((s, i) => (
-              <div key={i} id={`legal-section-${i}`} className="scroll-mt-28">
+              <div key={i} id={`yasal-bolum-${i}`} className="scroll-mt-28">
                 {s.heading && (
                   <h2 className="font-display text-[19px] md:text-[21px] font-normal text-ink mb-3" style={{ lineHeight: 1.2 }}>
                     {s.heading}

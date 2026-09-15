@@ -21,9 +21,11 @@ export default function DesignerApplyPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [form, setForm] = useState({
     name: "",
+    brandName: "",
     email: "",
     phone: "",
     password: "",
+    canInvoice: "" as "" | "true" | "false",
     category: "",
     otherCategory: "",
     message: "",
@@ -41,7 +43,7 @@ export default function DesignerApplyPage() {
     setBusy(true);
     setError(null);
     try {
-      await api.post("/designer-applications", form);
+      await api.post("/designer-applications", { ...form, canInvoice: form.canInvoice === "true" });
       setDone(true);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Başvuru gönderilemedi");
@@ -110,6 +112,13 @@ export default function DesignerApplyPage() {
                   className={inputClass}
                 />
                 <input
+                  placeholder="Marka / Atölye Adı"
+                  required
+                  value={form.brandName}
+                  onChange={(e) => setForm((f) => ({ ...f, brandName: e.target.value }))}
+                  className={inputClass}
+                />
+                <input
                   type="email"
                   placeholder="E-posta"
                   required
@@ -134,6 +143,18 @@ export default function DesignerApplyPage() {
                   onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
                   className={inputClass}
                 />
+                <select
+                  required
+                  value={form.canInvoice}
+                  onChange={(e) => setForm((f) => ({ ...f, canInvoice: e.target.value as "" | "true" | "false" }))}
+                  className={inputClass}
+                >
+                  <option value="" disabled>
+                    Fatura Kesebiliyor musunuz?
+                  </option>
+                  <option value="true">Evet, fatura kesebiliyorum</option>
+                  <option value="false">Hayır, fatura kesemiyorum</option>
+                </select>
                 <select
                   required
                   value={form.category}

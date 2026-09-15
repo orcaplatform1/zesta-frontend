@@ -124,7 +124,9 @@ export default function DesignerPanelPage() {
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
           <p className="eyebrow-on-light">Zesta Tasarımcı Paneli</p>
-          <h1 className="mt-2 font-display text-[28px] font-normal text-ink">Merhaba, {me.name}</h1>
+          <h1 className="mt-2 font-display text-[28px] font-normal text-ink">
+            Merhaba, {me.name} <span className="text-smoke">({me.brandName})</span>
+          </h1>
         </div>
         <div className="flex items-center gap-3">
           <DesignerTermsButton />

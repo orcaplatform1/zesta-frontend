@@ -148,7 +148,7 @@ export function HomeClient() {
                 className="flex h-12 items-center justify-center rounded-full bg-[var(--zesta-green)] px-7 text-[12px] font-medium text-white transition-opacity duration-[180ms] hover:opacity-90"
                 style={{ letterSpacing: "0.1em" }}
               >
-                ZESTA TASARIMCI PANELİ — BAŞVURU YAP
+                BAŞVURU YAP
               </Link>
             </span>
             <Link
@@ -156,7 +156,7 @@ export function HomeClient() {
               className="flex h-12 items-center justify-center rounded-full border border-[var(--border-light)] px-7 text-[12px] font-medium text-[var(--text-on-dark)] transition-colors duration-[180ms] hover:bg-onyx-700"
               style={{ letterSpacing: "0.1em" }}
             >
-              ZESTA TASARIMCI PANELİ — GİRİŞ YAP
+              PANELE GİRİŞ YAP
             </Link>
           </div>
         </div>

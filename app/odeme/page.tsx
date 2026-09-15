@@ -95,7 +95,7 @@ export default function CheckoutPage() {
         window.location.href = res.payment.checkoutUrl;
         return;
       }
-      router.push(`/order-success?orderNumber=${res.order.orderNumber}&email=${encodeURIComponent(form.email)}`);
+      router.push(`/siparis-basarili?orderNumber=${res.order.orderNumber}&email=${encodeURIComponent(form.email)}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sipariş oluşturulamadı");
     } finally {

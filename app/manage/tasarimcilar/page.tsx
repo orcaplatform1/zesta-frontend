@@ -7,8 +7,10 @@ import type { Product } from "@/lib/types";
 interface DesignerApplication {
   id: string;
   name: string;
+  brandName: string;
   email: string;
   phone: string;
+  canInvoice: boolean;
   category: string;
   otherCategory: string | null;
   message: string;
@@ -19,6 +21,7 @@ interface DesignerApplication {
 interface Designer {
   id: string;
   name: string;
+  brandName: string;
   email: string;
   phone: string;
   commissionPct: number;
@@ -101,14 +104,17 @@ export default function ManageDesignersPage() {
               .map((a) => (
                 <div key={a.id} className="rounded-xs border border-[var(--border-subtle)] p-4">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-ink">{a.name}</span>
+                    <span className="font-medium text-ink">
+                      {a.name} — {a.brandName}
+                    </span>
                     <span className="text-xs text-dim">{new Date(a.createdAt).toLocaleDateString("tr-TR")}</span>
                   </div>
                   <p className="mt-1 text-sm text-smoke">
                     {a.email} · {a.phone}
                   </p>
                   <p className="mt-1 text-sm text-ash">
-                    Kategori: {a.category === "diger" ? a.otherCategory : a.category}
+                    Kategori: {a.category === "diger" ? a.otherCategory : a.category} · Fatura:{" "}
+                    {a.canInvoice ? "Kesebiliyor" : "Kesemiyor"}
                   </p>
                   <p className="mt-2 text-sm text-smoke">{a.message}</p>
                   <div className="mt-3 flex gap-2">
@@ -244,7 +250,7 @@ export default function ManageDesignersPage() {
               <div key={d.id} className="flex items-center justify-between rounded-xs border border-[var(--border-subtle)] p-4">
                 <div>
                   <p className="font-medium text-ink">
-                    {d.name} {!d.isActive && <span className="text-[var(--status-error)]">(askıda)</span>}
+                    {d.name} — {d.brandName} {!d.isActive && <span className="text-[var(--status-error)]">(askıda)</span>}
                   </p>
                   <p className="text-xs text-dim">
                     {d.email} · {d._count.products} ürün · {d.shipViolationCount} ihlal
