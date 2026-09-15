@@ -59,10 +59,21 @@ export function ImageUploadField({
   );
 }
 
-export function Field({ label, children }: { label: string; children: ReactNode }) {
+export function Field({
+  label,
+  required,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  children: ReactNode;
+}) {
   return (
     <label className="block">
-      <span className="label-uppercase block mb-1.5">{label}</span>
+      <span className="label-uppercase block mb-1.5">
+        {label}
+        {required && <span style={{ color: "var(--status-error)" }}> *</span>}
+      </span>
       {children}
     </label>
   );
