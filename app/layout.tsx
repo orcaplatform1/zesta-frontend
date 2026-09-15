@@ -92,8 +92,10 @@ const LEGAL_LINKS = [
   { href: "/yasal/kullanim-kosullari", label: "Kullanım Koşulları" },
 ];
 
-// "Traders.TR" gecen kismi ozel stille (kirmizi/beyaz + bayrak) vurguluyoruz —
-// ORCA (traders.tr) ve KriptoBeyan footer'larindaki AYNI desen/marka kimligi.
+// "Traders.TR" gecen kismi ozel stille (beyaz/mavi + bayrak) vurguluyoruz —
+// renkler traders.tr logosuyla tutarli (2026-09-15): "Traders" beyaz,
+// ".TR" mavi. ORCA (traders.tr) ve KriptoBeyan footer'larindaki AYNI
+// desen/marka kimligi. Bayrak ikonuna dokunulmadi.
 function renderCopyrightWithBrandHighlight(text: string) {
   const marker = "Traders.TR";
   const parts = text.split(marker);
@@ -103,8 +105,8 @@ function renderCopyrightWithBrandHighlight(text: string) {
       ? [part]
       : [
           <span key={i} className="whitespace-nowrap">
-            <span className="text-traders-red">Traders</span>
-            <span className="text-traders-white">.TR</span>{" "}
+            <span className="text-traders-white">Traders</span>
+            <span className="text-traders-blue">.TR</span>{" "}
             <img
               src="/footerflag.png"
               alt=""
