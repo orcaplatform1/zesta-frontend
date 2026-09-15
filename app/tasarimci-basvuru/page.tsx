@@ -212,7 +212,7 @@ export default function DesignerApplyPage() {
                 <Field label="Telefon Numarası" required>
                   <div className="flex gap-2">
                     <span
-                      className={`${inputClass} flex w-24 flex-shrink-0 items-center justify-center gap-1.5 px-2`}
+                      className="flex h-12 w-16 flex-shrink-0 items-center justify-center gap-1 rounded-xs border border-[var(--border-subtle)] bg-onyx-800 text-[13px] text-dim"
                       aria-hidden
                     >
                       <span>🇹🇷</span>
