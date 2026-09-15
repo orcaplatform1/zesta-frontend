@@ -281,10 +281,13 @@ function RelatedProducts({
             Beğeneceğiniz Ürünler
           </h2>
           <span
-            className="inline-flex h-6 items-center rounded-full border border-[var(--border-default)] px-3 text-[10px] font-medium text-smoke"
-            style={{ letterSpacing: "0.03em" }}
+            className="inline-flex h-6 items-center gap-1 rounded-full px-3 text-[10px] font-semibold text-white"
+            style={{
+              letterSpacing: "0.03em",
+              background: "linear-gradient(90deg, #8b5cf6, #3b82f6)",
+            }}
           >
-            (Yapay Zeka tarafından önerildi)
+            ✨ Yapay Zeka tarafından önerildi
           </span>
         </div>
       </div>

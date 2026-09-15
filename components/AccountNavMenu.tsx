@@ -28,22 +28,22 @@ export function AccountNavMenu() {
 
       {open && (
         <div className="absolute left-1/2 top-full z-50 mt-3 w-48 -translate-x-1/2 rounded-xs border border-[var(--border-subtle)] bg-[var(--ivory-50)] p-4 shadow-[var(--shadow-lg)]">
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col items-center gap-2.5">
             <Link
               href="/hesap"
               onClick={() => setOpen(false)}
               className="inline-flex h-9 items-center justify-center rounded-full border border-[var(--border-default)] px-4 text-[11px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink hover:border-[var(--border-hover)]"
-              style={{ letterSpacing: "0.08em" }}
+              style={{ letterSpacing: "0.02em" }}
             >
-              GİRİŞ YAP
+              Giriş Yap
             </Link>
             <Link
               href="/hesap?islem=kayit"
               onClick={() => setOpen(false)}
               className="inline-flex h-9 items-center justify-center rounded-full bg-charcoal-700 px-4 text-[11px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
-              style={{ letterSpacing: "0.08em" }}
+              style={{ letterSpacing: "0.02em" }}
             >
-              KAYIT OL
+              Kayıt Ol
             </Link>
           </div>
         </div>

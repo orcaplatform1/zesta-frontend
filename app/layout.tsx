@@ -155,15 +155,15 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               className="hidden md:flex items-center gap-6 md:gap-8 text-[13px]"
               style={{ letterSpacing: "0.08em" }}
             >
-              <Link href="/magaza" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
-                ÜRÜNLER
-              </Link>
-              <CategoryNav categories={categories} />
               <AccountNavMenu />
               <DesignerNavMenu />
               <Link href="/sepet" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
                 SEPET
               </Link>
+              <Link href="/magaza" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
+                ÜRÜNLER
+              </Link>
+              <CategoryNav categories={categories} />
             </nav>
 
             <MobileNav categories={categories} />

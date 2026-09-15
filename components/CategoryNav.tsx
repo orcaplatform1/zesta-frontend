@@ -31,7 +31,7 @@ export function CategoryNav({ categories }: { categories: Category[] }) {
 
       {open && (
         <div
-          className="absolute left-1/2 top-full z-50 mt-3 w-[280px] -translate-x-1/2 rounded-xs border border-[var(--border-subtle)] bg-[var(--ivory-50)] p-3 shadow-[var(--shadow-lg)]"
+          className="absolute right-0 top-full z-50 mt-3 w-[280px] rounded-xs border border-[var(--border-subtle)] bg-[var(--ivory-50)] p-3 shadow-[var(--shadow-lg)]"
         >
           <div className="grid grid-cols-1 gap-0.5">
             {categories.map((c) => (

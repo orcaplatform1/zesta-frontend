@@ -21,6 +21,11 @@ const SECTIONS = [
     body: "Ortak olduğumuz fakültelerden gelen öğrenci başvuruları kendi iç değerlendirme sürecimizden geçer; seçilen öğrenciler Zesta atölyesinde hem üretim yapar hem de mentorluk desteği alır. Onaylanan tasarımlar sınırlı sayıda üretilir, sipariş üzerine el emeğiyle tamamlanır ve özenle paketlenerek size ulaştırılır. Aldığınız her parçanın arkasında, o eseri hayata geçiren gerçek bir isim ve hikâye vardır.",
     tone: "dark" as const,
   },
+  {
+    heading: "Tasarımcı Paneli",
+    body: "Atölyemizde istihdam ettiğimiz genç sanatçıların yanı sıra, artık bağımsız çalışan tasarımcı ve üreticilere de kapılarımızı açıyoruz. Zesta Tasarımcı Paneli'ne başvurup onaylanan tasarımcılar, kendi ürünlerini doğrudan Zesta vitrinine ekleyebilir, satışlarını tek ekrandan takip edebilir ve kazançlarını düzenli olarak çekebilir — emeğinizin karşılığını, büyüyen ailemizin bir parçası olarak alırsınız.",
+    tone: "light" as const,
+  },
 ];
 
 export default function AboutPage() {

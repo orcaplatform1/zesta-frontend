@@ -33,6 +33,13 @@ const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
     ],
   },
   {
+    title: "Tasarımcı",
+    links: [
+      { href: "/tasarimci-basvuru", label: "Tasarımcı Başvurusu" },
+      { href: "/tasarimci-giris", label: "Tasarımcı Girişi" },
+    ],
+  },
+  {
     title: "Yasal",
     links: [
       { href: "/yasal/mesafeli-satis-sozlesmesi", label: "Mesafeli Satış Sözleşmesi" },

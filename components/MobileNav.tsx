@@ -74,17 +74,17 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                     href="/hesap"
                     onClick={() => setOpen(false)}
                     className="inline-flex h-10 items-center justify-center rounded-full border border-[var(--border-default)] px-5 text-[11px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink hover:border-[var(--border-hover)]"
-                    style={{ letterSpacing: "0.08em" }}
+                    style={{ letterSpacing: "0.02em" }}
                   >
-                    GİRİŞ YAP
+                    Giriş Yap
                   </Link>
                   <Link
                     href="/hesap?islem=kayit"
                     onClick={() => setOpen(false)}
                     className="inline-flex h-10 items-center justify-center rounded-full bg-charcoal-700 px-5 text-[11px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
-                    style={{ letterSpacing: "0.08em" }}
+                    style={{ letterSpacing: "0.02em" }}
                   >
-                    KAYIT OL
+                    Kayıt Ol
                   </Link>
                 </div>
                 {AFTER_ACCOUNT_LINKS.map((link) => (
@@ -103,17 +103,17 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                     href="/tasarimci-basvuru"
                     onClick={() => setOpen(false)}
                     className="inline-flex h-10 items-center justify-center rounded-full bg-charcoal-700 px-5 text-[11px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
-                    style={{ letterSpacing: "0.08em" }}
+                    style={{ letterSpacing: "0.02em" }}
                   >
-                    TASARIMCI BAŞVURU
+                    Başvuru Yap
                   </Link>
                   <Link
                     href="/tasarimci-giris"
                     onClick={() => setOpen(false)}
                     className="inline-flex h-10 items-center justify-center rounded-full border border-[var(--border-default)] px-5 text-[11px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink hover:border-[var(--border-hover)]"
-                    style={{ letterSpacing: "0.08em" }}
+                    style={{ letterSpacing: "0.02em" }}
                   >
-                    TASARIMCI GİRİŞİ
+                    Panele Giriş
                   </Link>
                 </div>
 

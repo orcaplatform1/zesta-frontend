@@ -141,17 +141,17 @@ export function HomeClient() {
               takip edin, kazancınızı düzenli olarak çekin.
             </p>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col items-start gap-3">
             <Link
               href="/tasarimci-basvuru"
-              className="flex h-12 items-center justify-center rounded-full bg-[var(--zesta-green)] px-7 text-[12px] font-medium text-white transition-opacity duration-[180ms] hover:opacity-90"
+              className="inline-flex h-11 w-56 items-center justify-center rounded-full bg-[var(--zesta-green)] text-[12px] font-medium text-white transition-opacity duration-[180ms] hover:opacity-90"
               style={{ letterSpacing: "0.1em" }}
             >
               BAŞVURU YAP
             </Link>
             <Link
               href="/tasarimci-giris"
-              className="flex h-12 items-center justify-center rounded-full bg-mist-800 px-7 text-[12px] font-medium text-white transition-colors duration-[180ms] hover:bg-mist-700"
+              className="inline-flex h-11 w-56 items-center justify-center rounded-full bg-mist-800 text-[12px] font-medium text-white transition-colors duration-[180ms] hover:bg-mist-700"
               style={{ letterSpacing: "0.1em" }}
             >
               PANELE GİRİŞ YAP
