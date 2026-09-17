@@ -200,7 +200,13 @@ export function HomeClient() {
           satırının (Biblolar) altında, tam genişlik. -mb-32, footer'ın
           mt-32'sini (layout.tsx) iptal edip aradaki beyaz boşluğu kapatır. */}
       <div className="relative -mb-32 w-full aspect-[3/1] md:aspect-[2172/724]">
-        <Image src="/guvenlikargo.png" alt="Güvenli Kargo" fill unoptimized className="object-cover" />
+        <Image
+          src="/guvenlikargo.png"
+          alt="Güvenli Kargo"
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
       </div>
     </div>
   );
