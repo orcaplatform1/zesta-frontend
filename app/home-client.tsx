@@ -1,60 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { api } from "@/lib/api";
-import type { ProductListResponse } from "@/lib/types";
+import type { HomeData, ProductListResponse } from "@/lib/types";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { HomeProductCarousel } from "@/components/HomeProductCarousel";
-import { DEFAULT_HOMEPAGE_CONTENT, type HomepageContent, type HomepageEditorialSplit } from "@/lib/homepage-content";
+import type { HomepageEditorialSplit } from "@/lib/homepage-content";
 import { useInView } from "@/lib/use-in-view";
 
-export function HomeClient() {
-  const [content, setContent] = useState<HomepageContent>(DEFAULT_HOMEPAGE_CONTENT);
-  const [rows, setRows] = useState<Record<string, ProductListResponse | null>>({});
-  const [rowRatings, setRowRatings] = useState<Record<string, Record<string, { average: number; count: number }>>>({});
-  const [splitProducts, setSplitProducts] = useState<Record<string, ProductListResponse | null>>({});
-  const [hero, setHero] = useState<ProductListResponse | null>(null);
-
-  useEffect(() => {
-    api
-      .get<Record<string, unknown>>("/settings")
-      .then((settings) => {
-        const stored = settings.homepage_content as HomepageContent | undefined;
-        if (stored) setContent(stored);
-      })
-      .catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    content.categoryRows.forEach((c) => {
-      api
-        .get<ProductListResponse>(`/products?category=${c.slug}&pageSize=4`)
-        .then((data) => {
-          setRows((r) => ({ ...r, [c.slug]: data }));
-          const ids = data.items.map((p) => p.id).join(",");
-          if (ids) {
-            api
-              .get<Record<string, { average: number; count: number }>>(`/reviews/summary?productIds=${ids}`)
-              .then((summary) => setRowRatings((r) => ({ ...r, [c.slug]: summary })))
-              .catch(() => {});
-          }
-        })
-        .catch(() => setRows((r) => ({ ...r, [c.slug]: null })));
-    });
-    content.editorialSplits.forEach((s) => {
-      api
-        .get<ProductListResponse>(`/products?category=${s.categorySlug}&pageSize=1`)
-        .then((data) => setSplitProducts((r) => ({ ...r, [s.categorySlug]: data })))
-        .catch(() => setSplitProducts((r) => ({ ...r, [s.categorySlug]: null })));
-    });
-    api
-      .get<ProductListResponse>(`/products?category=${content.hero.heroCategorySlug}&pageSize=1`)
-      .then(setHero)
-      .catch(() => setHero(null));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content]);
+// Anasayfanin tum verisi (icerik + satirlardaki urunler + puanlar + vitrin)
+// artik sunucuda (app/page.tsx, RSC) tek istekte (/home) hazirlanip prop
+// olarak buraya geliyor — ilk render'da zaten dolu, ayri client fetch/"Yukleniyor..."
+// durumu yok.
+export function HomeClient({ data }: { data: HomeData }) {
+  const { content, rows, rowRatings, splitProducts, hero, vitrin } = data;
 
   const heroProduct = hero?.items[0];
   const rowCount = Math.max(content.categoryRows.length, content.editorialSplits.length);
@@ -174,7 +133,7 @@ export function HomeClient() {
         </div>
       </section>
 
-      <HomeProductCarousel />
+      <HomeProductCarousel vitrin={vitrin} />
 
       {Array.from({ length: rowCount }).map((_, i) => (
         <div key={i}>
@@ -245,9 +204,7 @@ function CategoryRow({
           </Link>
         </div>
 
-        {!data ? (
-          <p className="text-sm text-ash">Yükleniyor...</p>
-        ) : data.items.length === 0 ? (
+        {!data || data.items.length === 0 ? (
           <p className="text-sm text-ash">Bu kategoride henüz ürün yok.</p>
         ) : (
           <ProductCarousel items={data.items} ratings={ratings} />

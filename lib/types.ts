@@ -96,6 +96,23 @@ export interface Page {
   content: string;
 }
 
+export type RatingMap = Record<string, { average: number; count: number }>;
+
+export interface HomeVitrin {
+  category: Category | null;
+  items: Product[];
+  ratings: RatingMap;
+}
+
+export interface HomeData {
+  content: import("./homepage-content").HomepageContent;
+  rows: Record<string, ProductListResponse>;
+  rowRatings: Record<string, RatingMap>;
+  splitProducts: Record<string, ProductListResponse>;
+  hero: ProductListResponse | null;
+  vitrin: HomeVitrin;
+}
+
 export interface Review {
   id: string;
   productId: string;
