@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { safeJsonLd } from "@/lib/json-ld";
 import { serverApiGet } from "@/lib/server-api";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
@@ -42,6 +43,8 @@ export async function generateMetadata(props: PageProps<"/urun/[slug]">): Promis
 export default async function ProductPage(props: PageProps<"/urun/[slug]">) {
   const { slug } = await props.params;
   const product = await getProduct(slug);
+
+  if (!product) notFound();
 
   const jsonLd = product
     ? {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { serverApiGet } from "@/lib/server-api";
 import type { Category, ProductListResponse } from "@/lib/types";
 import { CategoryClient } from "./category-client";
@@ -27,6 +28,8 @@ export async function generateMetadata(props: PageProps<"/kategori/[slug]">): Pr
 export default async function CategoryPage(props: PageProps<"/kategori/[slug]">) {
   const { slug } = await props.params;
   const [category, products] = await Promise.all([getCategory(slug), getProducts(slug)]);
+
+  if (!category) notFound();
 
   return <CategoryClient slug={slug} initialCategory={category} initialProducts={products} />;
 }
