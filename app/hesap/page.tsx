@@ -207,7 +207,7 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
     e.preventDefault();
     setError(null);
     if (mode === "register" && !termsAccepted) {
-      setError("Devam etmek için Gizlilik Politikası ve Kullanım Şartları'nı okuyup kabul etmelisiniz");
+      setError("Devam etmek için Kullanım Şartları ve KVKK Aydınlatma Metni'ni okuyup kabul etmelisiniz");
       return;
     }
     setBusy(true);
