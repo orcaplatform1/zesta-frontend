@@ -46,7 +46,7 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
               aria-label="Menüyü kapat"
               className="flex-1 bg-black/30"
             />
-            <div className="flex w-1/2 min-w-[240px] flex-col bg-onyx-900 shadow-[var(--shadow-xl)]">
+            <div className="flex w-1/2 min-w-[240px] flex-col shadow-[var(--shadow-xl)]" style={{ background: "var(--zesta-primary-mid)" }}>
               <div className="w-full h-16 flex items-center justify-end px-5 flex-shrink-0">
                 <button
                   onClick={() => setOpen(false)}
@@ -63,12 +63,13 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                     key={link.href}
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="font-display text-[24px] text-ink hover:text-champagne-300 transition-colors duration-[180ms]"
+                    className="font-display text-[24px] transition-colors duration-[200ms]"
+                    style={{ color: "var(--text-on-dark)" }}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <span className="-mb-2 font-display text-[24px] text-ink">Hesabım</span>
+                <span className="-mb-2 font-display text-[24px]" style={{ color: "var(--text-on-dark)" }}>Hesabım</span>
                 <div className="flex flex-col gap-2.5">
                   <Link
                     href="/hesap"
@@ -81,8 +82,8 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                   <Link
                     href="/hesap?islem=kayit"
                     onClick={() => setOpen(false)}
-                    className="inline-flex h-10 items-center justify-center rounded-full bg-charcoal-700 px-5 text-[11px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
-                    style={{ letterSpacing: "0.02em" }}
+                    className="inline-flex h-10 items-center justify-center px-5 text-[11px] font-semibold text-white transition-all duration-[200ms]"
+                    style={{ background: "var(--zesta-accent)", borderRadius: "var(--radius-md)", letterSpacing: "0.02em" }}
                   >
                     Kayıt Ol
                   </Link>
@@ -92,18 +93,19 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                     key={link.href}
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="font-display text-[24px] text-ink hover:text-champagne-300 transition-colors duration-[180ms]"
+                    className="font-display text-[24px] transition-colors duration-[200ms]"
+                    style={{ color: "var(--text-on-dark)" }}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <span className="-mb-2 font-display text-[24px] text-ink">Tasarımcı Ol</span>
+                <span className="-mb-2 font-display text-[24px]" style={{ color: "var(--text-on-dark)" }}>Tasarımcı Ol</span>
                 <div className="flex flex-col gap-2.5">
                   <Link
                     href="/tasarimci-basvuru"
                     onClick={() => setOpen(false)}
-                    className="inline-flex h-10 items-center justify-center rounded-full bg-charcoal-700 px-5 text-[11px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
-                    style={{ letterSpacing: "0.02em" }}
+                    className="inline-flex h-10 items-center justify-center px-5 text-[11px] font-semibold text-white transition-all duration-[200ms]"
+                    style={{ background: "var(--zesta-accent)", borderRadius: "var(--radius-md)", letterSpacing: "0.02em" }}
                   >
                     Başvuru Yap
                   </Link>

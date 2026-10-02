@@ -27,7 +27,15 @@ export function AccountNavMenu() {
       </button>
 
       {open && (
-        <div className="absolute left-1/2 top-full z-50 mt-3 w-48 -translate-x-1/2 rounded-xs border border-[var(--border-subtle)] bg-[var(--ivory-50)] p-4 shadow-[var(--shadow-lg)]">
+        <div
+          className="absolute left-1/2 top-full z-50 mt-3 w-48 -translate-x-1/2 p-4"
+          style={{
+            background: "var(--zesta-surface)",
+            borderRadius: "var(--radius-xl)",
+            border: "1px solid var(--border-subtle)",
+            boxShadow: "var(--shadow-lg)",
+          }}
+        >
           <div className="flex flex-col items-center gap-2.5">
             <Link
               href="/hesap"
@@ -40,8 +48,8 @@ export function AccountNavMenu() {
             <Link
               href="/hesap?islem=kayit"
               onClick={() => setOpen(false)}
-              className="inline-flex h-9 items-center justify-center rounded-full bg-charcoal-700 px-4 text-[11px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
-              style={{ letterSpacing: "0.02em" }}
+              className="inline-flex h-9 items-center justify-center px-4 text-[11px] font-semibold text-white transition-all duration-[200ms] hover:-translate-y-[1px]"
+              style={{ background: "var(--zesta-accent)", borderRadius: "var(--radius-md)", letterSpacing: "0.02em" }}
             >
               Kayıt Ol
             </Link>

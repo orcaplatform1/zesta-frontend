@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Bodoni_Moda, Inter } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { MobileNav } from "@/components/MobileNav";
 import { CategoryNav } from "@/components/CategoryNav";
 import { AccountNavMenu } from "@/components/AccountNavMenu";
@@ -16,15 +16,16 @@ import { serverApiGet } from "@/lib/server-api";
 import type { Category } from "@/lib/types";
 import "./globals.css";
 
-const bodoniModa = Bodoni_Moda({
-  variable: "--font-bodoni",
+const cormorantGaramond = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const DEFAULT_DESCRIPTION =
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#FAF9F6",
+  themeColor: "#F4F1E9",
 };
 
 const ORGANIZATION_JSON_LD = {
@@ -132,18 +133,32 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="tr"
-      className={`${bodoniModa.variable} ${inter.variable} h-full antialiased`}
+      className={`${cormorantGaramond.variable} ${manrope.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-onyx-900 text-ink font-sans">
-        <div className="promo-bar sticky top-0 z-50 h-9 flex items-center justify-center overflow-hidden bg-charcoal-700 px-4 border-b border-[var(--border-accent-soft)]">
+      <body className="min-h-full flex flex-col text-ink font-sans" style={{ background: "var(--zesta-bg)" }}>
+        {/* Promo bar */}
+        <div className="sticky top-0 z-50 h-9 flex items-center justify-center overflow-hidden px-4" style={{ background: "var(--zesta-primary)", borderBottom: "1px solid var(--border-accent-soft)" }}>
           <span className="promo-bar-shimmer" aria-hidden />
-          <p className="relative max-w-full truncate text-[8px] tracking-[0.03em] md:text-[11px] md:tracking-[0.14em] font-medium uppercase text-[var(--text-on-dark)]">
+          <p className="relative max-w-full truncate text-[8px] tracking-[0.03em] md:text-[11px] md:tracking-[0.14em] font-semibold uppercase" style={{ color: "var(--text-on-dark)" }}>
             {promoBarText}
           </p>
         </div>
-        <header className="sticky top-9 z-40 bg-onyx-900/95 backdrop-blur-sm border-b border-[var(--border-subtle)]">
-          <div className="mx-auto max-w-[1440px] h-16 md:h-[76px] flex items-center justify-between px-5 md:px-12">
-            <Link href="/" className="flex items-center">
+
+        {/* Floating navbar */}
+        <header className="sticky top-9 z-40 px-4 md:px-6 py-2">
+          <div
+            className="mx-auto max-w-[1280px] h-[62px] md:h-[70px] flex items-center justify-between px-5 md:px-8"
+            style={{
+              background: "rgba(250,248,243,0.94)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              border: "1px solid rgba(23,60,60,0.09)",
+              borderRadius: "var(--radius-xl)",
+              boxShadow: "0 4px 24px rgba(9,43,43,0.07)",
+            }}
+          >
+            {/* Logo */}
+            <Link href="/" className="flex items-center flex-shrink-0">
               <Image
                 src="/logo.png"
                 alt="Zesta"
@@ -151,49 +166,63 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                 height={724}
                 priority
                 unoptimized
-                className="h-10 md:h-14 w-auto"
+                className="h-8 md:h-10 w-auto"
               />
             </Link>
+
+            {/* Center nav */}
             <nav
-              className="hidden md:flex items-center gap-6 md:gap-8 text-[13px]"
-              style={{ letterSpacing: "0.08em" }}
+              className="hidden md:flex items-center gap-6 lg:gap-8 text-[12px] font-medium"
+              style={{ letterSpacing: "0.07em" }}
             >
-              <AccountNavMenu />
-              <DesignerNavMenu />
-              <Link href="/sepet" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
-                SEPET
-              </Link>
-              <Link href="/magaza" className="text-smoke hover:text-ink transition-colors duration-[180ms]">
-                ÜRÜNLER
+              <Link href="/magaza" className="text-smoke hover:text-ink transition-colors duration-[200ms]">
+                TÜM ÜRÜNLER
               </Link>
               <CategoryNav categories={categories} />
+              <DesignerNavMenu />
+              <Link href="/hikayemiz" className="text-smoke hover:text-ink transition-colors duration-[200ms]">
+                HİKÂYEMİZ
+              </Link>
             </nav>
+
+            {/* Right: Account + Cart */}
+            <div className="hidden md:flex items-center gap-1">
+              <AccountNavMenu />
+              <Link
+                href="/sepet"
+                aria-label="Sepet"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[200ms]"
+                style={{ background: "transparent" }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+              </Link>
+            </div>
 
             <MobileNav categories={categories} />
           </div>
         </header>
 
-        <main className="flex-1 bg-onyx-900">{children}</main>
+        <main className="flex-1">{children}</main>
 
-        <footer className="bg-onyx-950 border-t border-[var(--border-light)] mt-32">
-          <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-16 grid gap-10 md:grid-cols-[1fr_2.4fr]">
+        <footer className="mt-32" style={{ background: "var(--zesta-primary-dark)", borderTop: "1px solid var(--border-light)" }}>
+          <div className="mx-auto max-w-[1280px] px-5 md:px-12 py-16 grid gap-10 md:grid-cols-[1fr_2.4fr]">
             <div>
-              <Image src="/logo.png" alt="Zesta" width={2172} height={724} unoptimized className="h-12 md:h-16 w-auto" />
-              <p className="mt-4 text-sm text-stone-300 max-w-xs leading-relaxed">
+              <Image src="/logo.png" alt="Zesta" width={2172} height={724} unoptimized className="h-11 md:h-14 w-auto brightness-0 invert opacity-90" />
+              <p className="mt-5 text-sm max-w-xs leading-relaxed" style={{ color: "var(--primary-300)" }}>
                 El emeği, özenle hazırlanmış ürünler. Her parça elde, sipariş üzerine üretilir.
               </p>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
               <div>
-                <div className="label-uppercase-on-dark mb-4">Mağaza</div>
+                <div className="label-uppercase-on-dark mb-5">Mağaza</div>
                 <div className="flex flex-col gap-3 text-sm">
                   {FOOTER_LINKS.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="text-mist-200 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]"
-                    >
+                    <Link key={link.href} href={link.href} className="footer-link">
                       {link.label}
                     </Link>
                   ))}
@@ -201,14 +230,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               </div>
 
               <div>
-                <div className="label-uppercase-on-dark mb-4">Kurumsal</div>
+                <div className="label-uppercase-on-dark mb-5">Kurumsal</div>
                 <div className="flex flex-col gap-3 text-sm">
                   {CORPORATE_LINKS.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="text-mist-200 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]"
-                    >
+                    <Link key={link.href} href={link.href} className="footer-link">
                       {link.label}
                     </Link>
                   ))}
@@ -216,14 +241,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               </div>
 
               <div>
-                <div className="label-uppercase-on-dark mb-4">Yasal</div>
+                <div className="label-uppercase-on-dark mb-5">Yasal</div>
                 <div className="flex flex-col gap-3 text-sm">
                   {LEGAL_LINKS.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="text-mist-200 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]"
-                    >
+                    <Link key={link.href} href={link.href} className="footer-link">
                       {link.label}
                     </Link>
                   ))}
@@ -231,13 +252,13 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               </div>
 
               <div>
-                <div className="label-uppercase-on-dark mb-4">İletişim</div>
-                <div className="flex flex-col gap-3 text-sm text-mist-200">
-                  <a href={`tel:${footerContact.phone.replace(/\s+/g, "")}`} className="flex items-center gap-2 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
+                <div className="label-uppercase-on-dark mb-5">İletişim</div>
+                <div className="flex flex-col gap-3 text-sm" style={{ color: "var(--primary-200)" }}>
+                  <a href={`tel:${footerContact.phone.replace(/\s+/g, "")}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
                     <span aria-hidden>📞</span>
                     {footerContact.phone}
                   </a>
-                  <a href={`mailto:${footerContact.email}`} className="flex items-center gap-2 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
+                  <a href={`mailto:${footerContact.email}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
                     <span aria-hidden>✉️</span>
                     {footerContact.email}
                   </a>
@@ -250,16 +271,16 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             </div>
           </div>
 
-          <div className="border-t border-[var(--border-light)] py-6">
-            <div className="mx-auto max-w-[1440px] px-5 md:px-12">
+          <div className="py-6" style={{ borderTop: "1px solid var(--border-light)" }}>
+            <div className="mx-auto max-w-[1280px] px-5 md:px-12">
               <PaymentBadges />
             </div>
           </div>
 
-          <div className="border-t border-[var(--border-light)]">
-            <div className="mx-auto max-w-[1440px] px-5 md:px-12 py-6 flex flex-col items-center text-center gap-3 text-xs leading-relaxed text-charcoal-200">
+          <div style={{ borderTop: "1px solid var(--border-light)" }}>
+            <div className="mx-auto max-w-[1280px] px-5 md:px-12 py-6 flex flex-col items-center text-center gap-3 text-xs leading-relaxed" style={{ color: "var(--primary-300)" }}>
               <p>{renderCopyrightWithBrandHighlight(copyrightText)}</p>
-              <Link href="/site-haritasi" className="mt-2 hover:text-[var(--text-on-dark)] transition-colors duration-[180ms]">
+              <Link href="/site-haritasi" className="mt-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
                 Site Haritası
               </Link>
             </div>

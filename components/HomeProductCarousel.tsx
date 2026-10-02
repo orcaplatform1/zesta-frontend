@@ -11,20 +11,23 @@ export function HomeProductCarousel({ vitrin }: { vitrin: HomeVitrin }) {
   if (items.length === 0) return null;
 
   return (
-    <section className="py-14 md:py-20 border-t border-[var(--border-subtle)]">
-      <div className="mx-auto max-w-[1440px] px-5 md:px-12">
-        <div className="mb-8 flex items-end justify-between">
+    <section className="py-16 md:py-24" style={{ borderTop: "1px solid var(--border-subtle)" }}>
+      <div className="mx-auto max-w-[1280px] px-5 md:px-12">
+        <div className="mb-10 flex items-end justify-between">
           <div>
-            <p className="eyebrow-on-light">Vitrin</p>
-            <h2 className="mt-2 font-display text-[28px] md:text-[36px] font-normal text-ink" style={{ lineHeight: 1.05 }}>
+            <p className="eyebrow-muted">Vitrin</p>
+            <h2
+              className="mt-3 font-display font-normal text-ink"
+              style={{ fontSize: "clamp(28px, 3vw, 40px)", lineHeight: 1.05, letterSpacing: "-0.015em" }}
+            >
               {category?.name ?? ""}
             </h2>
           </div>
           {category && (
             <Link
               href={`/kategori/${category.slug}`}
-              className="hidden sm:inline text-[12px] text-smoke hover:text-ink transition-colors duration-[180ms] whitespace-nowrap"
-              style={{ letterSpacing: "0.1em" }}
+              className="hidden sm:inline-flex items-center gap-1 text-[12px] font-medium transition-colors duration-[200ms] hover:text-ink whitespace-nowrap"
+              style={{ color: "var(--text-secondary)", letterSpacing: "0.08em" }}
             >
               TÜMÜNÜ GÖR →
             </Link>

@@ -31,7 +31,13 @@ export function CategoryNav({ categories }: { categories: Category[] }) {
 
       {open && (
         <div
-          className="absolute right-0 top-full z-50 mt-3 w-[280px] rounded-xs border border-[var(--border-subtle)] bg-[var(--ivory-50)] p-3 shadow-[var(--shadow-lg)]"
+          className="absolute right-0 top-full z-50 mt-3 w-[280px] p-3"
+          style={{
+            background: "var(--zesta-surface)",
+            borderRadius: "var(--radius-xl)",
+            border: "1px solid var(--border-subtle)",
+            boxShadow: "var(--shadow-lg)",
+          }}
         >
           <div className="grid grid-cols-1 gap-0.5">
             {categories.map((c) => (
@@ -39,7 +45,8 @@ export function CategoryNav({ categories }: { categories: Category[] }) {
                 key={c.id}
                 href={`/kategori/${c.slug}`}
                 onClick={() => setOpen(false)}
-                className="rounded-xs px-3 py-2 text-[13px] text-[color:var(--text-primary)] transition-colors duration-[180ms] hover:bg-[var(--bg-secondary)]"
+                className="px-3 py-2 text-[13px] transition-colors duration-[200ms] hover:bg-[var(--bg-secondary)]"
+                style={{ color: "var(--text-primary)", borderRadius: "var(--radius-sm)", display: "block" }}
               >
                 {c.name}
               </Link>

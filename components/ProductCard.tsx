@@ -1,20 +1,17 @@
 "use client";
 
-import { useState, type MouseEvent, type CSSProperties } from "react";
+import { useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/api";
 import type { Product } from "@/lib/types";
 import { Stars } from "@/components/Stars";
 import { useBestsellerRank } from "@/lib/bestsellers";
 
-const glowRingStyle: CSSProperties = { "--zg-radius": "50%", "--zg-padding": "3px" } as CSSProperties;
-
 export function ProductCard({
   product,
   rating,
 }: {
   product: Product;
-  /** Verilirse fiyatın altında ortalama puan + yıldız gösterilir (gerçek yorum yoksa geçirilmemeli). */
   rating?: { average: number; count: number };
 }) {
   const bestsellerRank = useBestsellerRank(product.id);
@@ -44,31 +41,43 @@ export function ProductCard({
   return (
     <Link
       href={`/urun/${product.slug}`}
-      className="group block border border-[var(--border-subtle)] rounded-sm bg-onyx-700 overflow-hidden transition-all duration-[250ms] ease-[var(--ease-luxury)] hover:-translate-y-[3px] hover:border-[var(--border-hover)] hover:shadow-[var(--shadow-lg)]"
+      className="group block overflow-hidden transition-all duration-[280ms] ease-[var(--ease-luxury)] hover:-translate-y-1"
+      style={{
+        background: "var(--zesta-surface)",
+        borderRadius: "var(--radius-lg)",
+        border: "1px solid var(--zesta-border-light)",
+        boxShadow: "0 4px 20px rgba(9,43,43,0.04)",
+      }}
+      onMouseEnter={e => ((e.currentTarget as HTMLElement).style.boxShadow = "0 18px 40px rgba(9,43,43,0.10)")}
+      onMouseLeave={e => ((e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(9,43,43,0.04)")}
     >
-      <div className="relative aspect-square flex items-center justify-center">
+      {/* Image area */}
+      <div
+        className="relative aspect-square overflow-hidden m-2"
+        style={{ borderRadius: "var(--radius-md)", background: "var(--stone-100)" }}
+      >
         {discountPct !== null && discountPct > 0 && (
-          <span className="badge-sale absolute left-2.5 top-2.5 z-10">-%{discountPct}</span>
+          <span className="badge-sale absolute left-2.5 top-2.5 z-10">
+            -%{discountPct}
+          </span>
         )}
-        <span className="zesta-glow-ring h-[92%] w-[92%]" style={glowRingStyle}>
-          <div className="relative h-full w-full rounded-full bg-stone-100 overflow-hidden">
-            {image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={image}
-                alt={product.name}
-                className="h-full w-full object-cover transition-transform duration-[250ms] ease-[var(--ease-luxury)] group-hover:scale-[1.025]"
-              />
-            ) : (
-              <span className="absolute inset-0 flex items-center justify-center text-center text-xs text-stone-500">
-                Görsel yok
-              </span>
-            )}
-          </div>
-        </span>
+
+        {image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={image}
+            alt={product.name}
+            className="h-full w-full object-cover transition-transform duration-[280ms] ease-[var(--ease-luxury)] group-hover:scale-[1.03]"
+          />
+        ) : (
+          <span className="absolute inset-0 flex items-center justify-center text-center text-xs" style={{ color: "var(--text-muted)" }}>
+            Görsel yok
+          </span>
+        )}
+
         {bestsellerRank !== null && (
           <span
-            className="absolute bottom-1 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full px-2.5 py-1 text-[9px] font-semibold text-white shadow-[var(--shadow-sm)]"
+            className="absolute bottom-2 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full px-2.5 py-1 text-[9px] font-semibold text-white"
             style={{
               background: "linear-gradient(90deg, #f59e0b, #ef4444)",
               letterSpacing: "0.02em",
@@ -77,6 +86,7 @@ export function ProductCard({
             🔥 EN ÇOK SATILAN {bestsellerRank}.
           </span>
         )}
+
         {images.length > 1 && (
           <>
             {index > 0 && (
@@ -92,23 +102,46 @@ export function ProductCard({
           </>
         )}
       </div>
-      <div className="p-4">
-        {product.category && <div className="label-uppercase mb-1.5">{product.category.name}</div>}
-        <h3 className="text-[18px] leading-tight font-medium text-ink line-clamp-2">{product.name}</h3>
+
+      {/* Card body */}
+      <div className="px-4 pb-4 pt-2.5">
+        {product.category && (
+          <div className="label-uppercase mb-1.5">{product.category.name}</div>
+        )}
+        <h3
+          className="text-[15px] leading-snug font-semibold line-clamp-2"
+          style={{ color: "var(--zesta-text)", fontFamily: "var(--font-sans)" }}
+        >
+          {product.name}
+        </h3>
         <div className="mt-2 flex items-center gap-2">
-          <span className="text-[15px] font-medium text-ink">{formatPrice(price)}</span>
+          <span
+            className="text-[15px] font-bold"
+            style={{ color: "var(--zesta-primary)", fontFamily: "var(--font-sans)" }}
+          >
+            {formatPrice(price)}
+          </span>
           {product.salePrice && (
-            <span className="text-[13px] text-dim line-through">{formatPrice(product.price)}</span>
+            <span
+              className="text-[13px] line-through"
+              style={{ color: "var(--text-muted)" }}
+            >
+              {formatPrice(product.price)}
+            </span>
           )}
         </div>
         {rating && rating.count > 0 && (
           <div className="mt-1.5 flex items-center gap-1.5">
             <span className="text-[12px] font-medium text-ink">{rating.average.toFixed(1)}</span>
             <Stars rating={rating.average} size={12} />
-            <span className="text-[11px] text-dim">({rating.count})</span>
+            <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>({rating.count})</span>
           </div>
         )}
-        {product.stock <= 0 && <span className="mt-1 block text-xs text-dim">Tükendi</span>}
+        {product.stock <= 0 && (
+          <span className="mt-1 block text-xs" style={{ color: "var(--text-muted)" }}>
+            Tükendi
+          </span>
+        )}
       </div>
     </Link>
   );
