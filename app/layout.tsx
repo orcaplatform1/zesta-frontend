@@ -166,7 +166,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                 height={724}
                 priority
                 unoptimized
-                className="h-8 md:h-10 w-auto"
+                className="h-10 md:h-12 w-auto max-w-[160px] md:max-w-[200px] object-contain"
               />
             </Link>
 
@@ -211,7 +211,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <footer className="mt-32" style={{ background: "var(--zesta-primary-dark)", borderTop: "1px solid var(--border-light)" }}>
           <div className="mx-auto max-w-[1280px] px-5 md:px-12 py-16 grid gap-10 md:grid-cols-[1fr_2.4fr]">
             <div>
-              <Image src="/logo.png" alt="Zesta" width={2172} height={724} unoptimized className="h-11 md:h-14 w-auto brightness-0 invert opacity-90" />
+              <Image src="/logo.png" alt="Zesta" width={2172} height={724} unoptimized className="h-11 md:h-14 w-auto max-w-[210px] object-contain" style={{ filter: "brightness(0) invert(1)", opacity: 0.88 }} />
               <p className="mt-5 text-sm max-w-xs leading-relaxed" style={{ color: "var(--primary-300)" }}>
                 El emeği, özenle hazırlanmış ürünler. Her parça elde, sipariş üzerine üretilir.
               </p>
