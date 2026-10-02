@@ -2,13 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { HomeData, ProductListResponse } from "@/lib/types";
+import type { HomeData, ProductListResponse, Category } from "@/lib/types";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { HomeProductCarousel } from "@/components/HomeProductCarousel";
 import type { HomepageEditorialSplit } from "@/lib/homepage-content";
 import { useInView } from "@/lib/use-in-view";
 
-export function HomeClient({ data }: { data: HomeData }) {
+// Kategori adına göre dekoratif baş harf rengi tonu
+const CAT_COLORS = [
+  "#173C3C", "#285A59", "#1D4B4B", "#52706C",
+  "#173C3C", "#285A59", "#1D4B4B", "#52706C",
+  "#173C3C", "#285A59",
+];
+
+export function HomeClient({ data, categories = [] }: { data: HomeData; categories?: Category[] }) {
   const { content, rows, rowRatings, splitProducts, hero, vitrin } = data;
 
   const heroProduct = hero?.items[0];
@@ -165,14 +172,84 @@ export function HomeClient({ data }: { data: HomeData }) {
         </div>
       </section>
 
-      {/* ── ARTISAN SECTION — dark teal ── */}
-      <section style={{ background: "var(--zesta-primary-dark)" }} className="py-16 md:py-20">
+      {/* ── KATEGORİ STRIP — hero'nun hemen altında ── */}
+      {categories.length > 0 && (
+        <section className="py-10 md:py-14" style={{ background: "var(--zesta-bg)" }}>
+          <div className="mx-auto max-w-[1280px] px-5 md:px-12">
+            <div
+              className="carousel-scroll flex gap-6 md:gap-8 overflow-x-auto pb-2"
+              style={{ scrollPadding: "0 20px" }}
+            >
+              {categories.map((cat, i) => (
+                <Link
+                  key={cat.id}
+                  href={`/kategori/${cat.slug}`}
+                  className="group flex flex-col items-center gap-3 flex-none transition-all duration-[240ms]"
+                  style={{ minWidth: "80px" }}
+                >
+                  {/* Circle */}
+                  <div
+                    className="w-[72px] h-[72px] md:w-[80px] md:h-[80px] rounded-full flex items-center justify-center transition-all duration-[240ms] group-hover:-translate-y-1"
+                    style={{
+                      background: "var(--zesta-surface-muted)",
+                      border: "1px solid var(--border-subtle)",
+                    }}
+                  >
+                    <span
+                      className="font-display text-[22px] md:text-[26px] font-normal select-none"
+                      style={{ color: CAT_COLORS[i % CAT_COLORS.length] }}
+                    >
+                      {cat.name.charAt(0)}
+                    </span>
+                  </div>
+                  {/* Label */}
+                  <span
+                    className="text-center text-[11px] md:text-[12px] font-medium leading-tight transition-colors duration-[200ms] group-hover:text-ink"
+                    style={{ color: "var(--text-secondary)", maxWidth: "80px" }}
+                  >
+                    {cat.name}
+                  </span>
+                </Link>
+              ))}
+              {/* "Tüm Kategoriler" */}
+              <Link
+                href="/magaza"
+                className="group flex flex-col items-center gap-3 flex-none"
+                style={{ minWidth: "80px" }}
+              >
+                <div
+                  className="w-[72px] h-[72px] md:w-[80px] md:h-[80px] rounded-full flex items-center justify-center transition-all duration-[240ms] group-hover:-translate-y-1"
+                  style={{
+                    background: "var(--zesta-surface-muted)",
+                    border: "1px solid var(--border-subtle)",
+                  }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--zesta-primary)" }}>
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </div>
+                <span
+                  className="text-center text-[11px] md:text-[12px] font-medium leading-tight transition-colors duration-[200ms] group-hover:text-ink"
+                  style={{ color: "var(--text-secondary)", maxWidth: "80px" }}
+                >
+                  Tüm Kategoriler
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <HomeProductCarousel vitrin={vitrin} />
+
+      {/* ── ARTISAN / TASARIMCI SECTION — dark teal ── */}
+      <section style={{ background: "var(--zesta-primary-dark)" }} className="py-16 md:py-24">
         <div className="mx-auto max-w-[1280px] px-5 md:px-12 grid md:grid-cols-[1.4fr_1fr] gap-10 md:gap-16 items-center">
           <div>
-            <p className="eyebrow">Zesta&apos;da Satış Yap</p>
+            <p className="eyebrow">Gerçek Hikâyeler, Özgün Üretimler</p>
             <h2
               className="mt-4 font-display font-normal"
-              style={{ lineHeight: 1.06, color: "var(--text-on-dark)", fontSize: "clamp(26px, 3.2vw, 42px)", letterSpacing: "-0.015em" }}
+              style={{ lineHeight: 1.06, color: "var(--text-on-dark)", fontSize: "clamp(28px, 3.4vw, 46px)", letterSpacing: "-0.015em" }}
             >
               Elinizin Emeğini Binlerce Kişiyle Buluşturun.
             </h2>
@@ -181,43 +258,63 @@ export function HomeClient({ data }: { data: HomeData }) {
               doğru yerdesiniz. Zesta Tasarımcı Paneli üzerinden ürünlerinizi ekleyin, satışlarınızı tek ekrandan
               takip edin, kazancınızı düzenli olarak çekin.
             </p>
+            <div className="mt-8 flex flex-col sm:flex-row items-start gap-3">
+              <Link
+                href="/tasarimci-basvuru"
+                className="inline-flex items-center justify-center font-semibold text-white transition-all duration-[240ms] hover:-translate-y-[2px]"
+                style={{
+                  height: "48px",
+                  padding: "0 24px",
+                  background: "var(--zesta-accent)",
+                  borderRadius: "var(--radius-md)",
+                  fontSize: "12px",
+                  letterSpacing: "0.1em",
+                }}
+              >
+                TASARIMCILARIMIZI KEŞFET →
+              </Link>
+              <Link
+                href="/tasarimci-giris"
+                className="inline-flex items-center justify-center font-medium transition-all duration-[240ms] hover:-translate-y-[1px]"
+                style={{
+                  height: "48px",
+                  padding: "0 24px",
+                  background: "rgba(255,255,255,0.07)",
+                  border: "1px solid rgba(244,241,233,0.18)",
+                  color: "var(--text-on-dark)",
+                  borderRadius: "var(--radius-md)",
+                  fontSize: "12px",
+                  letterSpacing: "0.1em",
+                }}
+              >
+                PANELE GİRİŞ
+              </Link>
+            </div>
           </div>
-          <div className="flex flex-col items-start gap-3">
-            <Link
-              href="/tasarimci-basvuru"
-              className="inline-flex items-center justify-center font-semibold text-white transition-all duration-[240ms] hover:-translate-y-[2px]"
-              style={{
-                height: "48px",
-                width: "220px",
-                background: "var(--zesta-accent)",
-                borderRadius: "var(--radius-md)",
-                fontSize: "12px",
-                letterSpacing: "0.1em",
-              }}
-            >
-              BAŞVURU YAP
-            </Link>
-            <Link
-              href="/tasarimci-giris"
-              className="inline-flex items-center justify-center font-medium transition-all duration-[240ms] hover:-translate-y-[1px]"
-              style={{
-                height: "48px",
-                width: "220px",
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(244,241,233,0.20)",
-                color: "var(--text-on-dark)",
-                borderRadius: "var(--radius-md)",
-                fontSize: "12px",
-                letterSpacing: "0.1em",
-              }}
-            >
-              PANELE GİRİŞ YAP
-            </Link>
+          {/* Dekoratif fotoğraf grid — sağ taraf */}
+          <div className="hidden md:grid grid-cols-2 gap-3">
+            {[
+              { label: "Seramik ustası", color: "#123A3A" },
+              { label: "Tekstil atölyesi", color: "#1D4B4B" },
+              { label: "Ahşap tasarım", color: "#173C3C" },
+              { label: "El sanatları", color: "#285A59" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="aspect-square rounded-[14px] flex items-end p-3"
+                style={{ background: item.color }}
+              >
+                <span
+                  className="font-display text-[13px]"
+                  style={{ color: "rgba(244,241,233,0.55)" }}
+                >
+                  {item.label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
-
-      <HomeProductCarousel vitrin={vitrin} />
 
       {Array.from({ length: rowCount }).map((_, i) => (
         <div key={i}>
