@@ -52,10 +52,17 @@ export function DesignerTermsButton({ className }: { className?: string }) {
         onClick={() => setOpen(true)}
         className={
           className ??
-          "inline-flex h-10 items-center gap-2 rounded-full border border-[var(--border-default)] px-4 text-[11px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink hover:border-[var(--border-hover)]"
+          "inline-flex h-12 items-center gap-2 rounded-full px-6 text-[12px] font-semibold text-white transition-all duration-[220ms] hover:-translate-y-[1px] hover:opacity-90"
         }
-        style={{ letterSpacing: "0.06em" }}
+        style={{
+          letterSpacing: "0.08em",
+          background: "var(--zesta-accent)",
+          boxShadow: "0 2px 12px rgba(196,134,90,0.35)",
+        }}
       >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
         TASARIMCI HAKLARI
       </button>
 

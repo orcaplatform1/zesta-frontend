@@ -304,7 +304,7 @@ export function HomeClient({ data, categories = [] }: { data: HomeData; categori
                   letterSpacing: "0.1em",
                 }}
               >
-                TASARIMCILARIMIZI KEŞFET →
+                TASARIMCI BAŞVURUSU YAP →
               </Link>
               <Link
                 href="/tasarimci-giris"
