@@ -11,4 +11,6 @@ export const adminApi = {
   me: () => api.get<AdminMe>("/admin/auth/me"),
   login: (email: string, password: string) => api.post<AdminMe>("/admin/auth/login", { email, password }),
   logout: () => api.post("/admin/auth/logout"),
+  get: <T>(path: string) => api.get<T>(path),
+  patch: <T>(path: string, body: unknown) => api.patch<T>(path, body),
 };
