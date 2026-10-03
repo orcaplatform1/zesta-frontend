@@ -21,8 +21,8 @@ export function InstallmentOptionsButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="mt-2 inline-flex h-10 items-center gap-2 rounded-full border border-[var(--border-default)] px-4 text-[11px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink hover:border-[var(--border-hover)]"
-        style={{ letterSpacing: "0.06em" }}
+        className="mt-2 inline-flex h-10 items-center gap-2 rounded-full bg-[var(--zesta-green)] px-5 text-[11px] font-semibold text-white shadow-sm transition-all duration-[180ms] hover:brightness-105 hover:shadow"
+        style={{ letterSpacing: "0.08em" }}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <rect x="2.5" y="5.5" width="19" height="13" rx="2" />
