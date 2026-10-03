@@ -15,17 +15,17 @@ const CAT_COLORS = [
   "#173C3C", "#285A59",
 ];
 
-// Kategori slug → Unsplash arama terimi (telif ücretsiz görsel)
+// Kategori slug → yerel görsel (Pexels'tan indirildi, public/cat-img/)
 const CAT_IMAGES: Record<string, string> = {
-  "ahsap-objeler":    "wood,craft,wooden,object",
-  "biblolar":         "figurine,ornament,decorative,knick",
-  "cam-sanati":       "glass,art,crystal,blown",
-  "dekoratif-aynalar":"mirror,decorative,frame,wall",
-  "el-yapimi-tekstil":"textile,handmade,fabric,weave",
-  "mumlar-kokular":   "candle,scent,aroma,wax",
-  "seramik":          "ceramic,pottery,clay,handcraft",
-  "tablolar":         "painting,art,canvas,artwork",
-  "tasarim-heykeller":"sculpture,statue,art,design",
+  "ahsap-objeler":    "/cat-img/ahsap-objeler.jpg",
+  "biblolar":         "/cat-img/biblolar.jpg",
+  "cam-sanati":       "/cat-img/cam-sanati.jpg",
+  "dekoratif-aynalar":"/cat-img/dekoratif-aynalar.jpg",
+  "el-yapimi-tekstil":"/cat-img/el-yapimi-tekstil.jpg",
+  "mumlar-kokular":   "/cat-img/mumlar-kokular.jpg",
+  "seramik":          "/cat-img/seramik.jpg",
+  "tablolar":         "/cat-img/tablolar.jpg",
+  "tasarim-heykeller":"/cat-img/tasarim-heykeller.jpg",
 };
 
 export function HomeClient({ data, categories = [] }: { data: HomeData; categories?: Category[] }) {
@@ -211,7 +211,7 @@ export function HomeClient({ data, categories = [] }: { data: HomeData; categori
                     {CAT_IMAGES[cat.slug] ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        src={`https://source.unsplash.com/160x160/?${CAT_IMAGES[cat.slug]}`}
+                        src={CAT_IMAGES[cat.slug]}
                         alt={cat.name}
                         width={80}
                         height={80}
