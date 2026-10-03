@@ -121,7 +121,8 @@ function renderCopyrightWithBrandHighlight(text: string) {
 }
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const copyrightText = `© ${new Date().getFullYear()} Zesta. Tüm hakları saklıdır. Zesta bir Traders.TR ticari markasıdır. Bu platformda yer alan tüm içerikler, tasarımlar, marka unsurları ve fikrî mülkiyet hakları ilgili yasal mevzuat kapsamında korunmaktadır.`;
+  const copyrightLine1 = `© ${new Date().getFullYear()} Zesta. Tüm hakları saklıdır. Zesta bir Traders.TR ticari markasıdır.`;
+  const copyrightLine2 = `Bu platformda yer alan tüm içerikler, tasarımlar, marka unsurları ve fikrî mülkiyet hakları ilgili yasal mevzuat kapsamında korunmaktadır.`;
 
   const settings = await serverApiGet<Record<string, unknown>>("/settings", 60);
   const homepageContent = settings?.homepage_content as HomepageContent | undefined;
@@ -218,16 +219,21 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               <div className="mt-6 flex flex-col gap-3 text-sm" style={{ color: "var(--primary-200)" }}>
                 <a href={`tel:${footerContact.phone.replace(/\s+/g, "")}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
                   <span aria-hidden>📞</span>
-                  {footerContact.phone}
+                  {footerContact.phone.replace(/^\+90\s*/, "")}
                 </a>
                 <a href={`mailto:${footerContact.email}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
                   <span aria-hidden>✉️</span>
                   {footerContact.email}
                 </a>
-                <p className="flex items-start gap-2 leading-relaxed">
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(footerContact.addressNote)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2 leading-relaxed transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]"
+                >
                   <span aria-hidden>📍</span>
                   {footerContact.addressNote}
-                </p>
+                </a>
               </div>
             </div>
 
@@ -275,7 +281,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 
           <div style={{ borderTop: "1px solid var(--border-light)" }}>
             <div className="mx-auto max-w-[1280px] px-5 md:px-12 py-6 flex flex-col items-center text-center gap-3 text-xs leading-relaxed" style={{ color: "var(--primary-300)" }}>
-              <p>{renderCopyrightWithBrandHighlight(copyrightText)}</p>
+              <p>{renderCopyrightWithBrandHighlight(copyrightLine1)}</p>
+              <p style={{ opacity: 0.65 }}>{copyrightLine2}</p>
               <Link href="/site-haritasi" className="mt-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
                 Site Haritası
               </Link>
