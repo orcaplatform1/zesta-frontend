@@ -82,7 +82,7 @@ const FOOTER_LINKS = [
 const CORPORATE_LINKS = [
   { href: "/kurumsal-cozumler", label: "Kurumsal Çözümler" },
   { href: "/magazalarimiz", label: "Mağazalarımız" },
-  { href: "/siparis-takip", label: "Sipariş Takip" },
+  { href: "/siparis-takip", label: "Sipariş Takibi" },
 ];
 
 const LEGAL_LINKS = [
