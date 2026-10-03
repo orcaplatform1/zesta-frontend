@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 };
 
 interface Props {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ sayfa?: string }>;
 }
 
 export default async function EkitapPage({ searchParams }: Props) {
   const params = await searchParams;
-  const initialPage = parseInt(params.page ?? "0", 10) || 0;
+  const initialPage = parseInt(params.sayfa ?? "0", 10) || 0;
   return <EbookReader initialPage={initialPage} />;
 }

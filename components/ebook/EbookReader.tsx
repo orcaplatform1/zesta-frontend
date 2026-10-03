@@ -110,7 +110,7 @@ export function EbookReader({ initialPage = 0 }: { initialPage?: number }) {
       setFlipReady(false);
       animLock.current = false;
       try { localStorage.setItem(EBOOK_STORAGE_KEY, String(n)); } catch {}
-      router.replace(`?page=${n}`, { scroll: false });
+      router.replace(`?sayfa=${n}`, { scroll: false });
     }, PAGE_FLIP_DURATION + 40);
   }, [displayPage, router]);
 
