@@ -247,8 +247,7 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
               className={inputClass}
             />
             <input
-              placeholder="Telefon"
-              required
+              placeholder="Telefon (opsiyonel)"
               value={form.phone}
               onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
               className={inputClass}
