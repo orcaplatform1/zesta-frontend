@@ -327,19 +327,29 @@ export function HomeClient({ data, categories = [] }: { data: HomeData; categori
           {/* Dekoratif fotoğraf grid — sağ taraf */}
           <div className="hidden md:grid grid-cols-2 gap-3">
             {[
-              { label: "Seramik ustası", color: "#123A3A" },
-              { label: "Tekstil atölyesi", color: "#1D4B4B" },
-              { label: "Ahşap tasarım", color: "#173C3C" },
-              { label: "El sanatları", color: "#285A59" },
+              { label: "Seramik ustası",  image: "/designer-cta/seramik.jpg" },
+              { label: "Tekstil atölyesi", image: "/designer-cta/tekstil.jpg" },
+              { label: "Ahşap tasarım",   image: "/designer-cta/ahsap.jpg" },
+              { label: "El sanatları",    image: "/designer-cta/el-sanatlari.jpg" },
             ].map((item) => (
               <div
                 key={item.label}
-                className="aspect-square rounded-[14px] flex items-end p-3"
-                style={{ background: item.color }}
+                className="aspect-square rounded-[14px] flex items-end p-3 overflow-hidden"
+                style={{ position: "relative", background: "#123A3A" }}
               >
+                <img
+                  src={item.image}
+                  alt={item.label}
+                  style={{
+                    position: "absolute", inset: 0,
+                    width: "100%", height: "100%",
+                    objectFit: "cover",
+                    opacity: 0.72,
+                  }}
+                />
                 <span
                   className="font-display text-[13px]"
-                  style={{ color: "rgba(244,241,233,0.55)" }}
+                  style={{ color: "rgba(244,241,233,0.85)", position: "relative", zIndex: 1, textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}
                 >
                   {item.label}
                 </span>

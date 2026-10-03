@@ -281,8 +281,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 
           <div style={{ borderTop: "1px solid var(--border-light)" }}>
             <div className="mx-auto max-w-[1280px] px-5 md:px-12 py-6 flex flex-col items-center text-center gap-3 text-xs leading-relaxed" style={{ color: "var(--primary-300)" }}>
-              <p>{renderCopyrightWithBrandHighlight(copyrightLine1)}</p>
-              <p style={{ opacity: 0.65 }}>{copyrightLine2}</p>
+              <div>
+                <p>{renderCopyrightWithBrandHighlight(copyrightLine1)}</p>
+                <p>{copyrightLine2}</p>
+              </div>
               <Link href="/site-haritasi" className="mt-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
                 Site Haritası
               </Link>
