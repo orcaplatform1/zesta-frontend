@@ -283,11 +283,11 @@ function RelatedProducts({
           <span
             className="inline-flex h-6 items-center gap-1 rounded-full px-3 text-[10px] font-semibold text-white"
             style={{
-              letterSpacing: "0.03em",
-              background: "linear-gradient(90deg, #8b5cf6, #3b82f6)",
+              letterSpacing: "0.05em",
+              background: "linear-gradient(90deg, #0ea5e9, #06b6d4)",
             }}
           >
-            ✨ Yapay Zeka tarafından önerildi
+            Yapay Zeka tarafından önerildi
           </span>
         </div>
       </div>
@@ -370,8 +370,8 @@ export function ProductClient({ slug, initialProduct }: { slug: string; initialP
     <div className="mx-auto max-w-5xl px-5 md:px-12 py-16 md:py-24 grid md:grid-cols-2 gap-12 md:gap-16">
       <div>
         <div className="relative aspect-square flex items-center justify-center">
-          <span className="zesta-glow-ring h-[92%] w-[92%]" style={{ "--zg-radius": "50%", "--zg-padding": "3px" } as CSSProperties}>
-            <div className="relative h-full w-full rounded-full bg-stone-100 overflow-hidden">
+          <span className="zesta-glow-ring h-[92%] w-[92%]" style={{ "--zg-radius": "12px", "--zg-padding": "3px" } as CSSProperties}>
+            <div className="relative h-full w-full rounded-xl bg-stone-100 overflow-hidden">
               {images[imageIndex] ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={images[imageIndex].url} alt={product.name} className="h-full w-full object-cover" />
