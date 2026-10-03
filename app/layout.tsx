@@ -215,12 +215,23 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <div className="mx-auto max-w-[1280px] px-5 md:px-12 py-16 grid gap-10 md:grid-cols-[1fr_2.4fr]">
             <div>
               <Image src="/logo.png" alt="Zesta" width={2172} height={724} unoptimized className="h-11 md:h-14 w-auto max-w-[210px] object-contain" style={{ filter: "brightness(0) invert(1)", opacity: 0.88 }} />
-              <p className="mt-5 text-sm max-w-xs leading-relaxed" style={{ color: "var(--primary-300)" }}>
-                El emeği, özenle hazırlanmış ürünler. Her parça elde, sipariş üzerine üretilir.
-              </p>
+              <div className="mt-6 flex flex-col gap-3 text-sm" style={{ color: "var(--primary-200)" }}>
+                <a href={`tel:${footerContact.phone.replace(/\s+/g, "")}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
+                  <span aria-hidden>📞</span>
+                  {footerContact.phone}
+                </a>
+                <a href={`mailto:${footerContact.email}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
+                  <span aria-hidden>✉️</span>
+                  {footerContact.email}
+                </a>
+                <p className="flex items-start gap-2 leading-relaxed">
+                  <span aria-hidden>📍</span>
+                  {footerContact.addressNote}
+                </p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
               <div>
                 <div className="label-uppercase-on-dark mb-5">Mağaza</div>
                 <div className="flex flex-col gap-3 text-sm">
@@ -251,24 +262,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                       {link.label}
                     </Link>
                   ))}
-                </div>
-              </div>
-
-              <div>
-                <div className="label-uppercase-on-dark mb-5">İletişim</div>
-                <div className="flex flex-col gap-3 text-sm" style={{ color: "var(--primary-200)" }}>
-                  <a href={`tel:${footerContact.phone.replace(/\s+/g, "")}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
-                    <span aria-hidden>📞</span>
-                    {footerContact.phone}
-                  </a>
-                  <a href={`mailto:${footerContact.email}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
-                    <span aria-hidden>✉️</span>
-                    {footerContact.email}
-                  </a>
-                  <p className="flex items-start gap-2 leading-relaxed">
-                    <span aria-hidden>📍</span>
-                    {footerContact.addressNote}
-                  </p>
                 </div>
               </div>
             </div>
