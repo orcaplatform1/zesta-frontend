@@ -5,6 +5,46 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import type { Category } from "@/lib/types";
 
+function AccordionItem({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="w-full">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between font-display text-[24px] transition-colors duration-[200ms]"
+        style={{ color: "var(--text-on-dark)" }}
+      >
+        {label}
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="flex-shrink-0 transition-transform duration-[200ms]"
+          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", opacity: 0.6 }}
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {open && (
+        <div className="mt-4 flex flex-col gap-2.5 pl-2">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function MobileNav({ categories = [] }: { categories?: Category[] }) {
   const [open, setOpen] = useState(false);
@@ -33,13 +73,8 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
       {mounted &&
         open &&
         createPortal(
-          // document.body'ye portal ile taşınıyor — header'daki backdrop-blur
-          // (backdrop-filter) aksi halde bu fixed elemanın containing block'unu
-          // header'ın kendisine (64px) indirger, tam ekran kaplamasını bozar.
-          // Panel ekranın sadece sağ yarısını kaplar (tam ekran değil); sol
-          // yarıda kalan boşluk arka planı karartıp tıklanınca menüyü kapatır.
           <div className="fixed inset-0 z-50 flex">
-            <div className="flex w-1/2 min-w-[240px] flex-col shadow-[var(--shadow-xl)]" style={{ background: "var(--zesta-primary-mid)" }}>
+            <div className="flex w-[72%] min-w-[260px] flex-col shadow-[var(--shadow-xl)]" style={{ background: "var(--zesta-primary-mid)" }}>
               <div className="w-full h-16 flex items-center justify-start px-5 flex-shrink-0">
                 <button
                   onClick={() => setOpen(false)}
@@ -50,10 +85,9 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                 </button>
               </div>
 
-              <nav className="flex flex-1 flex-col items-start justify-start gap-6 overflow-y-auto px-8 py-10">
+              <nav className="flex flex-1 flex-col items-start gap-6 overflow-y-auto px-8 py-8">
                 {/* Hesabım */}
-                <span className="-mb-2 font-display text-[24px]" style={{ color: "var(--text-on-dark)" }}>Hesabım</span>
-                <div className="flex flex-col gap-2.5">
+                <AccordionItem label="Hesabım">
                   <Link
                     href="/hesap"
                     onClick={() => setOpen(false)}
@@ -70,11 +104,10 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                   >
                     Kayıt Ol
                   </Link>
-                </div>
+                </AccordionItem>
 
                 {/* Tasarımcı Ol */}
-                <span className="-mb-2 font-display text-[24px]" style={{ color: "var(--text-on-dark)" }}>Tasarımcı Ol</span>
-                <div className="flex flex-col gap-2.5">
+                <AccordionItem label="Tasarımcı Ol">
                   <Link
                     href="/tasarimci-giris"
                     onClick={() => setOpen(false)}
@@ -91,56 +124,46 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                   >
                     Başvuru Yap
                   </Link>
-                </div>
+                </AccordionItem>
 
-                {/* Ürünler + Sepet */}
-                <Link
-                  href="/magaza"
-                  onClick={() => setOpen(false)}
-                  className="font-display text-[24px] transition-colors duration-[200ms]"
-                  style={{ color: "var(--text-on-dark)" }}
-                >
-                  Ürünler
-                </Link>
-                <Link
-                  href="/sepet"
-                  onClick={() => setOpen(false)}
-                  className="font-display text-[24px] transition-colors duration-[200ms]"
-                  style={{ color: "var(--text-on-dark)" }}
-                >
-                  Sepet
-                </Link>
-
-                {/* Kategoriler */}
-                {categories.length > 0 && (
-                  <div className="mt-2 flex flex-col items-start gap-4 border-t border-[var(--border-subtle)] pt-8 w-full">
-                    <span className="label-uppercase">Kategoriler</span>
-                    {categories.map((c) => (
-                      <Link
-                        key={c.id}
-                        href={`/kategori/${c.slug}`}
-                        onClick={() => setOpen(false)}
-                        className="text-[15px] text-smoke hover:text-ink transition-colors duration-[180ms]"
-                      >
-                        {c.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+                {/* Ürünler */}
+                <AccordionItem label="Ürünler">
+                  {categories.map((c) => (
+                    <Link
+                      key={c.id}
+                      href={`/kategori/${c.slug}`}
+                      onClick={() => setOpen(false)}
+                      className="text-[14px] text-smoke hover:text-ink transition-colors duration-[180ms]"
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                  {categories.length === 0 && (
+                    <Link
+                      href="/magaza"
+                      onClick={() => setOpen(false)}
+                      className="text-[14px] text-smoke hover:text-ink transition-colors duration-[180ms]"
+                    >
+                      Tüm Ürünler
+                    </Link>
+                  )}
+                </AccordionItem>
 
                 {/* Alt sayfalar */}
-                <div className="mt-2 flex flex-col items-start gap-4 border-t border-[var(--border-subtle)] pt-8 w-full">
+                <div className="mt-2 flex flex-col items-start gap-5 border-t border-[var(--border-subtle)] pt-7 w-full">
                   <Link
                     href="/hikayemiz"
                     onClick={() => setOpen(false)}
-                    className="text-[15px] text-smoke hover:text-ink transition-colors duration-[180ms]"
+                    className="font-display text-[24px] transition-colors duration-[200ms]"
+                    style={{ color: "var(--text-on-dark)" }}
                   >
                     Hikayemiz
                   </Link>
                   <Link
                     href="/iletisim"
                     onClick={() => setOpen(false)}
-                    className="text-[15px] text-smoke hover:text-ink transition-colors duration-[180ms]"
+                    className="font-display text-[24px] transition-colors duration-[200ms]"
+                    style={{ color: "var(--text-on-dark)" }}
                   >
                     İletişim
                   </Link>
