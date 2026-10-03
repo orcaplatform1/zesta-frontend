@@ -242,26 +242,35 @@ export function EbookPage({ page, onGoToPage }: Props) {
   }
 
   if (page.type === "text") {
+    const isContinuation = (page as { continuation?: boolean }).continuation;
     return (
       <div
         style={{
           width: w, height: h,
           background: bg.dark,
           display: "flex", flexDirection: "column",
-          padding: "80px 70px",
+          padding: "72px 70px 60px",
         }}
       >
-        {page.title && (
-          <>
-            <p style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: 10, letterSpacing: "0.2em", color: bg.gold, textTransform: "uppercase", marginBottom: 12 }}>
-              Metin
+        {/* Devam sayfası: küçük başlık satırı */}
+        {isContinuation && page.title ? (
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 40 }}>
+            <div style={{ width: 28, height: 1, background: bg.gold, opacity: 0.35 }} />
+            <p style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: 9, letterSpacing: "0.22em", color: bg.gold, textTransform: "uppercase", opacity: 0.7 }}>
+              {page.title}
             </p>
-            <h3 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: 36, fontWeight: 400, color: bg.text, lineHeight: 1.1, marginBottom: 32 }}>
+            <div style={{ flex: 1, height: 1, background: bg.gold, opacity: 0.35 }} />
+          </div>
+        ) : page.title ? (
+          /* İlk sayfa: tam başlık */
+          <>
+            <h3 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: 34, fontWeight: 400, color: bg.text, lineHeight: 1.1, marginBottom: 20 }}>
               {page.title}
             </h3>
-            <div style={{ width: 40, height: 1, background: bg.gold, opacity: 0.4, marginBottom: 40 }} />
+            <div style={{ width: 36, height: 1, background: bg.gold, opacity: 0.45, marginBottom: 36 }} />
           </>
-        )}
+        ) : null}
+
         <div style={{ flex: 1, overflowY: "hidden" }}>
           {page.content?.split("\n\n").map((para, i) => (
             <p
@@ -270,8 +279,8 @@ export function EbookPage({ page, onGoToPage }: Props) {
                 fontFamily: "var(--font-cormorant), serif",
                 fontSize: 18,
                 color: bg.muted,
-                lineHeight: 1.75,
-                marginBottom: 24,
+                lineHeight: 1.8,
+                marginBottom: 22,
               }}
             >
               {para}
