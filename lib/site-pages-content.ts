@@ -11,7 +11,7 @@ export interface FooterContactContent {
 export const DEFAULT_FOOTER_CONTACT: FooterContactContent = {
   phone: "+90 540 306 0080",
   email: "mdagdeviren@zesta.tr",
-  addressNote: "Trump Towers, Kuştepe Mah. Mecidiyeköy Yeni Yolu No:12 Kat:4 Şişli/İSTANBUL",
+  addressNote: "Emaar Square, Ünalan Mah. Libadiye Cad. No:82 E Blok Üsküdar/İstanbul",
 };
 
 export interface CorporateSolutionCard {
