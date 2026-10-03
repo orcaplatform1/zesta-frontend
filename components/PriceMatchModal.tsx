@@ -13,11 +13,12 @@ const SECTIONS = [
     body: "Zesta.tr'den satın aldığınız bir ürünün, sipariş tarihinizden itibaren 7 gün içinde Türkiye'deki başka bir online satış noktasında daha düşük bir liste fiyatıyla satıldığını tespit ederseniz:",
     list: ["İlgili web sitesinin bağlantısını (URL)", "Zesta sipariş numaranızı", "Ürünün fiyat bilgilerini"],
     footer:
-      "Yukarıdaki bilgileri info@zesta.tr adresine e-posta ile iletmeniz gerekmektedir. Destek ekibimiz, başvurunuzu aldıktan sonra 3-4 iş günü içinde inceleyerek size geri dönüş yapacaktır. Başvurunuzun uygun bulunması halinde, fiyat farkı ödemeyi yaptığınız yöntemle 3-4 iş günü içinde tarafınıza iade edilir.",
+      "Yukarıdaki bilgileri mdagdeviren@zesta.tr adresine e-posta ile iletmeniz gerekmektedir. Destek ekibimiz, başvurunuzu aldıktan sonra 3-4 iş günü içinde inceleyerek size geri dönüş yapacaktır. Başvurunuzun uygun bulunması halinde, fiyat farkı ödemeyi yaptığınız yöntemle 3-4 iş günü içinde tarafınıza iade edilir.",
   },
   {
     heading: "Fiyat Eşitlemesi Şartları",
     list: [
+      "Sipariş tarihinden 7 gün içinde yapılmayan başvurularda, fark iadesi yapılmaz.",
       "Ürün birebir aynı olmalıdır (renk, beden, tasarımcı, marka vb.).",
       "Sadece liste veya indirimli liste fiyatları geçerlidir. Promosyonlar kapsam dışıdır.",
       "Fiziksel mağazalar kapsam dışındadır.",
