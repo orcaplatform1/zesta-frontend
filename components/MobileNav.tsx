@@ -160,7 +160,7 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
               {/* Alt linkler */}
               <div className="flex flex-col gap-4 pt-1">
                 <Link href="/kurumsal-cozumler" onClick={close} className="font-display text-[22px] tracking-[-0.01em] transition-opacity duration-[180ms] hover:opacity-70" style={{ color: "var(--text-on-dark)" }}>
-                  Kurumsal
+                  Kurumsal Çözümler
                 </Link>
                 <Link href="/hikayemiz" onClick={close} className="font-display text-[22px] tracking-[-0.01em] transition-opacity duration-[180ms] hover:opacity-70" style={{ color: "var(--text-on-dark)" }}>
                   Hikayemiz
