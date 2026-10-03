@@ -26,7 +26,7 @@ export function CategoryNav({ categories }: { categories: Category[] }) {
         className="text-smoke hover:text-ink transition-colors duration-[180ms]"
         aria-expanded={open}
       >
-        KATEGORİLER
+        ÜRÜNLER
       </button>
 
       {open && (

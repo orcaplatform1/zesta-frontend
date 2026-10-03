@@ -162,6 +162,9 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
                 <Link href="/kurumsal-cozumler" onClick={close} className="font-display text-[22px] tracking-[-0.01em] transition-opacity duration-[180ms] hover:opacity-70" style={{ color: "var(--text-on-dark)" }}>
                   Kurumsal Çözümler
                 </Link>
+                <Link href="/ekitap" onClick={close} className="font-display text-[22px] tracking-[-0.01em] transition-opacity duration-[180ms] hover:opacity-70" style={{ color: "var(--text-on-dark)" }}>
+                  E-Kitap
+                </Link>
                 <Link href="/hikayemiz" onClick={close} className="font-display text-[22px] tracking-[-0.01em] transition-opacity duration-[180ms] hover:opacity-70" style={{ color: "var(--text-on-dark)" }}>
                   Hikayemiz
                 </Link>
