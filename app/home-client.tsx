@@ -8,12 +8,25 @@ import { HomeProductCarousel } from "@/components/HomeProductCarousel";
 import type { HomepageEditorialSplit } from "@/lib/homepage-content";
 import { useInView } from "@/lib/use-in-view";
 
-// Kategori adına göre dekoratif baş harf rengi tonu
+// Kategori adına göre dekoratif baş harf rengi tonu (yedek)
 const CAT_COLORS = [
   "#173C3C", "#285A59", "#1D4B4B", "#52706C",
   "#173C3C", "#285A59", "#1D4B4B", "#52706C",
   "#173C3C", "#285A59",
 ];
+
+// Kategori slug → Unsplash arama terimi (telif ücretsiz görsel)
+const CAT_IMAGES: Record<string, string> = {
+  "ahsap-objeler":    "wood,craft,wooden,object",
+  "biblolar":         "figurine,ornament,decorative,knick",
+  "cam-sanati":       "glass,art,crystal,blown",
+  "dekoratif-aynalar":"mirror,decorative,frame,wall",
+  "el-yapimi-tekstil":"textile,handmade,fabric,weave",
+  "mumlar-kokular":   "candle,scent,aroma,wax",
+  "seramik":          "ceramic,pottery,clay,handcraft",
+  "tablolar":         "painting,art,canvas,artwork",
+  "tasarim-heykeller":"sculpture,statue,art,design",
+};
 
 export function HomeClient({ data, categories = [] }: { data: HomeData; categories?: Category[] }) {
   const { content, rows, rowRatings, splitProducts, hero, vitrin } = data;
@@ -189,15 +202,35 @@ export function HomeClient({ data, categories = [] }: { data: HomeData; categori
                 >
                   {/* Circle */}
                   <div
-                    className="w-[72px] h-[72px] md:w-[80px] md:h-[80px] rounded-full flex items-center justify-center transition-all duration-[240ms] group-hover:-translate-y-1"
+                    className="w-[72px] h-[72px] md:w-[80px] md:h-[80px] rounded-full overflow-hidden transition-all duration-[240ms] group-hover:-translate-y-1 relative flex items-center justify-center"
                     style={{
                       background: "var(--zesta-surface-muted)",
                       border: "1px solid var(--border-subtle)",
                     }}
                   >
+                    {CAT_IMAGES[cat.slug] ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={`https://source.unsplash.com/160x160/?${CAT_IMAGES[cat.slug]}`}
+                        alt={cat.name}
+                        width={80}
+                        height={80}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const t = e.currentTarget;
+                          t.style.display = "none";
+                          const next = t.nextElementSibling as HTMLElement | null;
+                          if (next) next.style.display = "flex";
+                        }}
+                      />
+                    ) : null}
                     <span
-                      className="font-display text-[22px] md:text-[26px] font-normal select-none"
-                      style={{ color: CAT_COLORS[i % CAT_COLORS.length] }}
+                      className="font-display text-[22px] md:text-[26px] font-normal select-none absolute inset-0 flex items-center justify-center"
+                      style={{
+                        color: CAT_COLORS[i % CAT_COLORS.length],
+                        display: CAT_IMAGES[cat.slug] ? "none" : "flex",
+                      }}
                     >
                       {cat.name.charAt(0)}
                     </span>

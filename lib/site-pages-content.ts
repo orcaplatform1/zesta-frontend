@@ -9,9 +9,9 @@ export interface FooterContactContent {
 }
 
 export const DEFAULT_FOOTER_CONTACT: FooterContactContent = {
-  phone: "0530 000 00 00",
-  email: "info@zesta.tr",
-  addressNote: "Merkez Mağazamıza hafta içi ve Cumartesi 09:00 - 18:00 saatleri arasında ulaşabilirsiniz.",
+  phone: "+90 540 306 0080",
+  email: "mdagdeviren@zesta.tr",
+  addressNote: "Trump Towers, Kuştepe Mah. Mecidiyeköy Yeni Yolu No:12 Kat:4 Şişli/İSTANBUL",
 };
 
 export interface CorporateSolutionCard {
@@ -70,15 +70,6 @@ export interface StoresPageContent {
 }
 
 export const DEFAULT_STORES_PAGE: StoresPageContent = {
-  intro: "Ürünlerimizi yerinde incelemek isterseniz, mağazamıza bekleriz.",
-  stores: [
-    {
-      id: "merkez",
-      name: "Zesta Merkez Mağaza",
-      address: "Örnek Mahallesi, Sanat Sokak No:1, Kadıköy / İstanbul",
-      phone: "0530 000 00 00",
-      hours: "Hafta içi ve Cumartesi 09:00 - 18:00",
-      image: "/magaza-ornek.jpg",
-    },
-  ],
+  intro: "",
+  stores: [],
 };
