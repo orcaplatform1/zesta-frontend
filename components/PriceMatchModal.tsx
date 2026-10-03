@@ -35,12 +35,10 @@ export function PriceMatchButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="mt-3 inline-flex h-10 items-center gap-2 rounded-full border border-[var(--border-default)] px-4 text-[11px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink hover:border-[var(--border-hover)]"
-        style={{ letterSpacing: "0.06em" }}
+        className="mt-3 inline-flex h-10 items-center gap-2 rounded-full bg-[var(--zesta-green)] px-5 text-[11px] font-semibold text-white shadow-sm transition-all duration-[180ms] hover:brightness-105 hover:shadow"
+        style={{ letterSpacing: "0.08em" }}
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-          <path d="M12 2v20M17 6H9.5a2.5 2.5 0 0 0 0 5h5a2.5 2.5 0 0 1 0 5H6" />
-        </svg>
+        <span className="text-[15px] font-bold leading-none">₺</span>
         FİYAT EŞLEŞMESİ YAPIYORUZ
       </button>
 

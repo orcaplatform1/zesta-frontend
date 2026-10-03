@@ -4,13 +4,13 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 
 const BANKS = [
-  { name: "Bonus", color: "#00A19A" },
-  { name: "Axess", color: "#E4002B" },
-  { name: "Paraf", color: "#0033A0" },
-  { name: "Maximum", color: "#00205B" },
-  { name: "World", color: "#7A0C2E" },
-  { name: "Finansbank", color: "#5A2D82" },
-  { name: "Bankkart", color: "#00843D" },
+  { name: "Bonus", logo: "/banks/bonus.svg", bg: "#fff" },
+  { name: "Axess", logo: "/banks/axess.png", bg: "#fff" },
+  { name: "Paraf", logo: "/banks/paraf.svg", bg: "#1A1169" },
+  { name: "Maximum", logo: "/banks/maximum.svg", bg: "#fff" },
+  { name: "World", logo: "/banks/world.webp", bg: "#fff" },
+  { name: "Finansbank", logo: "/banks/finansbank_qnb.png", bg: "#fff" },
+  { name: "DenizBank", logo: "/banks/denizbank.svg", bg: "#fff" },
 ];
 
 export function InstallmentOptionsButton() {
@@ -56,10 +56,11 @@ export function InstallmentOptionsButton() {
                     className="flex items-center gap-3 rounded-xs border border-[var(--border-subtle)] px-4 py-3"
                   >
                     <span
-                      className="flex h-9 w-14 flex-shrink-0 items-center justify-center rounded-xs text-[11px] font-bold italic text-white"
-                      style={{ background: b.color }}
+                      className="flex h-9 w-14 flex-shrink-0 items-center justify-center rounded-xs overflow-hidden p-1"
+                      style={{ background: b.bg }}
                     >
-                      {b.name}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={b.logo} alt={b.name} className="max-h-full max-w-full object-contain" />
                     </span>
                     <div>
                       <p className="text-[14px] font-medium text-ink">{b.name}</p>
