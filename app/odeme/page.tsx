@@ -48,7 +48,10 @@ export default function CheckoutPage() {
       .get<Me>("/auth/me")
       .then((m) => {
         setMe(m);
-        setForm((f) => ({ ...f, email: m.email, fullName: m.name }));
+        setForm((f) => {
+          const savedCoupon = (() => { try { return sessionStorage.getItem("zesta_coupon_code") ?? ""; } catch { return ""; } })();
+          return { ...f, email: m.email, fullName: m.name, couponCode: savedCoupon };
+        });
       })
       .catch(() => setMe(null));
   }, []);
@@ -139,7 +142,21 @@ export default function CheckoutPage() {
           <Field label="İlçe" value={form.district} onChange={(v) => set("district", v)} required />
         </div>
         <Field label="Posta Kodu" value={form.postalCode} onChange={(v) => set("postalCode", v)} />
-        <Field label="Kupon Kodu (opsiyonel)" value={form.couponCode} onChange={(v) => set("couponCode", v)} />
+        <div>
+          <span className="label-uppercase block mb-1.5">İndirim Kodu (opsiyonel)</span>
+          <input
+            type="text"
+            value={form.couponCode}
+            onChange={(e) => set("couponCode", e.target.value)}
+            placeholder="Varsa kupon kodunuzu girin"
+            className="w-full h-12 rounded-xs border border-[var(--border-subtle)] bg-onyx-700 px-3.5 text-sm text-ink placeholder:text-dim focus:outline-none focus:border-[var(--border-accent)]"
+          />
+          {form.couponCode.trim() && (
+            <p className="mt-1.5 text-xs text-smoke">
+              Kupon geçerliyse indirim sipariş toplamına yansıtılır.
+            </p>
+          )}
+        </div>
 
         <div className="pt-2">
           <span className="label-uppercase block mb-2">Fatura Tipi</span>
