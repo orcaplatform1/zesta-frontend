@@ -200,12 +200,12 @@ export function EbookReader({ initialPage = 0 }: { initialPage?: number }) {
             <ScaledPage page={BOOK_PAGES[0]} scale={scale} />
           </div>
           <p style={{
-            position: "absolute", bottom: -34, left: "50%", transform: "translateX(-50%)",
+            position: "absolute", bottom: -40, left: "50%", transform: "translateX(-50%)",
             fontFamily: "var(--font-manrope), sans-serif",
-            fontSize: 9, letterSpacing: "0.26em", color: "rgba(185,138,85,0.6)",
-            textTransform: "uppercase", whiteSpace: "nowrap",
+            fontSize: 13, letterSpacing: "0.12em", color: "rgba(185,138,85,0.85)",
+            textTransform: "uppercase", whiteSpace: "nowrap", fontWeight: 600,
           }}>
-            Açmak için tıklayın
+            Kitabı Okumak için Tıklayın
           </p>
         </div>
       )}
