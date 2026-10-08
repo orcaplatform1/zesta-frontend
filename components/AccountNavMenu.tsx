@@ -20,10 +20,14 @@ export function AccountNavMenu() {
     <div className="relative" onMouseEnter={show} onMouseLeave={hide}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="text-smoke hover:text-ink transition-colors duration-[180ms]"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[180ms]"
         aria-expanded={open}
+        aria-label="Hesabım"
       >
-        HESABIM
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
       </button>
 
       {open && (

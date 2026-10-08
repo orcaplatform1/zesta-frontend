@@ -145,68 +145,104 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           </p>
         </div>
 
-        {/* Floating navbar */}
-        <header className="sticky top-9 z-40 px-4 md:px-6 py-2">
-          <div
-            className="mx-auto max-w-[1280px] h-[62px] md:h-[70px] flex items-center justify-between px-5 md:px-8"
-            style={{
-              background: "rgba(250,248,243,0.94)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: "1px solid rgba(23,60,60,0.09)",
-              borderRadius: "var(--radius-xl)",
-              boxShadow: "0 4px 24px rgba(9,43,43,0.07)",
-            }}
-          >
-            {/* Logo */}
-            <Link href="/" className="flex items-center flex-shrink-0">
-              <Image
-                src="/logo.png"
-                alt="Zesta"
-                width={2172}
-                height={724}
-                priority
-                unoptimized
-                className="h-10 md:h-12 w-auto max-w-[160px] md:max-w-[200px] object-contain"
-              />
-            </Link>
-
-            {/* Center nav */}
-            <nav
-              className="hidden md:flex items-center gap-6 lg:gap-8 text-[12px] font-medium"
-              style={{ letterSpacing: "0.07em" }}
+        {/* Navbar */}
+        <header className="sticky top-9 z-40" style={{ background: "var(--zesta-primary)" }}>
+          <div className="px-3 md:px-4 py-[10px]">
+            <div
+              className="mx-auto max-w-[1280px] h-[56px] md:h-[62px] flex items-center gap-3 md:gap-4 px-4 md:px-6"
+              style={{
+                background: "rgba(250,248,243,0.97)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
+                border: "1px solid rgba(23,60,60,0.08)",
+                borderRadius: "100px",
+                boxShadow: "0 2px 20px rgba(9,43,43,0.14)",
+              }}
             >
-              <CategoryNav categories={categories} />
-              <Link href="/kurumsal-cozumler" className="text-smoke hover:text-ink transition-colors duration-[200ms]">
-                KURUMSAL ÇÖZÜMLER
+              {/* Logo */}
+              <Link href="/" className="flex items-center flex-shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="Zesta"
+                  width={2172}
+                  height={724}
+                  priority
+                  unoptimized
+                  className="h-9 md:h-10 w-auto max-w-[140px] md:max-w-[170px] object-contain"
+                />
               </Link>
-              <Link href="/hikayemiz" className="text-smoke hover:text-ink transition-colors duration-[200ms]">
-                HİKÂYEMİZ
-              </Link>
-              <DesignerNavMenu />
-              <Link href="/ekitap" className="text-smoke hover:text-ink transition-colors duration-[200ms]">
-                E-KİTAP
-              </Link>
-            </nav>
 
-            {/* Right: Account + Cart */}
-            <div className="hidden md:flex items-center gap-1">
-              <AccountNavMenu />
-              <Link
-                href="/sepet"
-                aria-label="Sepet"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[200ms]"
-                style={{ background: "transparent" }}
+              {/* Center nav */}
+              <nav
+                className="hidden md:flex items-center gap-5 lg:gap-7 text-[11.5px] font-medium flex-1 justify-center"
+                style={{ letterSpacing: "0.07em" }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                  <line x1="3" y1="6" x2="21" y2="6"/>
-                  <path d="M16 10a4 4 0 01-8 0"/>
-                </svg>
-              </Link>
-            </div>
+                <CategoryNav categories={categories} />
+                <Link href="/kurumsal-cozumler" className="text-smoke hover:text-ink transition-colors duration-[200ms] whitespace-nowrap">
+                  KURUMSAL ÇÖZÜMLER
+                </Link>
+                <Link href="/hikayemiz" className="text-smoke hover:text-ink transition-colors duration-[200ms]">
+                  HİKÂYEMİZ
+                </Link>
+                <DesignerNavMenu />
+                <Link href="/ekitap" className="text-smoke hover:text-ink transition-colors duration-[200ms]">
+                  E-KİTAP
+                </Link>
+              </nav>
 
-            <MobileNav categories={categories} />
+              {/* Desktop right: Search + Icons */}
+              <div className="hidden md:flex items-center gap-1 flex-shrink-0">
+                {/* Search bar */}
+                <form action="/magaza" method="get" className="flex items-center gap-2 h-8 rounded-full px-3 mr-1" style={{ background: "rgba(23,60,60,0.07)" }}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-smoke flex-shrink-0">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                  <input
+                    name="q"
+                    type="search"
+                    placeholder="Ürün, kategori ara..."
+                    className="bg-transparent outline-none text-[11.5px] w-28 lg:w-36 placeholder:text-smoke/50"
+                    style={{ color: "var(--text-primary)" }}
+                  />
+                </form>
+
+                {/* User / Account */}
+                <AccountNavMenu />
+
+                {/* Wishlist */}
+                <Link href="/magaza" aria-label="Favoriler" className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[200ms]">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                </Link>
+
+                {/* Cart */}
+                <Link href="/sepet" aria-label="Sepet" className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[200ms]">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 01-8 0"/>
+                  </svg>
+                </Link>
+              </div>
+
+              {/* Mobile right: search icon + cart + hamburger */}
+              <div className="md:hidden flex items-center gap-0.5 ml-auto">
+                <Link href="/magaza" aria-label="Ara" className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[200ms]">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                </Link>
+                <Link href="/sepet" aria-label="Sepet" className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[200ms]">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 01-8 0"/>
+                  </svg>
+                </Link>
+                <MobileNav categories={categories} />
+              </div>
+            </div>
           </div>
         </header>
 
