@@ -1,20 +1,44 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function NavSearch({ iconClass }: { iconClass?: string } = {}) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [panelStyle, setPanelStyle] = useState<React.CSSProperties>({});
   const inputRef = useRef<HTMLInputElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  function openPanel() {
+    if (btnRef.current) {
+      const r = btnRef.current.getBoundingClientRect();
+      const panelW = Math.min(300, window.innerWidth - 24);
+      // İkonun altına, sağ kenarına hizalı; ekrandan taşarsa sola kaydır
+      let right = window.innerWidth - r.right;
+      if (r.right - panelW < 12) right = window.innerWidth - panelW - 12;
+      setPanelStyle({
+        position: "fixed",
+        top: r.bottom + 8,
+        right,
+        width: panelW,
+        zIndex: 9999,
+      });
+    }
+    setOpen(true);
+  }
 
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 50);
+    if (open) setTimeout(() => inputRef.current?.focus(), 40);
   }, [open]);
 
   useEffect(() => {
     if (!open) return;
     function onDown(e: MouseEvent) {
-      if (!containerRef.current?.contains(e.target as Node)) setOpen(false);
+      const target = e.target as Node;
+      if (!btnRef.current?.contains(target) && !(e.target as Element)?.closest?.(".navsearch-panel")) {
+        setOpen(false);
+      }
     }
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
@@ -27,10 +51,19 @@ export function NavSearch({ iconClass }: { iconClass?: string } = {}) {
     };
   }, [open]);
 
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const q = inputRef.current?.value.trim() ?? "";
+    setOpen(false);
+    if (q) router.push(`/magaza?q=${encodeURIComponent(q)}`);
+    else router.push("/magaza");
+  }
+
   return (
-    <div className="relative" ref={containerRef}>
+    <>
       <button
-        onClick={() => setOpen((o) => !o)}
+        ref={btnRef}
+        onClick={() => (open ? setOpen(false) : openPanel())}
         aria-label="Ara"
         aria-expanded={open}
         className={iconClass ?? "nav-dark-icon inline-flex h-10 w-10 items-center justify-center rounded-full transition-opacity duration-[200ms]"}
@@ -41,21 +74,16 @@ export function NavSearch({ iconClass }: { iconClass?: string } = {}) {
       </button>
 
       {open && (
-        <div
-          className="absolute right-0 top-full mt-2 z-50"
-          style={{ minWidth: "320px" }}
-        >
+        <div className="navsearch-panel" style={panelStyle}>
           <form
-            action="/magaza"
-            method="get"
-            onSubmit={() => setOpen(false)}
-            className="flex items-center gap-3 px-5"
+            onSubmit={handleSubmit}
+            className="flex items-center gap-3 px-4"
             style={{
-              height: "52px",
+              height: "48px",
               background: "rgba(249,246,240,0.99)",
-              border: "1px solid rgba(23,60,60,0.10)",
+              border: "1px solid rgba(23,60,60,0.12)",
               borderRadius: "100px",
-              boxShadow: "0 8px 32px rgba(9,43,43,0.18)",
+              boxShadow: "0 6px 24px rgba(9,43,43,0.18)",
             }}
           >
             <input
@@ -71,13 +99,13 @@ export function NavSearch({ iconClass }: { iconClass?: string } = {}) {
               aria-label="Ara"
               className="flex-shrink-0 text-smoke hover:text-ink transition-colors"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </button>
           </form>
         </div>
       )}
-    </div>
+    </>
   );
 }

@@ -150,11 +150,11 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <header className="sticky top-9 z-40" style={{ background: "var(--zesta-primary)" }}>
 
           {/* ── DESKTOP ── */}
-          <div className="hidden md:flex items-center gap-3 px-5 lg:px-8 py-3 mx-auto max-w-[1400px]">
+          <div className="hidden md:flex items-center px-5 lg:px-8 py-3 mx-auto max-w-[1400px]" style={{ gap: "72px" }}>
 
-            {/* SOL PİLL: Logo + Nav */}
+            {/* SOL PİLL: Logo + Nav — flex-1 ile sağa doğru uzar */}
             <div
-              className="flex items-center gap-6 lg:gap-8 px-5 lg:px-7 flex-shrink-0"
+              className="flex items-center gap-6 lg:gap-8 px-5 lg:px-7 flex-1 min-w-0"
               style={{
                 background: "rgba(249,246,240,0.98)",
                 border: "1px solid rgba(23,60,60,0.07)",
@@ -189,9 +189,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                 </Link>
               </nav>
             </div>
-
-            {/* Boşluk */}
-            <div className="flex-1" />
 
             {/* Sağ ikonlar: Ara + Hesap + Favoriler + Sepet */}
             <div className="flex items-center gap-1 flex-shrink-0">
