@@ -20,7 +20,7 @@ export function AccountNavMenu() {
     <div className="relative" onMouseEnter={show} onMouseLeave={hide}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[180ms]"
+        className="nav-dark-icon inline-flex h-9 w-9 items-center justify-center rounded-full transition-opacity duration-[180ms]"
         aria-expanded={open}
         aria-label="Hesabım"
       >

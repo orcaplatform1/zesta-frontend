@@ -523,3 +523,12 @@ body {
 .text-traders-red   { font-weight: 700; color: #dc2626; }
 .text-traders-white { font-weight: 700; color: #ffffff; }
 .text-traders-blue  { font-weight: 700; color: #3b82f6; }
+
+/* Navbar dark-area icons (beyaz, koyu yeşil arka plan üzerinde) */
+.nav-dark-icon {
+  color: var(--text-on-dark);
+  opacity: 0.82;
+}
+.nav-dark-icon:hover {
+  opacity: 1;
+}
