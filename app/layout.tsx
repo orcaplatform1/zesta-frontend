@@ -6,6 +6,7 @@ import { MobileNav } from "@/components/MobileNav";
 import { CategoryNav } from "@/components/CategoryNav";
 import { AccountNavMenu } from "@/components/AccountNavMenu";
 import { DesignerNavMenu } from "@/components/DesignerNavMenu";
+import { NavSearch } from "@/components/NavSearch";
 import { PaymentBadges } from "@/components/PaymentBadges";
 import { CookieConsent } from "@/components/CookieConsent";
 import { safeJsonLd } from "@/lib/json-ld";
@@ -153,7 +154,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 
             {/* SOL PİLL: Logo + Nav */}
             <div
-              className="flex items-center gap-7 lg:gap-9 px-6 lg:px-8 flex-shrink-0"
+              className="flex items-center gap-6 lg:gap-8 px-5 lg:px-7 flex-shrink-0"
               style={{
                 background: "rgba(249,246,240,0.98)",
                 border: "1px solid rgba(23,60,60,0.07)",
@@ -162,14 +163,19 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                 height: "58px",
               }}
             >
-              <Link
-                href="/"
-                className="flex-shrink-0 font-display font-semibold text-ink"
-                style={{ fontSize: "22px", letterSpacing: "-0.02em", lineHeight: 1 }}
-              >
-                ZESTA
+              <Link href="/" className="flex items-center flex-shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="Zesta"
+                  width={2172}
+                  height={724}
+                  priority
+                  unoptimized
+                  className="h-9 lg:h-10 w-auto object-contain"
+                  style={{ maxWidth: "160px" }}
+                />
               </Link>
-              <nav className="flex items-center gap-6 lg:gap-8">
+              <nav className="flex items-center gap-5 lg:gap-7">
                 <CategoryNav categories={categories} />
                 <Link href="/kurumsal-cozumler" className="navbar-link whitespace-nowrap">
                   Kurumsal Çözümler
@@ -184,39 +190,12 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               </nav>
             </div>
 
-            {/* SAĞ: Arama pill */}
-            <form
-              action="/magaza"
-              method="get"
-              className="flex items-center gap-3 px-5 flex-1"
-              style={{
-                background: "rgba(249,246,240,0.98)",
-                border: "1px solid rgba(23,60,60,0.07)",
-                borderRadius: "100px",
-                boxShadow: "0 2px 18px rgba(9,43,43,0.12)",
-                height: "58px",
-              }}
-            >
-              <input
-                name="q"
-                type="search"
-                placeholder="Ürün, kategori veya tasarımcı ara..."
-                className="flex-1 bg-transparent outline-none placeholder:text-smoke/50 text-ink"
-                style={{ fontSize: "13px" }}
-              />
-              <button
-                type="submit"
-                aria-label="Ara"
-                className="flex-shrink-0 text-smoke hover:text-ink transition-colors duration-[200ms]"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-              </button>
-            </form>
+            {/* Boşluk */}
+            <div className="flex-1" />
 
-            {/* İkonlar (koyu arka plan üzerinde) */}
+            {/* Sağ ikonlar: Ara + Hesap + Favoriler + Sepet */}
             <div className="flex items-center gap-1 flex-shrink-0">
+              <NavSearch />
               <AccountNavMenu />
               <Link
                 href="/magaza"
@@ -253,23 +232,20 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                 height: "52px",
               }}
             >
-              <Link
-                href="/"
-                className="flex-shrink-0 font-display font-semibold text-ink"
-                style={{ fontSize: "20px", letterSpacing: "-0.02em", lineHeight: 1 }}
-              >
-                ZESTA
+              <Link href="/" className="flex items-center flex-shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="Zesta"
+                  width={2172}
+                  height={724}
+                  priority
+                  unoptimized
+                  className="h-8 w-auto object-contain"
+                  style={{ maxWidth: "130px" }}
+                />
               </Link>
-              <div className="flex items-center gap-1 ml-auto">
-                <Link
-                  href="/magaza"
-                  aria-label="Ara"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-smoke"
-                >
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                  </svg>
-                </Link>
+              <div className="flex items-center gap-0.5 ml-auto">
+                <NavSearch iconClass="inline-flex h-10 w-10 items-center justify-center rounded-full text-smoke" />
                 <Link
                   href="/sepet"
                   aria-label="Sepet"
