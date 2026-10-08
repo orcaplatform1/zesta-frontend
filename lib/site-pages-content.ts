@@ -11,7 +11,7 @@ export interface FooterContactContent {
 export const DEFAULT_FOOTER_CONTACT: FooterContactContent = {
   phone: "+90 540 306 0080",
   email: "mdagdeviren@zesta.tr",
-  addressNote: "Emaar Square, Ünalan Mah. Libadiye Cad. No:82 E Blok Üsküdar/İstanbul",
+  addressNote: "Metropol İstanbul, Atatürk Mah. Ataşehir Bulvarı, Ertuğrul, Gazi Sokak, Ataşehir/İstanbul",
 };
 
 export interface CorporateSolutionCard {

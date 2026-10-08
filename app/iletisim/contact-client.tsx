@@ -159,7 +159,7 @@ export function ContactClient({ contact }: { contact: FooterContactContent }) {
               <iframe
                 src={mapEmbedUrl}
                 width="100%"
-                height="200"
+                height="380"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 style={{ display: "block", pointerEvents: "none", border: 0 }}
