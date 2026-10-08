@@ -23,10 +23,10 @@ export function CategoryNav({ categories }: { categories: Category[] }) {
     <div className="relative" onMouseEnter={show} onMouseLeave={hide}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="text-smoke hover:text-ink transition-colors duration-[180ms]"
+        className="navbar-link"
         aria-expanded={open}
       >
-        ÜRÜNLER
+        Ürünler
       </button>
 
       {open && (

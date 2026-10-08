@@ -532,3 +532,20 @@ body {
 .nav-dark-icon:hover {
   opacity: 1;
 }
+
+/* Navbar link stili (sol pill içi linkler) */
+.navbar-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary, #5a6a65);
+  transition: color 180ms;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-manrope), sans-serif;
+}
+.navbar-link:hover {
+  color: var(--text-primary, #1a2e2e);
+}

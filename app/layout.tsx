@@ -147,133 +147,135 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 
         {/* Navbar */}
         <header className="sticky top-9 z-40" style={{ background: "var(--zesta-primary)" }}>
-          <div className="px-3 md:px-5 py-[10px]">
 
-            {/* ── DESKTOP ─────────────────────────────────────────── */}
-            <div className="hidden md:flex items-center gap-3 mx-auto max-w-[1280px]">
+          {/* ── DESKTOP ── */}
+          <div className="hidden md:flex items-center gap-3 px-5 lg:px-8 py-3 mx-auto max-w-[1400px]">
 
-              {/* SOL PİLL: Logo + Nav */}
-              <div
-                className="flex items-center gap-6 lg:gap-8 h-[58px] px-5 lg:px-7 flex-1 min-w-0"
-                style={{
-                  background: "rgba(250,248,243,0.97)",
-                  backdropFilter: "blur(16px)",
-                  WebkitBackdropFilter: "blur(16px)",
-                  border: "1px solid rgba(23,60,60,0.08)",
-                  borderRadius: "100px",
-                  boxShadow: "0 2px 20px rgba(9,43,43,0.13)",
-                }}
-              >
-                <Link href="/" className="flex items-center flex-shrink-0">
-                  <Image
-                    src="/logo.png"
-                    alt="Zesta"
-                    width={2172}
-                    height={724}
-                    priority
-                    unoptimized
-                    className="h-9 lg:h-10 w-auto max-w-[140px] lg:max-w-[170px] object-contain"
-                  />
-                </Link>
-                <nav
-                  className="flex items-center gap-5 lg:gap-7 text-[11.5px] font-medium min-w-0"
-                  style={{ letterSpacing: "0.07em" }}
-                >
-                  <CategoryNav categories={categories} />
-                  <Link href="/kurumsal-cozumler" className="text-smoke hover:text-ink transition-colors duration-[200ms] whitespace-nowrap">
-                    KURUMSAL ÇÖZÜMLER
-                  </Link>
-                  <Link href="/hikayemiz" className="text-smoke hover:text-ink transition-colors duration-[200ms] whitespace-nowrap">
-                    HİKÂYEMİZ
-                  </Link>
-                  <DesignerNavMenu />
-                  <Link href="/ekitap" className="text-smoke hover:text-ink transition-colors duration-[200ms] whitespace-nowrap">
-                    E-KİTAP
-                  </Link>
-                </nav>
-              </div>
-
-              {/* SAĞ GRUP: Arama pill + ikonlar */}
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                {/* Arama pill */}
-                <form
-                  action="/magaza"
-                  method="get"
-                  className="flex items-center gap-2 h-[42px] rounded-full px-4"
-                  style={{
-                    background: "rgba(250,248,243,0.97)",
-                    backdropFilter: "blur(16px)",
-                    WebkitBackdropFilter: "blur(16px)",
-                    border: "1px solid rgba(23,60,60,0.08)",
-                    boxShadow: "0 2px 20px rgba(9,43,43,0.13)",
-                  }}
-                >
-                  <input
-                    name="q"
-                    type="search"
-                    placeholder="Ürün, kategori ara..."
-                    className="bg-transparent outline-none text-[11.5px] w-36 lg:w-44 placeholder:text-smoke/50"
-                    style={{ color: "var(--text-primary)" }}
-                  />
-                  <button type="submit" aria-label="Ara" className="text-smoke hover:text-ink transition-colors flex-shrink-0">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                  </button>
-                </form>
-
-                {/* Kullanıcı ikonu */}
-                <AccountNavMenu />
-
-                {/* Favoriler */}
-                <Link href="/magaza" aria-label="Favoriler" className="nav-dark-icon inline-flex h-9 w-9 items-center justify-center rounded-full transition-opacity duration-[200ms]">
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                  </svg>
-                </Link>
-
-                {/* Sepet */}
-                <Link href="/sepet" aria-label="Sepet" className="nav-dark-icon inline-flex h-9 w-9 items-center justify-center rounded-full transition-opacity duration-[200ms]">
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <path d="M16 10a4 4 0 01-8 0"/>
-                  </svg>
-                </Link>
-              </div>
-            </div>
-
-            {/* ── MOBİL ───────────────────────────────────────────── */}
+            {/* SOL PİLL: Logo + Nav */}
             <div
-              className="md:hidden flex items-center gap-2 h-[52px] px-4"
+              className="flex items-center gap-7 lg:gap-9 px-6 lg:px-8 flex-shrink-0"
               style={{
-                background: "rgba(250,248,243,0.97)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-                border: "1px solid rgba(23,60,60,0.08)",
+                background: "rgba(249,246,240,0.98)",
+                border: "1px solid rgba(23,60,60,0.07)",
                 borderRadius: "100px",
-                boxShadow: "0 2px 20px rgba(9,43,43,0.13)",
+                boxShadow: "0 2px 18px rgba(9,43,43,0.12)",
+                height: "58px",
               }}
             >
-              <Link href="/" className="flex items-center flex-shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="Zesta"
-                  width={2172}
-                  height={724}
-                  priority
-                  unoptimized
-                  className="h-8 w-auto max-w-[120px] object-contain"
-                />
+              <Link
+                href="/"
+                className="flex-shrink-0 font-display font-semibold text-ink"
+                style={{ fontSize: "22px", letterSpacing: "-0.02em", lineHeight: 1 }}
+              >
+                ZESTA
               </Link>
-              <div className="flex items-center gap-0.5 ml-auto">
-                <Link href="/magaza" aria-label="Ara" className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[200ms]">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <nav className="flex items-center gap-6 lg:gap-8">
+                <CategoryNav categories={categories} />
+                <Link href="/kurumsal-cozumler" className="navbar-link whitespace-nowrap">
+                  Kurumsal Çözümler
+                </Link>
+                <Link href="/hikayemiz" className="navbar-link whitespace-nowrap">
+                  Hikâyemiz
+                </Link>
+                <DesignerNavMenu />
+                <Link href="/ekitap" className="navbar-link whitespace-nowrap">
+                  E-Kitap
+                </Link>
+              </nav>
+            </div>
+
+            {/* SAĞ: Arama pill */}
+            <form
+              action="/magaza"
+              method="get"
+              className="flex items-center gap-3 px-5 flex-1"
+              style={{
+                background: "rgba(249,246,240,0.98)",
+                border: "1px solid rgba(23,60,60,0.07)",
+                borderRadius: "100px",
+                boxShadow: "0 2px 18px rgba(9,43,43,0.12)",
+                height: "58px",
+              }}
+            >
+              <input
+                name="q"
+                type="search"
+                placeholder="Ürün, kategori veya tasarımcı ara..."
+                className="flex-1 bg-transparent outline-none placeholder:text-smoke/50 text-ink"
+                style={{ fontSize: "13px" }}
+              />
+              <button
+                type="submit"
+                aria-label="Ara"
+                className="flex-shrink-0 text-smoke hover:text-ink transition-colors duration-[200ms]"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </button>
+            </form>
+
+            {/* İkonlar (koyu arka plan üzerinde) */}
+            <div className="flex items-center gap-1 flex-shrink-0">
+              <AccountNavMenu />
+              <Link
+                href="/magaza"
+                aria-label="Favoriler"
+                className="nav-dark-icon inline-flex h-10 w-10 items-center justify-center rounded-full transition-opacity duration-[200ms]"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </Link>
+              <Link
+                href="/sepet"
+                aria-label="Sepet"
+                className="nav-dark-icon inline-flex h-10 w-10 items-center justify-center rounded-full transition-opacity duration-[200ms]"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+              </Link>
+            </div>
+          </div>
+
+          {/* ── MOBİL ── */}
+          <div className="md:hidden px-3 py-3">
+            <div
+              className="flex items-center px-4 mx-auto"
+              style={{
+                background: "rgba(249,246,240,0.98)",
+                border: "1px solid rgba(23,60,60,0.07)",
+                borderRadius: "100px",
+                boxShadow: "0 2px 18px rgba(9,43,43,0.12)",
+                height: "52px",
+              }}
+            >
+              <Link
+                href="/"
+                className="flex-shrink-0 font-display font-semibold text-ink"
+                style={{ fontSize: "20px", letterSpacing: "-0.02em", lineHeight: 1 }}
+              >
+                ZESTA
+              </Link>
+              <div className="flex items-center gap-1 ml-auto">
+                <Link
+                  href="/magaza"
+                  aria-label="Ara"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-smoke"
+                >
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                   </svg>
                 </Link>
-                <Link href="/sepet" aria-label="Sepet" className="inline-flex h-9 w-9 items-center justify-center rounded-full text-smoke hover:text-ink transition-colors duration-[200ms]">
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <Link
+                  href="/sepet"
+                  aria-label="Sepet"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-smoke"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
                     <line x1="3" y1="6" x2="21" y2="6"/>
                     <path d="M16 10a4 4 0 01-8 0"/>
@@ -282,8 +284,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                 <MobileNav categories={categories} />
               </div>
             </div>
-
           </div>
+
         </header>
 
         <main className="flex-1">{children}</main>
