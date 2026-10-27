@@ -106,7 +106,7 @@ function renderCopyrightWithBrandHighlight(text: string) {
     i === 0
       ? [part]
       : [
-          <span key={i} className="whitespace-nowrap">
+          <a key={i} href="https://traders.tr" target="_blank" rel="noopener noreferrer" className="whitespace-nowrap no-underline">
             <span className="text-traders-white">Traders</span>
             <span className="text-traders-blue">.TR</span>{" "}
             <img
@@ -115,7 +115,7 @@ function renderCopyrightWithBrandHighlight(text: string) {
               aria-hidden
               className="inline-block h-[1em] w-[1em] translate-y-[0.1em] object-contain align-baseline"
             />
-          </span>,
+          </a>,
           part,
         ],
   );
@@ -336,7 +336,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                 <p>{renderCopyrightWithBrandHighlight(copyrightLine1)}</p>
                 <p>{copyrightLine2}</p>
               </div>
-              <Link href="/site-haritasi" className="mt-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
+              <Link href="/site-haritasi" className="mt-2">
                 Site Haritası
               </Link>
             </div>
