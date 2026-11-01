@@ -5,8 +5,8 @@ import { DEFAULT_HOMEPAGE_CONTENT } from "@/lib/homepage-content";
 import type { HomeData, Category } from "@/lib/types";
 
 export const metadata: Metadata = {
-  title: { absolute: "Ahenk Zesta Art Design" },
-  description: "Ahenk Zesta Art Design — el emeği, özenle ve sipariş üzerine hazırlanmış ürünler.",
+  title: { absolute: "Zesta Art&Design" },
+  description: "Zesta Art&Design — el emeği, özenle ve sipariş üzerine hazırlanmış ürünler.",
   alternates: { canonical: "/" },
 };
 
