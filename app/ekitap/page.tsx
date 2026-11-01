@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { EbookReader } from "@/components/ebook/EbookReader";
 
 export const metadata: Metadata = {
-  title: "Zarafetin İzinde | Zesta Art&Design",
+  title: "Zarafetin İzinde | Ahenk Zesta Art Design",
   description: "Zarafetin İzinde — eserlerin ardındaki hikâyelere bir yolculuk.",
   openGraph: {
     images: [{ url: "/ebook/cover/cover.png" }],
