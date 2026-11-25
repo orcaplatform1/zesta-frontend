@@ -2,20 +2,18 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
-import { MobileNav } from "@/components/MobileNav";
-import { CategoryNav } from "@/components/CategoryNav";
-import { AccountNavMenu } from "@/components/AccountNavMenu";
-import { DesignerNavMenu } from "@/components/DesignerNavMenu";
-import { NavSearch } from "@/components/NavSearch";
+import { SiteHeader } from "@/components/SiteHeader";
 import { PaymentBadges } from "@/components/PaymentBadges";
 import { CookieConsent } from "@/components/CookieConsent";
 import { safeJsonLd } from "@/lib/json-ld";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { OG_IMAGE, OG_SITE_NAME } from "@/lib/seo";
 import { DEFAULT_HOMEPAGE_CONTENT, type HomepageContent } from "@/lib/homepage-content";
 import { DEFAULT_FOOTER_CONTACT, type FooterContactContent } from "@/lib/site-pages-content";
 import { serverApiGet } from "@/lib/server-api";
 import type { Category } from "@/lib/types";
 import "./globals.css";
+import { NoInstallPrompt } from "@/components/NoInstallPrompt";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -44,17 +42,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "tr_TR",
-    siteName: SITE_NAME,
+    siteName: OG_SITE_NAME,
     url: SITE_URL,
     title: `${SITE_NAME} — El İşi Ürünler`,
     description: DEFAULT_DESCRIPTION,
-    images: [{ url: "/logo.png", width: 1200, height: 400, alt: SITE_NAME }],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE_NAME} — El İşi Ürünler`,
     description: DEFAULT_DESCRIPTION,
-    images: ["/logo.png"],
+    images: [OG_IMAGE.url],
   },
 };
 
@@ -94,35 +92,8 @@ const LEGAL_LINKS = [
   { href: "/yasal/kullanim-kosullari", label: "Kullanım Koşulları" },
 ];
 
-// "Traders.TR" gecen kismi ozel stille (beyaz/mavi + bayrak) vurguluyoruz —
-// renkler traders.tr logosuyla tutarli (2026-09-15): "Traders" beyaz,
-// ".TR" mavi. ORCA (traders.tr) ve KriptoBeyan footer'larindaki AYNI
-// desen/marka kimligi. Bayrak ikonuna dokunulmadi.
-function renderCopyrightWithBrandHighlight(text: string) {
-  const marker = "Traders.TR";
-  const parts = text.split(marker);
-  if (parts.length === 1) return text;
-  return parts.flatMap((part, i) =>
-    i === 0
-      ? [part]
-      : [
-          <a key={i} href="https://traders.tr" target="_blank" rel="noopener noreferrer" className="whitespace-nowrap no-underline">
-            <span className="text-traders-white">Traders</span>
-            <span className="text-traders-blue">.TR</span>{" "}
-            <img
-              src="/footerflag.png"
-              alt=""
-              aria-hidden
-              className="inline-block h-[1em] w-[1em] translate-y-[0.1em] object-contain align-baseline"
-            />
-          </a>,
-          part,
-        ],
-  );
-}
-
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const copyrightLine1 = `© ${new Date().getFullYear()} Zesta. Tüm hakları saklıdır. Zesta bir Traders.TR ticari markasıdır.`;
+  const copyrightLine1 = `© ${new Date().getFullYear()} Zesta. Tüm hakları saklıdır.`;
   const copyrightLine2 = `Bu platformda yer alan tüm içerikler, tasarımlar, marka unsurları ve fikrî mülkiyet hakları ilgili yasal mevzuat kapsamında korunmaktadır.`;
 
   const settings = await serverApiGet<Record<string, unknown>>("/settings", 60);
@@ -138,6 +109,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${cormorantGaramond.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col text-ink font-sans" style={{ background: "var(--zesta-bg)" }}>
+        <NoInstallPrompt />
         {/* Promo bar */}
         <div className="sticky top-0 z-50 h-9 flex items-center justify-center overflow-hidden px-4" style={{ background: "var(--zesta-primary)", borderBottom: "1px solid var(--border-accent-soft)" }}>
           <span className="promo-bar-shimmer" aria-hidden />
@@ -146,132 +118,16 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           </p>
         </div>
 
-        {/* Navbar */}
-        <header className="sticky top-9 z-40" style={{ background: "var(--zesta-primary)" }}>
-
-          {/* ── DESKTOP ── */}
-          <div className="hidden md:flex items-center px-5 lg:px-8 py-3 mx-auto max-w-[1400px]" style={{ gap: "72px" }}>
-
-            {/* SOL PİLL: Logo + Nav — flex-1 ile sağa doğru uzar */}
-            <div
-              className="flex items-center gap-6 lg:gap-8 px-5 lg:px-7 flex-1 min-w-0"
-              style={{
-                background: "rgba(249,246,240,0.98)",
-                border: "1px solid rgba(23,60,60,0.07)",
-                borderRadius: "100px",
-                boxShadow: "0 2px 18px rgba(9,43,43,0.12)",
-                height: "58px",
-              }}
-            >
-              <Link href="/" className="flex items-center flex-shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="Zesta"
-                  width={2172}
-                  height={724}
-                  priority
-                  unoptimized
-                  className="h-9 lg:h-10 w-auto object-contain"
-                  style={{ maxWidth: "160px" }}
-                />
-              </Link>
-              <nav className="flex items-center gap-5 lg:gap-7">
-                <CategoryNav categories={categories} />
-                <Link href="/kurumsal-cozumler" className="navbar-link whitespace-nowrap">
-                  Kurumsal Çözümler
-                </Link>
-                <Link href="/hikayemiz" className="navbar-link whitespace-nowrap">
-                  Hikâyemiz
-                </Link>
-                <DesignerNavMenu />
-                <Link href="/ekitap" className="navbar-link whitespace-nowrap">
-                  E-Kitap
-                </Link>
-              </nav>
-            </div>
-
-            {/* Sağ ikonlar: Ara + Hesap + Favoriler + Sepet */}
-            <div className="flex items-center gap-1 flex-shrink-0">
-              <NavSearch />
-              <AccountNavMenu />
-              <Link
-                href="/magaza"
-                aria-label="Favoriler"
-                className="nav-dark-icon inline-flex h-10 w-10 items-center justify-center rounded-full transition-opacity duration-[200ms]"
-              >
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                </svg>
-              </Link>
-              <Link
-                href="/sepet"
-                aria-label="Sepet"
-                className="nav-dark-icon inline-flex h-10 w-10 items-center justify-center rounded-full transition-opacity duration-[200ms]"
-              >
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                  <line x1="3" y1="6" x2="21" y2="6"/>
-                  <path d="M16 10a4 4 0 01-8 0"/>
-                </svg>
-              </Link>
-            </div>
-          </div>
-
-          {/* ── MOBİL ── */}
-          <div className="md:hidden px-3 py-3">
-            <div
-              className="flex items-center px-4 mx-auto"
-              style={{
-                background: "rgba(249,246,240,0.98)",
-                border: "1px solid rgba(23,60,60,0.07)",
-                borderRadius: "100px",
-                boxShadow: "0 2px 18px rgba(9,43,43,0.12)",
-                height: "52px",
-              }}
-            >
-              <Link href="/" className="flex items-center flex-shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="Zesta"
-                  width={2172}
-                  height={724}
-                  priority
-                  unoptimized
-                  className="h-8 w-auto object-contain"
-                  style={{ maxWidth: "130px" }}
-                />
-              </Link>
-              <div className="flex items-center gap-0.5 ml-auto">
-                <NavSearch iconClass="inline-flex h-10 w-10 items-center justify-center rounded-full text-smoke" />
-                <Link
-                  href="/sepet"
-                  aria-label="Sepet"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-smoke"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <path d="M16 10a4 4 0 01-8 0"/>
-                  </svg>
-                </Link>
-                <MobileNav categories={categories} />
-              </div>
-            </div>
-          </div>
-
-        </header>
+        {/* Header */}
+        <SiteHeader categories={categories} />
 
         <main className="flex-1">{children}</main>
 
         <footer className="mt-32" style={{ background: "var(--zesta-primary-dark)", borderTop: "1px solid var(--border-light)" }}>
-          <div className="mx-auto max-w-[1280px] px-5 md:px-12 py-16 grid gap-10 md:grid-cols-[1fr_2.4fr]">
+          <div className="mx-auto max-w-[1200px] px-4 lg:px-5 py-12 md:py-16 grid gap-8 md:gap-10 md:grid-cols-4">
             <div>
               <Image src="/logo.png" alt="Zesta" width={2172} height={724} unoptimized className="h-11 md:h-14 w-auto max-w-[210px] object-contain" style={{ filter: "brightness(0) invert(1)", opacity: 0.88 }} />
               <div className="mt-6 flex flex-col gap-3 text-sm" style={{ color: "var(--primary-200)" }}>
-                <a href={`tel:${footerContact.phone.replace(/\s+/g, "")}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
-                  <span aria-hidden>📞</span>
-                  {footerContact.phone.replace(/^\+90\s*/, "")}
-                </a>
                 <a href={`mailto:${footerContact.email}`} className="flex items-center gap-2 transition-colors duration-[200ms] hover:text-[var(--text-on-dark)]">
                   <span aria-hidden>✉️</span>
                   {footerContact.email}
@@ -288,52 +144,50 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
-              <div>
-                <div className="label-uppercase-on-dark mb-5">Mağaza</div>
-                <div className="flex flex-col gap-3 text-sm">
-                  {FOOTER_LINKS.map((link) => (
-                    <Link key={link.href} href={link.href} className="footer-link">
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
+            <div>
+              <div className="label-uppercase-on-dark mb-5">Mağaza</div>
+              <div className="flex flex-col gap-3 text-sm">
+              {FOOTER_LINKS.map((link) => (
+                <Link key={link.href} href={link.href} className="footer-link">
+                  {link.label}
+                </Link>
+              ))}
               </div>
+            </div>
 
-              <div>
-                <div className="label-uppercase-on-dark mb-5">Kurumsal</div>
-                <div className="flex flex-col gap-3 text-sm">
-                  {CORPORATE_LINKS.map((link) => (
-                    <Link key={link.href} href={link.href} className="footer-link">
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
+            <div>
+              <div className="label-uppercase-on-dark mb-5">Kurumsal</div>
+              <div className="flex flex-col gap-3 text-sm">
+              {CORPORATE_LINKS.map((link) => (
+                <Link key={link.href} href={link.href} className="footer-link">
+                  {link.label}
+                </Link>
+              ))}
               </div>
+            </div>
 
-              <div>
-                <div className="label-uppercase-on-dark mb-5">Yasal</div>
-                <div className="flex flex-col gap-3 text-sm">
-                  {LEGAL_LINKS.map((link) => (
-                    <Link key={link.href} href={link.href} className="footer-link">
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
+            <div>
+              <div className="label-uppercase-on-dark mb-5">Yasal</div>
+              <div className="flex flex-col gap-3 text-sm">
+              {LEGAL_LINKS.map((link) => (
+                <Link key={link.href} href={link.href} className="footer-link">
+                  {link.label}
+                </Link>
+              ))}
               </div>
             </div>
           </div>
 
           <div className="py-6" style={{ borderTop: "1px solid var(--border-light)" }}>
-            <div className="mx-auto max-w-[1280px] px-5 md:px-12">
+            <div className="mx-auto max-w-[1200px] px-4 lg:px-5">
               <PaymentBadges />
             </div>
           </div>
 
           <div style={{ borderTop: "1px solid var(--border-light)" }}>
-            <div className="mx-auto max-w-[1280px] px-5 md:px-12 py-6 flex flex-col items-center text-center gap-3 text-xs leading-relaxed" style={{ color: "var(--primary-300)" }}>
+            <div className="mx-auto max-w-[1200px] px-4 lg:px-5 py-6 flex flex-col items-center text-center gap-3 text-xs leading-relaxed" style={{ color: "var(--primary-300)" }}>
               <div>
-                <p>{renderCopyrightWithBrandHighlight(copyrightLine1)}</p>
+                <p>{copyrightLine1}</p>
                 <p>{copyrightLine2}</p>
               </div>
               <Link href="/site-haritasi" className="mt-2">
