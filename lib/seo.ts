@@ -25,10 +25,10 @@ type PageSeo = {
 };
 
 // Sayfanın mevcut başlık / açıklamasını korur, eksik kart etiketlerini tamamlar.
-// Başlığın " — Zesta" eki kök layout'taki şablondan gelir.
+// Başlığın " | Zesta" eki kök layout'taki şablondan gelir.
 export function pageMetadata({ title, description, path, type = "website", image }: PageSeo): Metadata {
   const url = `${SITE_URL}${path === "/" ? "" : path}`;
-  const suffix = ` — ${SITE_NAME}`;
+  const suffix = ` | ${SITE_NAME}`;
   const shortTitle = clip(title, 60 - suffix.length);
   const fullTitle = `${shortTitle}${suffix}`;
   const desc = clip(description, 160);

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Kargo & Teslimat",
   description: "Zesta kargo ve teslimat bilgileri.",
-  alternates: { canonical: "/kargo-teslimat" },
-};
+  path: "/kargo-teslimat",
+});
 
 export default function ShippingLayout({ children }: LayoutProps<"/kargo-teslimat">) {
   return children;

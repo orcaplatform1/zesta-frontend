@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { serverApiGet } from "@/lib/server-api";
 import type { Category } from "@/lib/types";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Site Haritası",
   description: "Zesta'daki tüm kategoriler ve sayfalar.",
-  alternates: { canonical: "/site-haritasi" },
-};
+  path: "/site-haritasi",
+});
 
 const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
   {

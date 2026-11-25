@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { EbookReader } from "@/components/ebook/EbookReader";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Zarafetin İzinde | Zesta Art&Design",
   description: "Zarafetin İzinde — eserlerin ardındaki hikâyelere bir yolculuk.",
-  openGraph: {
-    images: [{ url: "/ebook/cover/cover.png" }],
-  },
-};
+  path: "/ekitap",
+});
 
 interface Props {
   searchParams: Promise<{ sayfa?: string }>;

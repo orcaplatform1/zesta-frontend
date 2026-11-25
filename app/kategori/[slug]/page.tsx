@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { serverApiGet } from "@/lib/server-api";
 import type { Category, ProductListResponse } from "@/lib/types";
@@ -18,11 +19,11 @@ export async function generateMetadata(props: PageProps<"/kategori/[slug]">): Pr
 
   if (!category) return { title: "Kategori Bulunamadı" };
 
-  return {
+  return pageMetadata({
     title: category.name,
     description: category.description ?? `${category.name} kategorisindeki Zesta el işi ürünleri.`,
-    alternates: { canonical: `/kategori/${category.slug}` },
-  };
+    path: `/kategori/${category.slug}`,
+  });
 }
 
 export default async function CategoryPage(props: PageProps<"/kategori/[slug]">) {

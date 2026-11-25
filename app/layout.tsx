@@ -33,8 +33,8 @@ const DEFAULT_DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — El İşi Ürünler`,
-    template: `%s — ${SITE_NAME}`,
+    default: `${SITE_NAME} | El İşi Ürünler`,
+    template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -44,13 +44,13 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     siteName: OG_SITE_NAME,
     url: SITE_URL,
-    title: `${SITE_NAME} — El İşi Ürünler`,
+    title: `${SITE_NAME} | El İşi Ürünler`,
     description: DEFAULT_DESCRIPTION,
     images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — El İşi Ürünler`,
+    title: `${SITE_NAME} | El İşi Ürünler`,
     description: DEFAULT_DESCRIPTION,
     images: [OG_IMAGE.url],
   },

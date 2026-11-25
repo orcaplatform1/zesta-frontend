@@ -549,3 +549,30 @@ body {
 .navbar-link:hover {
   color: var(--text-primary, #1a2e2e);
 }
+
+/* ── Header aksiyonları (Hesabım / Favoriler / Sepet) — yalnız yerleşim, mevcut renk değişkenleri ── */
+.header-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  min-width: 40px;
+  padding: 0 6px;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 180ms;
+}
+.header-action:hover {
+  color: var(--zesta-primary);
+}
+.header-action-label {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .header-action { padding: 0 8px; }
+  .header-action-label { display: inline; }
+}

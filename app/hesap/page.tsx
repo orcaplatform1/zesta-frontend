@@ -179,6 +179,9 @@ function ProfileView({
         <Link href="/hesap/siparislerim" className="text-sm text-champagne-300 underline">
           Siparişlerim
         </Link>
+        <Link href="/hesap/favorilerim" className="text-sm text-champagne-300 underline">
+          Favorilerim
+        </Link>
         <button onClick={logout} className="text-left text-sm text-dim hover:text-ink transition-colors duration-[180ms]">
           Çıkış yap
         </button>
@@ -222,6 +225,12 @@ function AuthForms({ onAuthed }: { onAuthed: () => void }) {
         });
       } else {
         await api.post("/auth/login", { email: form.email, password: form.password });
+      }
+      // Favori gibi giriş isteyen bir işlemden gelindiyse aynı sayfaya geri dön
+      const donus = searchParams.get("donus");
+      if (donus && donus.startsWith("/") && !donus.startsWith("//")) {
+        window.location.assign(donus);
+        return;
       }
       onAuthed();
     } catch (err) {

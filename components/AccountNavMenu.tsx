@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import { UserIcon } from "@/components/HeaderIcons";
 
 export function AccountNavMenu() {
   const [open, setOpen] = useState(false);
@@ -20,19 +21,17 @@ export function AccountNavMenu() {
     <div className="relative" onMouseEnter={show} onMouseLeave={hide}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="nav-dark-icon inline-flex h-10 w-10 items-center justify-center rounded-full transition-opacity duration-[180ms]"
+        className="header-action"
         aria-expanded={open}
         aria-label="Hesabım"
       >
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
+        <UserIcon size={20} />
+        <span className="header-action-label">Hesabım</span>
       </button>
 
       {open && (
         <div
-          className="absolute left-1/2 top-full z-50 mt-3 w-48 -translate-x-1/2 p-4"
+          className="absolute right-0 top-full z-50 mt-2 w-48 p-4 md:left-1/2 md:right-auto md:-translate-x-1/2"
           style={{
             background: "var(--zesta-surface)",
             borderRadius: "var(--radius-xl)",

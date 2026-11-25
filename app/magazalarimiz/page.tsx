@@ -58,12 +58,6 @@ export default function StoresPage() {
                     {store.address}
                   </p>
                   <p className="flex gap-2.5">
-                    <span aria-hidden>📞</span>
-                    <a href={`tel:${store.phone.replace(/\s+/g, "")}`} className="hover:text-ink transition-colors duration-[180ms]">
-                      {store.phone}
-                    </a>
-                  </p>
-                  <p className="flex gap-2.5">
                     <span aria-hidden>🕐</span>
                     {store.hours}
                   </p>

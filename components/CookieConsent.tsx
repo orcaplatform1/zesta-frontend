@@ -43,6 +43,11 @@ function Toggle({
   );
 }
 
+const BTN =
+  "inline-flex h-11 items-center justify-center whitespace-nowrap rounded-full px-5 text-[14px] transition-colors duration-200";
+const BTN_PRIMARY = `${BTN} bg-[var(--primary-700)] font-semibold text-[var(--text-on-dark)] hover:bg-[var(--primary-800)]`;
+const BTN_GHOST = `${BTN} border border-[color-mix(in_srgb,var(--primary-700)_25%,transparent)] bg-transparent font-medium text-[var(--primary-700)] hover:bg-[var(--primary-50)]`;
+
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
@@ -69,50 +74,42 @@ export function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 p-4 sm:p-6">
-      <div className="mx-auto max-w-3xl rounded-sm border border-[var(--border-subtle)] bg-[var(--ivory-50)] p-5 shadow-[var(--shadow-xl)]">
+    <div
+      role="dialog"
+      aria-live="polite"
+      aria-label="Çerez onayı"
+      className="fixed inset-x-4 bottom-4 z-50 rounded-[24px] border border-[color-mix(in_srgb,var(--primary-700)_12%,transparent)] bg-[color-mix(in_srgb,var(--bg-primary)_92%,transparent)] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-md sm:inset-x-auto sm:bottom-6 sm:left-6 sm:w-full sm:max-w-[420px]"
+    >
         {!showPreferences ? (
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-            <div className="text-sm text-smoke">
-              <p>
-                Elektronik ticaret deneyiminizi kişiselleştirmek, Türkiye&apos;nin dört bir yanındaki ustalarımızın
-                sipariş üzerine hazırladığı el yapımı sanat ürünlerini size en doğru şekilde sunabilmek ve
-                alışveriş sepetinizi güvende tutmak amacıyla yasalara uygun çerezler kullanıyoruz.
-              </p>
-              <p className="mt-2">
-                Sitemizdeki çerezleri dilediğiniz gibi yönetebilir, onayınızı serbestçe geri çekebilirsiniz.
-                Detaylı bilgi için{" "}
-                <Link href="/yasal/cerez-politikasi" className="font-medium text-ink underline">
-                  Çerez Politikası
-                </Link>{" "}
-                ve{" "}
-                <Link href="/yasal/gizlilik-politikasi" className="font-medium text-ink underline">
-                  Gizlilik Politikası
-                </Link>{" "}
-                sayfalarımızı inceleyebilirsiniz.
-              </p>
-            </div>
-            <div className="flex shrink-0 flex-wrap items-center gap-2 sm:ml-auto">
+          <div className="flex flex-col gap-4">
+            <p className="text-[14px] leading-[1.6] text-[var(--text-primary)]">
+              Deneyiminizi iyileştirmek için çerezler kullanıyoruz. Ayrıntılar için{" "}
+              <Link href="/yasal/cerez-politikasi" className="text-[var(--primary-700)] underline">
+                Çerez Politikası
+              </Link>{" "}
+              ve{" "}
+              <Link href="/yasal/gizlilik-politikasi" className="text-[var(--primary-700)] underline">
+                Gizlilik Politikası
+              </Link>
+              &apos;nı inceleyebilirsiniz.
+            </p>
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-nowrap">
               <button
                 type="button"
-                onClick={() => setShowPreferences(true)}
-                className="inline-flex h-9 items-center justify-center rounded-full border border-[var(--border-default)] px-4 text-[12px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink hover:border-[var(--border-hover)]"
+                onClick={() => save({ necessary: true, analytics: true, marketing: true })}
+                className={`${BTN_PRIMARY} col-span-2 sm:col-span-1`}
               >
-                ⚙️ Tercihleri Yönet
+                Tümünü Kabul Et
               </button>
               <button
                 type="button"
                 onClick={() => save({ necessary: true, analytics: false, marketing: false })}
-                className="inline-flex h-9 items-center justify-center rounded-full border border-[var(--border-default)] px-4 text-[12px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink hover:border-[var(--border-hover)]"
+                className={BTN_GHOST}
               >
-                🟥 Reddet
+                Reddet
               </button>
-              <button
-                type="button"
-                onClick={() => save({ necessary: true, analytics: true, marketing: true })}
-                className="inline-flex h-9 items-center justify-center rounded-full bg-charcoal-700 px-4 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
-              >
-                🟩 Tüm Çerezleri Kabul Et
+              <button type="button" onClick={() => setShowPreferences(true)} className={BTN_GHOST}>
+                Tercihler
               </button>
             </div>
           </div>
@@ -125,10 +122,10 @@ export function CookieConsent() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 rounded-sm border border-[var(--border-subtle)] p-4">
+            <div className="flex flex-col gap-3 rounded-[16px] border border-[color-mix(in_srgb,var(--primary-700)_12%,transparent)] p-4">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-[13px] font-medium text-ink">🌐 Zorunlu Çerezler (Her Zaman Aktif)</p>
+                  <p className="text-[13px] font-medium text-ink">Zorunlu Çerezler (Her Zaman Aktif)</p>
                   <p className="mt-0.5 text-[12px] leading-relaxed text-smoke">
                     Seçtiğiniz el yapımı ürünlerin alışveriş sepetinizde kaybolmadan kalması, üye girişi
                     yapabilmeniz, sipariş ve güvenli ödeme formlarının çalışması için zorunludur. (Kullanıcı
@@ -142,7 +139,7 @@ export function CookieConsent() {
 
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-[13px] font-medium text-ink">📊 Performans ve Analiz Çerezleri</p>
+                  <p className="text-[13px] font-medium text-ink">Performans ve Analiz Çerezleri</p>
                   <p className="mt-0.5 text-[12px] leading-relaxed text-smoke">
                     Ziyaretçilerin hangi sanat kategorilerini, usta atölyelerini ve ürün hikâyelerini daha çok
                     incelediğini analiz ederek pazar yerimizin tasarımını ve alışveriş deneyimini geliştirmemize
@@ -156,7 +153,7 @@ export function CookieConsent() {
 
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-[13px] font-medium text-ink">📢 Pazarlama ve Reklam Çerezleri</p>
+                  <p className="text-[13px] font-medium text-ink">Pazarlama ve Reklam Çerezleri</p>
                   <p className="mt-0.5 text-[12px] leading-relaxed text-smoke">
                     İlgi duyduğunuz tasarım tarzlarına uygun yeni sanat ürünleri koleksiyonlarından, özel
                     indirimlerden ve Zesta kampanyalarından haberdar olmanızı sağlar.
@@ -167,24 +164,19 @@ export function CookieConsent() {
             </div>
 
             <div className="flex flex-wrap items-center justify-end gap-2">
-              <button
-                type="button"
-                onClick={() => setShowPreferences(false)}
-                className="inline-flex h-9 items-center justify-center rounded-full px-4 text-[12px] font-medium text-smoke transition-colors duration-[180ms] hover:text-ink"
-              >
+              <button type="button" onClick={() => setShowPreferences(false)} className={BTN_GHOST}>
                 Geri
               </button>
               <button
                 type="button"
                 onClick={() => save({ necessary: true, analytics, marketing })}
-                className="inline-flex h-9 items-center justify-center rounded-full bg-charcoal-700 px-4 text-[12px] font-medium text-ivory-50 transition-colors duration-[180ms] hover:bg-mist-800"
+                className={BTN_PRIMARY}
               >
                 Tercihleri Kaydet
               </button>
             </div>
           </div>
         )}
-      </div>
     </div>
   );
 }

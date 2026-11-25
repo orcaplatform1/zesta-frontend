@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import type { Category } from "@/lib/types";
+import { MobileMenuPanel } from "@/components/MobileMenuPanel";
 
 function ChevronDown() {
   return (
@@ -79,6 +80,7 @@ function AccentBtn({ href, label, onClick }: { href: string; label: string; onCl
 export function MobileNav({ categories = [] }: { categories?: Category[] }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => setMounted(true), []);
   useEffect(() => {
@@ -87,25 +89,32 @@ export function MobileNav({ categories = [] }: { categories?: Category[] }) {
   }, [open]);
 
   const close = () => setOpen(false);
+  const openMenu = () => {
+    setIsMobile(window.matchMedia("(max-width: 767px)").matches);
+    setOpen(true);
+  };
 
   return (
-    <div className="md:hidden">
-      <button onClick={() => setOpen(true)} aria-label="Menüyü aç" className="flex flex-col gap-[5px] p-2 -mr-2">
-        <span className="block h-[1.5px] w-[18px] rounded-full bg-[var(--zesta-primary)]" />
-        <span className="block h-[1.5px] w-[14px] rounded-full bg-[var(--zesta-primary)] opacity-60" />
+    <div>
+      <button onClick={openMenu} aria-label="Menüyü aç" className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] -ml-2">
+        <span className="block h-[2px] w-[20px] rounded-full bg-[var(--zesta-primary)]" />
+        <span className="block h-[2px] w-[20px] rounded-full bg-[var(--zesta-primary)]" />
+        <span className="block h-[2px] w-[20px] rounded-full bg-[var(--zesta-primary)]" />
       </button>
 
-      {mounted && open && createPortal(
-        <div className="fixed inset-0 z-50 flex justify-end">
+      {mounted && open && isMobile && createPortal(<MobileMenuPanel categories={categories} onClose={close} />, document.body)}
+
+      {mounted && open && !isMobile && createPortal(
+        <div className="fixed inset-0 z-[60] flex justify-start">
           {/* backdrop */}
           <button onClick={close} aria-label="Kapat" className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
 
           {/* panel */}
           <div
-            className="relative flex w-[260px] flex-col"
+            className="relative flex w-[280px] max-w-[85vw] flex-col"
             style={{
               background: "linear-gradient(160deg, #1D4B4B 0%, #173C3C 100%)",
-              boxShadow: "-8px 0 40px rgba(0,0,0,0.3)",
+              boxShadow: "8px 0 40px rgba(0,0,0,0.3)",
             }}
           >
             {/* header */}

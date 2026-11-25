@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: SITE_NAME,
     description: "El emeği, özenle ve sipariş üzerine hazırlanmış ürünler.",
     start_url: "/",
-    display: "standalone",
+    display: "browser",
     background_color: "#F4F1E9",
     theme_color: "#173C3C",
     icons: [

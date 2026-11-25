@@ -17,14 +17,6 @@ const SUBJECTS = [
   "Diğer",
 ];
 
-function stripCountryCode(phone: string) {
-  return phone.replace(/^\+90\s*/, "").trim();
-}
-
-function toTelHref(phone: string) {
-  return "tel:+" + phone.replace(/\D/g, "").replace(/^0/, "90");
-}
-
 function toMapsHref(address: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
 }
@@ -51,7 +43,6 @@ export function ContactClient({ contact }: { contact: FooterContactContent }) {
     }
   }
 
-  const displayPhone = stripCountryCode(contact.phone);
   const mapsUrl = toMapsHref(contact.addressNote);
   const mapEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(contact.addressNote)}&output=embed&z=15`;
 
@@ -103,25 +94,6 @@ export function ContactClient({ contact }: { contact: FooterContactContent }) {
                 <div>
                   <p className="text-[11px] font-semibold tracking-[0.1em] uppercase" style={{ color: "var(--zesta-primary)" }}>E-posta</p>
                   <p className="mt-0.5 text-sm text-ink group-hover:underline">{contact.email}</p>
-                </div>
-              </a>
-
-              {/* Telefon */}
-              <a
-                href={toTelHref(contact.phone)}
-                className="flex items-start gap-4 group"
-              >
-                <span
-                  className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full transition-colors duration-[180ms] group-hover:opacity-80"
-                  style={{ background: "rgba(23,60,60,0.08)" }}
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--zesta-primary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.1 1.18 2 2 0 012.1 0h3a2 2 0 012 1.72c.13 1 .37 1.97.72 2.9a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.18-1.18a2 2 0 012.11-.45c.93.35 1.9.59 2.9.72A2 2 0 0122 16.92z"/>
-                  </svg>
-                </span>
-                <div>
-                  <p className="text-[11px] font-semibold tracking-[0.1em] uppercase" style={{ color: "var(--zesta-primary)" }}>Telefon</p>
-                  <p className="mt-0.5 text-sm text-ink group-hover:underline">{displayPhone}</p>
                 </div>
               </a>
 

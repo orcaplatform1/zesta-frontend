@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { safeJsonLd } from "@/lib/json-ld";
 import { serverApiGet } from "@/lib/server-api";
@@ -19,25 +20,13 @@ export async function generateMetadata(props: PageProps<"/urun/[slug]">): Promis
   }
 
   const description = product.description ?? `${product.name} — Zesta el işi ürün koleksiyonu.`;
-  const image = product.images[0]?.url;
-
-  return {
+  return pageMetadata({
     title: product.name,
     description,
-    alternates: { canonical: `/urun/${product.slug}` },
-    openGraph: {
-      type: "website",
-      title: product.name,
-      description,
-      images: image ? [{ url: image }] : undefined,
-    },
-    twitter: {
-      card: image ? "summary_large_image" : "summary",
-      title: product.name,
-      description,
-      images: image ? [image] : undefined,
-    },
-  };
+    path: `/urun/${product.slug}`,
+    type: "product",
+    image: [...product.images].sort((a, b) => a.position - b.position)[0]?.url,
+  });
 }
 
 export default async function ProductPage(props: PageProps<"/urun/[slug]">) {
